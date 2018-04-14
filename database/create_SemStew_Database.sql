@@ -3,10 +3,17 @@ CREATE TABLE LANGUAGES (
   name varchar(32)
 );
 
+CREATE TABLE CATEGORIES(
+  id_category serial PRIMARY KEY,
+  id_language integer NOT NULL REFERENCES LANGUAGES(id_language) NOT NULL,
+  description text NOT NULL
+);
+
 CREATE TABLE FOOD(
   id_food serial PRIMARY KEY,
   price integer NOT NULL,
-  image_name varchar(64)
+  image_name varchar(64),
+  id_category integer REFERENCES CATEGORIES(id_category) NOT NULL
 );
 
 CREATE TABLE FOOD_NAME(
@@ -18,7 +25,8 @@ CREATE TABLE FOOD_NAME(
 
 CREATE TABLE BEVERAGES(
   id_beverage serial PRIMARY KEY,
-  price integer NOT NULL   
+  price integer NOT NULL,
+  id_category integer REFERENCES CATEGORIES(id_category) NOT NULL   
 );
 
 CREATE TABLE BEVERAGES_NAME(
@@ -51,17 +59,23 @@ CREATE TABLE ALLERGENS_NAME(
 CREATE TABLE REZERVATION(
   r_date date NOT NULL,
   time_from time NOT NULL,
-  time_to time NOT NULL,
   n_table integer NOT NULL
 );
 
+CREATE TABLE REZERVATION_CONFIG(
+  id_language integer NOT NULL REFERENCES LANGUAGES(id_language) NOT NULL,
+  header varchar(128) NOT NULL,
+  table_number integer NOT NULL,
+  time_from_desc varchar(64) NOT NULL
+);
+
 CREATE TABLE PERFORMANCE(
-  id_performance integer PRIMARY KEY,
+  id_performance serial PRIMARY KEY,
   name varchar(64)
 );
 
 CREATE TABLE EMPLOYEE(
-  id_employee integer PRIMARY KEY,
+  id_employee serial PRIMARY KEY,
   perform integer REFERENCES PERFORMANCE(id_performance),
   name varchar(64) NOT NULL,
   surname varchar(64) NOT NULL,
@@ -71,8 +85,61 @@ CREATE TABLE EMPLOYEE(
 
 CREATE TABLE ORDERS(
   o_date date NOT NULL,
-  time_from time NOT NULL,
-  time_to time NOT NULL,
   address text NOT NULL,
-  id_food integer REFERENCES FOOD(id_food) NOT NULL
+  id_food integer REFERENCES FOOD(id_food) NOT NULL,
+  id_beverage integer REFERENCES BEVERAGES(id_beverage)
+);
+
+CREATE TABLE NEWS(
+  id_news serial PRIMARY KEY,
+  n_date date NOT NULL  
+);
+
+CREATE TABLE NEWS_NAME(
+  id_news integer REFERENCES NEWS(id_news) NOT NULL,
+  id_language integer NOT NULL REFERENCES LANGUAGES(id_language) NOT NULL,
+  description text NOT NULL
+);
+
+CREATE TABLE GENERAL_CONFIG(
+  url_main_image text NOT NULL
+);
+
+CREATE TABLE INTRO_CONFIG(
+  id_language integer NOT NULL REFERENCES LANGUAGES(id_language) NOT NULL,
+  header varchar(128) NOT NULL,
+  short_description text NOT NULL,
+  news_header varchar(64) NOT NULL
+); 
+
+CREATE TABLE MENUS_CONFIG(
+  id_language integer NOT NULL REFERENCES LANGUAGES(id_language) NOT NULL,
+  header varchar(128) NOT NULL
+);
+
+CREATE TABLE MENUS(
+  id_menu serial PRIMARY KEY,
+  id_language integer NOT NULL REFERENCES LANGUAGES(id_language) NOT NULL,
+  url_image text NOT NULL,
+  description varchar(128) NOT NULL
+);
+
+CREATE TABLE ABOUT_US_CONFIG(
+  id_language integer NOT NULL REFERENCES LANGUAGES(id_language) NOT NULL,
+  header varchar(128) NOT NULL,
+  description text NOT NULL,
+  fotogallery_header varchar(64) NOT NULL
+);
+
+CREATE TABLE IMAGES(
+  id_image serial PRIMARY KEY,
+  url text NOT NULL
+);
+
+CREATE TABLE CONTACT_CONFIG(
+  id_language integer NOT NULL REFERENCES LANGUAGES(id_language) NOT NULL,
+  header varchar(128) NOT NULL,
+  description text NOT NULL,
+  url_image1 text,
+  url_image2 text
 );
