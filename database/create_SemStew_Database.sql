@@ -4,8 +4,12 @@ CREATE TABLE LANGUAGES (
 );
 
 CREATE TABLE CATEGORIES(
-  id_category serial PRIMARY KEY,
-  id_language integer NOT NULL REFERENCES LANGUAGES(id_language) NOT NULL,
+  id_category serial PRIMARY KEY
+);
+
+CREATE TABLE CATEGORIES_NAME(
+  id_category integer NOT NULL REFERENCES CATEGORIES(id_category),
+  id_language integer NOT NULL REFERENCES LANGUAGES(id_language),
   description text NOT NULL
 );
 
@@ -119,8 +123,12 @@ CREATE TABLE MENUS_CONFIG(
 
 CREATE TABLE MENUS(
   id_menu serial PRIMARY KEY,
+  url_image text NOT NULL
+);
+
+CREATE TABLE MENUS_NAME(
+  id_menu integer NOT NULL REFERENCES MENUS(id_menu) NOT NULL,
   id_language integer NOT NULL REFERENCES LANGUAGES(id_language) NOT NULL,
-  url_image text NOT NULL,
   description varchar(128) NOT NULL
 );
 
