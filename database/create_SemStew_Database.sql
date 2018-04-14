@@ -1,5 +1,5 @@
 CREATE TABLE LANGUAGES (
-  id_language integer PRIMARY KEY,
+  id_language serial PRIMARY KEY,
   name varchar(32)
 );
 
