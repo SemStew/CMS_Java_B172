@@ -48,17 +48,6 @@ CREATE TABLE ALLERGENS_NAME(
   allergen varchar(64) NOT NULL 
 );
 
-CREATE TABLE REVIEW(
-  id_review bigserial PRIMARY KEY,
-  rating real NOT NULL
-);
-
-CREATE TABLE REVIEW_NAME(
-  id_review bigint NOT NULL REFERENCES REVIEW(id_review),
-  id_language integer NOT NULL REFERENCES LANGUAGES(id_language),
-  review text NOT NULL
-);
-
 CREATE TABLE REZERVATION(
   r_date date NOT NULL,
   time_from time NOT NULL,
@@ -84,5 +73,6 @@ CREATE TABLE ORDERS(
   o_date date NOT NULL,
   time_from time NOT NULL,
   time_to time NOT NULL,
+  address text NOT NULL,
   id_food integer REFERENCES FOOD(id_food) NOT NULL
 );
