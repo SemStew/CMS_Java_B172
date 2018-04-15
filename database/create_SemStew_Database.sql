@@ -5,7 +5,7 @@ CREATE TABLE LANGUAGES (
 
 CREATE TABLE CATEGORIES(
   id_category serial PRIMARY KEY,
-  is_food boolean NOT NULL
+  is_MENU_ITEM boolean NOT NULL
 );
 
 CREATE TABLE CATEGORIES_NAME(
@@ -19,55 +19,35 @@ CREATE TABLE UNITS(
   description varchar(16) NOT NULL
 );
 
-CREATE TABLE FOOD(
-  id_food serial PRIMARY KEY,
+CREATE TABLE MENU_ITEM(
+  id_menu_item serial PRIMARY KEY,
   price integer NOT NULL,
-  image_name varchar(64),
+  image_name text,
   amount decimal NOT NULL,
   id_unit integer REFERENCES UNITS(id_unit) NOT NULL,     
   id_category integer REFERENCES CATEGORIES(id_category) NOT NULL
 );
 
-CREATE TABLE FOOD_NAME(
-  id_food integer NOT NULL REFERENCES FOOD(id_food),
+CREATE TABLE MENU_ITEM_NAME(
+  id_menu_item integer NOT NULL REFERENCES MENU_ITEM(id_menu_item),
   id_language integer NOT NULL REFERENCES LANGUAGES(id_language),
   name varchar(64) NOT NULL,
   description varchar(256)
 );
 
-CREATE TABLE BEVERAGES(
-  id_beverage serial PRIMARY KEY,
-  price integer NOT NULL,
-  amount integer NOT NULL,
-  id_unit integer REFERENCES UNITS(id_unit) NOT NULL,
-  id_category integer REFERENCES CATEGORIES(id_category) NOT NULL   
-);
-
-CREATE TABLE BEVERAGES_NAME(
-  id_beverage integer REFERENCES BEVERAGES(id_beverage),
-  id_language integer REFERENCES LANGUAGES(id_language),
-  name varchar(64) NOT NULL,
-  description varchar(256)
-);
-
 CREATE TABLE ALLERGENS(
-  id_allergen integer PRIMARY KEY
-);
-
-CREATE TABLE FOOD_ALLERGEN(
-  id_food integer REFERENCES FOOD(id_food) NOT NULL,
-  id_allergen integer REFERENCES ALLERGENS(id_allergen) NOT NULL
-);
-
-CREATE TABLE BEVERAGE_ALLERGEN(
-  id_beverage integer REFERENCES BEVERAGES(id_beverage) NOT NULL,
-  id_allergen integer REFERENCES ALLERGENS(id_allergen) NOT NULL
+  id_allergen serial PRIMARY KEY
 );
 
 CREATE TABLE ALLERGENS_NAME(
   id_allergen integer NOT NULL REFERENCES ALLERGENS(id_allergen),
   id_language integer NOT NULL REFERENCES LANGUAGES(id_language),
   allergen varchar(64) NOT NULL 
+);
+
+CREATE TABLE MENU_ITEM_ALLERGEN(
+  id_menu_item integer REFERENCES MENU_ITEM(id_menu_item) NOT NULL,
+  id_allergen integer REFERENCES ALLERGENS(id_allergen) NOT NULL
 );
 
 CREATE TABLE REZERVATION(
@@ -79,7 +59,7 @@ CREATE TABLE REZERVATION(
 CREATE TABLE REZERVATION_CONFIG(
   id_language integer NOT NULL REFERENCES LANGUAGES(id_language) NOT NULL,
   header varchar(128) NOT NULL,
-  table_number integer NOT NULL,
+  table_number varchar(64) NOT NULL,
   time_from_desc varchar(64) NOT NULL
 );
 
@@ -90,7 +70,7 @@ CREATE TABLE PERFORMANCE(
 
 CREATE TABLE EMPLOYEE(
   id_employee serial PRIMARY KEY,
-  perform integer REFERENCES PERFORMANCE(id_performance),
+  perform integer REFERENCES PERFORMANCE(id_performance) NOT NULL,
   name varchar(64) NOT NULL,
   surname varchar(64) NOT NULL,
   phone varchar(16),
@@ -98,10 +78,14 @@ CREATE TABLE EMPLOYEE(
 );
 
 CREATE TABLE ORDERS(
+  id_order serial PRIMARY KEY,
   o_date date NOT NULL,
-  address text NOT NULL,
-  id_food integer REFERENCES FOOD(id_food) NOT NULL,
-  id_beverage integer REFERENCES BEVERAGES(id_beverage)
+  address text NOT NULL
+);
+
+CREATE TABLE ORDER_ITEM(
+  id_menu_item integer REFERENCES MENU_ITEM(id_menu_item) NOT NULL,
+  id_order integer REFERENCES ORDERS(id_order) NOT NULL
 );
 
 CREATE TABLE NEWS(
@@ -147,11 +131,6 @@ CREATE TABLE ABOUT_US_CONFIG(
   header varchar(128) NOT NULL,
   description text NOT NULL,
   fotogallery_header varchar(64) NOT NULL
-);
-
-CREATE TABLE IMAGES(
-  id_image serial PRIMARY KEY,
-  url text NOT NULL
 );
 
 CREATE TABLE CONTACT_CONFIG(
