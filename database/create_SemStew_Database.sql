@@ -4,7 +4,8 @@ CREATE TABLE LANGUAGES (
 );
 
 CREATE TABLE CATEGORIES(
-  id_category serial PRIMARY KEY
+  id_category serial PRIMARY KEY,
+  is_food boolean NOT NULL
 );
 
 CREATE TABLE CATEGORIES_NAME(
@@ -13,10 +14,17 @@ CREATE TABLE CATEGORIES_NAME(
   description text NOT NULL
 );
 
+CREATE TABLE UNITS(
+  id_unit serial PRIMARY KEY,
+  description varchar(16) NOT NULL
+);
+
 CREATE TABLE FOOD(
   id_food serial PRIMARY KEY,
   price integer NOT NULL,
   image_name varchar(64),
+  amount decimal NOT NULL,
+  id_unit integer REFERENCES UNITS(id_unit) NOT NULL,     
   id_category integer REFERENCES CATEGORIES(id_category) NOT NULL
 );
 
@@ -30,6 +38,8 @@ CREATE TABLE FOOD_NAME(
 CREATE TABLE BEVERAGES(
   id_beverage serial PRIMARY KEY,
   price integer NOT NULL,
+  amount integer NOT NULL,
+  id_unit integer REFERENCES UNITS(id_unit) NOT NULL,
   id_category integer REFERENCES CATEGORIES(id_category) NOT NULL   
 );
 
