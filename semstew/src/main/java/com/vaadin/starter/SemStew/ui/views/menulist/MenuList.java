@@ -31,7 +31,7 @@ public class MenuList extends VerticalLayout {
             container.setClassName("view-container");
             container.setAlignItems(Alignment.STRETCH);
 
-            grid.addColumn(MenuItem::getName).setHeader("Name").setWidth("8em").setResizable(true);
+            //grid.addColumn(MenuItem::getName).setHeader("Name").setWidth("8em").setResizable(true);
             grid.setSelectionMode(Grid.SelectionMode.NONE);
 
             container.add(header, grid);

@@ -22,15 +22,13 @@ import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcons;
 import com.vaadin.flow.component.page.Viewport;
-import com.vaadin.flow.router.AfterNavigationEvent;
-import com.vaadin.flow.router.AfterNavigationObserver;
-import com.vaadin.flow.router.RouterLayout;
-import com.vaadin.flow.router.RouterLink;
+import com.vaadin.flow.router.*;
 import com.vaadin.flow.server.InitialPageSettings;
 import com.vaadin.flow.server.PageConfigurator;
 import com.vaadin.starter.SemStew.ui.views.aboutlist.AboutList;
 import com.vaadin.starter.SemStew.ui.views.categorieslist.CategoriesList;
 import com.vaadin.starter.SemStew.ui.views.contactsList.ContactsList;
+import com.vaadin.starter.SemStew.ui.views.introlist.IntroList;
 import com.vaadin.starter.SemStew.ui.views.menulist.MenuList;
 import com.vaadin.starter.SemStew.ui.views.reviewslist.ReviewsList;
 
@@ -46,6 +44,7 @@ public class MainLayout extends Div
     private static final String ACTIVE_ITEM_STYLE = "main-layout__nav-item--selected";
     private RouterLink categories;
     private RouterLink reviews;
+    private RouterLink intro;
     private RouterLink menu;
     private RouterLink about;
     private RouterLink contacts;
@@ -62,6 +61,10 @@ public class MainLayout extends Div
         categories.add(new Icon(VaadinIcons.ARCHIVES), new Text("Categories"));
         categories.addClassName("main-layout__nav-item");
 
+        intro = new RouterLink(null,IntroList.class);
+        intro.add(new Icon(VaadinIcons.BULLETS),new Text("Intro"));
+        intro.addClassName("main-layout__nav-item");
+
         menu = new RouterLink(null,MenuList.class);
         menu.add(new Icon(VaadinIcons.CROSS_CUTLERY), new Text("Menu"));
         menu.addClassName("main-layout__nav-item");
@@ -74,7 +77,7 @@ public class MainLayout extends Div
         contacts.add(new Icon(VaadinIcons.BOOK),new Text("Contacts"));
         contacts.addClassName("main-layout__nav-item");
 
-        Div navigation = new Div(reviews, categories,menu,about,contacts);
+        Div navigation = new Div(reviews, categories, intro, menu, about, contacts);
         navigation.addClassName("main-layout__nav");
 
         Div header = new Div(title, navigation);
@@ -91,12 +94,14 @@ public class MainLayout extends Div
         String segment = event.getLocation().getFirstSegment();
         boolean reviewsActive = segment.equals(reviews.getHref());
         boolean categoriesActive = segment.equals(categories.getHref());
+        boolean introActive = segment.equals(intro.getHref());
         boolean menuActive = segment.equals(menu.getHref());
         boolean aboutActive = segment.equals(about.getHref());
         boolean contactsActive = segment.equals(contacts.getHref());
 
         reviews.setClassName(ACTIVE_ITEM_STYLE, reviewsActive);
         categories.setClassName(ACTIVE_ITEM_STYLE, categoriesActive);
+        intro.setClassName(ACTIVE_ITEM_STYLE,introActive);
         menu.setClassName(ACTIVE_ITEM_STYLE,menuActive);
         about.setClassName(ACTIVE_ITEM_STYLE,aboutActive);
         contacts.setClassName(ACTIVE_ITEM_STYLE,contactsActive);
