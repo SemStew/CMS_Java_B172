@@ -38,6 +38,7 @@
   * :bug: `:bug:` when fixing a bug
   * :fire: `:fire:` when removing something
   * :house: `:house:` when improving database related stuff
+  * :tada: `:tada:` when adding a new feature
 #### Code styles
 ##### Java
 * Variables start with lower case and if they have more words all words except the first one start with capital letter.
