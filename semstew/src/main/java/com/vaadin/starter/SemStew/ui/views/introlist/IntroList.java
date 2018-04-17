@@ -9,7 +9,7 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.starter.SemStew.backend.IntroConfig;
 import com.vaadin.starter.SemStew.ui.MainLayout;
 
-@Route(value = "intro", layout = MainLayout.class)
+@Route(value = "", layout = MainLayout.class)
 @PageTitle("Intro List")
 public class IntroList extends VerticalLayout {
     private final H2 header = new H2();

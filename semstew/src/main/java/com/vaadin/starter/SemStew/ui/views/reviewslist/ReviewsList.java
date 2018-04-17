@@ -48,7 +48,7 @@ import com.vaadin.starter.SemStew.ui.views.reviewslist.ReviewsList.ReviewsModel;
  *
  * Implemented using a simple template.
  */
-@Route(value = "", layout = MainLayout.class)
+@Route(value = "review", layout = MainLayout.class)
 @PageTitle("Review List")
 @Tag("reviews-list")
 @HtmlImport("frontend://src/views/reviewslist/reviews-list.html")
