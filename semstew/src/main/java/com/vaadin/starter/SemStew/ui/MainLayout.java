@@ -32,6 +32,7 @@ import com.vaadin.starter.SemStew.ui.views.aboutlist.AboutList;
 import com.vaadin.starter.SemStew.ui.views.contactsList.ContactsList;
 import com.vaadin.starter.SemStew.ui.views.introlist.IntroList;
 import com.vaadin.starter.SemStew.ui.views.menulist.MenuList;
+import com.vaadin.starter.SemStew.ui.views.reservationslist.ReservationsList;
 
 import java.util.Collection;
 
@@ -51,6 +52,7 @@ public class MainLayout extends Div
     private RouterLink menu;
     private RouterLink about;
     private RouterLink contacts;
+    private RouterLink reservations;
 
     public MainLayout() {
         H2 title = new H2("SemStew restaurant example");
@@ -92,7 +94,11 @@ public class MainLayout extends Div
         contacts.add(new Icon(VaadinIcons.BOOK),new Text("Contacts"));
         contacts.addClassName("main-layout__nav-item");
 
-        Div navigation = new Div(intro, menu, about, contacts);
+        reservations = new RouterLink(null,ReservationsList.class);
+        reservations.add(new Icon(VaadinIcons.NOTEBOOK),new Text("Reservations"));
+        reservations.addClassName("main-layout__nav-item");
+
+        Div navigation = new Div(intro, menu, about, contacts,reservations);
         navigation.addClassName("main-layout__nav");
 
         Div header = new Div(title, navigation);
@@ -114,6 +120,7 @@ public class MainLayout extends Div
         boolean menuActive = segment.equals(menu.getHref());
         boolean aboutActive = segment.equals(about.getHref());
         boolean contactsActive = segment.equals(contacts.getHref());
+        boolean reservationsActive = segment.equals(contacts.getHref());
 
         //reviews.setClassName(ACTIVE_ITEM_STYLE, reviewsActive);
         /*categories.setClassName(ACTIVE_ITEM_STYLE, categoriesActive);*/
@@ -121,6 +128,7 @@ public class MainLayout extends Div
         menu.setClassName(ACTIVE_ITEM_STYLE,menuActive);
         about.setClassName(ACTIVE_ITEM_STYLE,aboutActive);
         contacts.setClassName(ACTIVE_ITEM_STYLE,contactsActive);
+        reservations.setClassName(ACTIVE_ITEM_STYLE,reservationsActive);
     }
 
     @Override
