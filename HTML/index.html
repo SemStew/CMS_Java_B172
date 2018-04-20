@@ -6,6 +6,7 @@
     <title>Admin - SemStew</title>
   	<link rel="shortcut icon" type="image/x-icon" href="graphic/shorcut_icon.ico" />
     <link rel="icon" type="image/png" href="graphic/shorcut_icon.png" sizes="32x32" />
+    <link type="text/css" rel="stylesheet" media="all" href="layout/layout-shared.css" />
     <link type="text/css" rel="stylesheet" media="all" href="layout/layout-login.css" />
 	</head>
   <body>
@@ -23,13 +24,21 @@
         <div class="content">
           <div class="form">
             <form action="" method="">
-              <div class="input">
-                <input type="text" name="username" value="" />
-                <input type="password" name="password" value="" />
+              <div class="wrapper">
+                <div class="input">
+                  <input type="text" name="username" value="" />
+                </div>
+                <div class="text">
+                  Uživatelské jméno:
+                </div>
               </div>
-              <div class="text">
-                <p>Uživatelské jméno:</p>
-                <p>Uživatelské&ensp;heslo:</p>  
+              <div class="wrapper">
+                <div class="input">
+                  <input type="password" name="password" value="" />
+                </div>
+                <div class="text">
+                  Uživatelské heslo: 
+                </div>
               </div>
               <button onclick="">Přihlásit</button> 
             </form>

@@ -1,19 +1,10 @@
 /* CSS Document 
-   special for login*/
+   special for registration*/
 
 button {
 	width: 100%;
 	font-family: Arial;
 	font-size: 0.9rem;
-}
-
-a {
-	text-decoration: none;
-	color: white;
-}
-
-a:hover {
-	color: #2d314b;
 }
 
 /* Desktops */
@@ -22,20 +13,21 @@ a:hover {
 		background-color: #0450fb;
 		border: 1px solid #2d314b;
 		box-shadow: 2px 2px 4px #2a2c5a;
-		width: 25%;
-		margin: 15% auto 0;
-		padding: 1.4rem 1.4rem 0.2rem;
-		text-align: center;
+		width: 33%;
+		margin: 2rem auto;
+		padding: 0.5rem;
 	}
 
 	div.content {
+		background-color: white;
+		border: 1px solid #2d314b;
 		margin: auto;
+		padding: 0.2rem;
 		width: auto;
 	}
 
 	div.form {
 		background-color: white;
-		border: 1px solid #2d314b;
 		padding: 0.5rem;
 		text-align: center;
 	}
@@ -45,7 +37,7 @@ a:hover {
 	}
 
 	div.text {
-		width: 45%;
+		width: 35%;
 		float: left;
 		text-align: right;
 		margin: 0.1rem;
@@ -53,7 +45,7 @@ a:hover {
 	}
 
 	div.input {
-		width: 52%;
+		width: 62%;
 		float: right;
 		margin: 0.1rem;
 		padding: 0.1rem 0.1rem 0.1rem 0.1rem;
