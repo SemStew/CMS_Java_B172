@@ -1,7 +1,7 @@
 /* CSS Document */
 html {
-	font-size: 1.2rem;
-	font-family: fantasy;
+	font-size: 1rem;
+	font-family: Arial;
 }
 
 div.container {
@@ -76,20 +76,35 @@ div.top-bar h1 {
 		background-color: white;
 		border: 1px solid #2d314b;
 		padding: 0.5rem;
+		text-align: center;
 	}
 
 	div.text {
 		width: 47%;
 		float: left;
 		text-align: right;
+		margin: 0.1rem;
 		padding: 0.1rem 0 0.1rem 0.1rem;
+		display: block;
+	}
+
+	div.text p {
+		margin: 0rem;
+		padding: 0.1rem;
 	}
 
 	div.input {
 		width: 47%;
 		float: right;
-		text-align: left;
-		padding: 0.1rem 0.1rem 0.1rem 0;
+		text-align: justify;
+		margin: 0.1rem;
+		padding: 0.1rem 0.1rem 0.1rem 0.1rem;
+		display: block;
+	}
+
+	div.input input {
+		margin: 0.1rem 0;
+		width: 97%;
 	}
 
 	div.foot {
@@ -106,8 +121,8 @@ div.top-bar h1 {
 	}
 
 	button {
-		width: 98%;
-		font-family: fantasy;
+		width: 100%;
+		font-family: Arial;
 		font-size: 0.9rem;
 	}
 
