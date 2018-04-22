@@ -33,31 +33,16 @@ import com.vaadin.starter.SemStew.ui.views.contactsList.ContactsList;
 import com.vaadin.starter.SemStew.ui.views.introlist.IntroList;
 import com.vaadin.starter.SemStew.ui.views.menulist.MenuList;
 import com.vaadin.starter.SemStew.ui.views.reservationslist.ReservationsList;
+import com.vaadin.flow.component.textfield.TextField;
 
 import java.util.Collection;
 
-/**
- * The main layout contains the header with the navigation buttons, and the
- * child views below that.
- */
 @HtmlImport("frontend://styles/shared-styles.html")
 @Viewport("width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes")
 public class MainLayout extends Div
-        implements RouterLayout, AfterNavigationObserver, PageConfigurator {
-
-    private static final String ACTIVE_ITEM_STYLE = "main-layout__nav-item--selected";
-    //private RouterLink categories;
-    //private RouterLink reviews;
-    private RouterLink intro;
-    private RouterLink menu;
-    private RouterLink about;
-    private RouterLink contacts;
-    private RouterLink reservations;
+        implements RouterLayout, PageConfigurator {
 
     public MainLayout() {
-        H2 title = new H2("SemStew restaurant example");
-        title.addClassName("main-layout__title");
-
         Image image = new Image();
         image.setSrc("https://scontent-frt3-2.xx.fbcdn.net/v/t35.0-12/s2048x2048/29680738_2052341935036421_876125089_o.png?_nc_cat=0&oh=72dbec5b54c6fb1e576570ecfe3c14aa&oe=5AD6807A");
         image.addClassName("main-layout__picture");
@@ -68,67 +53,21 @@ public class MainLayout extends Div
         languages.addClassName("main-layout__combo");
 
         HorizontalLayout top = new HorizontalLayout();
+        HorizontalLayout bottom = new HorizontalLayout();
         top.addClassName("main-layout__top");
+        bottom.addClassName("main-layout__bottom");
 
-        /*reviews = new RouterLink(null, ReviewsList.class);
-        reviews.add(new Icon(VaadinIcons.LIST), new Text("Reviews"));
-        reviews.addClassName("main-layout__nav-item");*/
+        Div foot = new Div ();
+        foot.addClassName("foot");
 
-        /*categories = new RouterLink(null, CategoriesList.class);
-        categories.add(new Icon(VaadinIcons.ARCHIVES), new Text("Categories"));
-        categories.addClassName("main-layout__nav-item");*/
+        TextField foot__text = new TextField("Design and developed by DreamTeam © SemStew CMS");
+        foot.add(foot__text);
 
-        intro = new RouterLink(null,IntroList.class);
-        intro.add(new Icon(VaadinIcons.BULLETS),new Text("Intro"));
-        intro.addClassName("main-layout__nav-item");
-
-        menu = new RouterLink(null,MenuList.class);
-        menu.add(new Icon(VaadinIcons.CROSS_CUTLERY), new Text("Menu"));
-        menu.addClassName("main-layout__nav-item");
-
-        about = new RouterLink(null, AboutList.class);
-        about.add(new Icon(VaadinIcons.INFO_CIRCLE),new Text("About us"));
-        about.addClassName("main-layout__nav-item");
-
-        contacts = new RouterLink(null,ContactsList.class);
-        contacts.add(new Icon(VaadinIcons.BOOK),new Text("Contacts"));
-        contacts.addClassName("main-layout__nav-item");
-
-        reservations = new RouterLink(null,ReservationsList.class);
-        reservations.add(new Icon(VaadinIcons.NOTEBOOK),new Text("Reservations"));
-        reservations.addClassName("main-layout__nav-item");
-
-        Div navigation = new Div(intro, menu, about, contacts,reservations);
-        navigation.addClassName("main-layout__nav");
-
-        Div header = new Div(title, navigation);
-        header.addClassName("main-layout__header");
         top.add(image,languages);
-        add(top, header);
+        bottom.add(foot);
+        add(top,bottom);
 
         addClassName("main-layout");
-    }
-
-    @Override
-    public void afterNavigation(AfterNavigationEvent event) {
-        // updating the active menu item based on if either of views is active
-        // (note that this is triggered even for the error view)
-        String segment = event.getLocation().getFirstSegment();
-        //boolean reviewsActive = segment.equals(reviews.getHref());
-        /*boolean categoriesActive = segment.equals(categories.getHref());*/
-        boolean introActive = segment.equals(intro.getHref());
-        boolean menuActive = segment.equals(menu.getHref());
-        boolean aboutActive = segment.equals(about.getHref());
-        boolean contactsActive = segment.equals(contacts.getHref());
-        boolean reservationsActive = segment.equals(contacts.getHref());
-
-        //reviews.setClassName(ACTIVE_ITEM_STYLE, reviewsActive);
-        /*categories.setClassName(ACTIVE_ITEM_STYLE, categoriesActive);*/
-        intro.setClassName(ACTIVE_ITEM_STYLE,introActive);
-        menu.setClassName(ACTIVE_ITEM_STYLE,menuActive);
-        about.setClassName(ACTIVE_ITEM_STYLE,aboutActive);
-        contacts.setClassName(ACTIVE_ITEM_STYLE,contactsActive);
-        reservations.setClassName(ACTIVE_ITEM_STYLE,reservationsActive);
     }
 
     @Override
