@@ -2,14 +2,11 @@ package com.vaadin.starter.SemStew.ui.views.introlist;
 
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.grid.Grid;
-import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.starter.SemStew.backend.IntroConfig;
 import com.vaadin.starter.SemStew.ui.MainLayout;
-
-import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.html.Div;
@@ -22,11 +19,15 @@ import com.vaadin.flow.component.page.Viewport;
 import com.vaadin.flow.router.*;
 import com.vaadin.flow.server.InitialPageSettings;
 import com.vaadin.flow.server.PageConfigurator;
-import com.vaadin.starter.SemStew.ui.views.aboutlist.AboutList;
-import com.vaadin.starter.SemStew.ui.views.contactsList.ContactsList;
+import com.vaadin.starter.SemStew.ui.views.appearancelist.AppearanceList;
+import com.vaadin.starter.SemStew.ui.views.articlelist.ArticleList;
+import com.vaadin.starter.SemStew.ui.views.gallerylist.GalleryList;
 import com.vaadin.starter.SemStew.ui.views.introlist.IntroList;
 import com.vaadin.starter.SemStew.ui.views.menulist.MenuList;
+import com.vaadin.starter.SemStew.ui.views.previewlist.PreviewList;
 import com.vaadin.starter.SemStew.ui.views.reservationslist.ReservationsList;
+import com.vaadin.starter.SemStew.ui.views.settingslist.SettingsList;
+import com.vaadin.starter.SemStew.ui.views.statisticslist.StatisticsList;
 
 import java.util.Collection;
 
@@ -36,13 +37,15 @@ public class IntroList extends VerticalLayout
     implements AfterNavigationObserver {
 
     private static final String ACTIVE_ITEM_STYLE = "main-layout__nav-item--selected";
-    //private RouterLink categories;
-    //private RouterLink reviews;
-    private RouterLink intro;
-    private RouterLink menu;
-    private RouterLink about;
-    private RouterLink contacts;
+    private RouterLink home;
+    private RouterLink preview;
+    private RouterLink dishes;
+    private RouterLink articles;
+    private RouterLink gallery;
     private RouterLink reservations;
+    private RouterLink statistics;
+    private RouterLink appearance;
+    private RouterLink settings;
 
     private final H2 header = new H2();
     private final Grid<IntroConfig> actualities = new Grid<>();
@@ -80,35 +83,43 @@ public class IntroList extends VerticalLayout
         Div navigation = new Div(title);
         navigation.addClassName("nav");
 
-        /*reviews = new RouterLink(null, ReviewsList.class);
-        reviews.add(new Icon(VaadinIcons.LIST), new Text("Reviews"));
-        reviews.addClassName("main-layout__nav-item");*/
+        home = new RouterLink(null,IntroList.class);
+        home.add(new Icon(VaadinIcons.HOME), new Text("Home"));
+        home.addClassName("nav-item");
 
-        /*categories = new RouterLink(null, CategoriesList.class);
-        categories.add(new Icon(VaadinIcons.ARCHIVES), new Text("Categories"));
-        categories.addClassName("main-layout__nav-item");*/
+        preview = new RouterLink(null, PreviewList.class);
+        preview.add(new Icon(VaadinIcons.BROWSER), new Text("Preview"));
+        preview.addClassName("nav-item");
 
-        intro = new RouterLink(null, IntroList.class);
-        intro.add(new Icon(VaadinIcons.BULLETS), new Text("Intro"));
-        intro.addClassName("nav-item");
+        dishes = new RouterLink(null, MenuList.class);
+        dishes.add(new Icon(VaadinIcons.CROSS_CUTLERY), new Text("Dishes"));
+        dishes.addClassName("nav-item");
 
-        menu = new RouterLink(null, MenuList.class);
-        menu.add(new Icon(VaadinIcons.CROSS_CUTLERY), new Text("Menu"));
-        menu.addClassName("nav-item");
+        articles = new RouterLink(null, ArticleList.class);
+        articles.add(new Icon(VaadinIcons.PAPERCLIP), new Text("Articles"));
+        articles.addClassName("nav-item");
 
-        about = new RouterLink(null, AboutList.class);
-        about.add(new Icon(VaadinIcons.INFO_CIRCLE), new Text("About us"));
-        about.addClassName("nav-item");
-
-        contacts = new RouterLink(null, ContactsList.class);
-        contacts.add(new Icon(VaadinIcons.BOOK), new Text("Contacts"));
-        contacts.addClassName("nav-item");
+        gallery = new RouterLink(null, GalleryList.class);
+        gallery.add(new Icon(VaadinIcons.PICTURE), new Text("Gallery"));
+        gallery.addClassName("nav-item");
 
         reservations = new RouterLink(null, ReservationsList.class);
-        reservations.add(new Icon(VaadinIcons.NOTEBOOK), new Text("Reservations"));
+        reservations.add(new Icon(VaadinIcons.NOTEBOOK), new Text("Reservations & Orders"));
         reservations.addClassName("nav-item");
 
-        navigation.add(intro, menu, about, contacts, reservations);
+        statistics = new RouterLink(null, StatisticsList.class);
+        statistics.add(new Icon(VaadinIcons.SPLINE_AREA_CHART), new Text("Statistics"));
+        statistics.addClassName("nav-item");
+
+        appearance = new RouterLink(null, AppearanceList.class);
+        appearance.add(new Icon(VaadinIcons.VIEWPORT), new Text("Appearance"));
+        appearance.addClassName("nav-item");
+
+        settings = new RouterLink(null, SettingsList.class);
+        settings.add(new Icon(VaadinIcons.TOOLS), new Text("Settings"));
+        settings.addClassName("nav-item");
+
+        navigation.add(home, preview, dishes, articles, gallery, reservations, statistics, appearance, settings);
 
         add(navigation);
     }
@@ -130,21 +141,26 @@ public class IntroList extends VerticalLayout
     public void afterNavigation(AfterNavigationEvent event) {
         // updating the active menu item based on if either of views is active
         // (note that this is triggered even for the error view)
-        String segment = event.getLocation().getFirstSegment();
-        //boolean reviewsActive = segment.equals(reviews.getHref());
-        /*boolean categoriesActive = segment.equals(categories.getHref());*/
-        boolean introActive = segment.equals(intro.getHref());
-        boolean menuActive = segment.equals(menu.getHref());
-        boolean aboutActive = segment.equals(about.getHref());
-        boolean contactsActive = segment.equals(contacts.getHref());
-        boolean reservationsActive = segment.equals(contacts.getHref());
 
-        //reviews.setClassName(ACTIVE_ITEM_STYLE, reviewsActive);
-        /*categories.setClassName(ACTIVE_ITEM_STYLE, categoriesActive);*/
-        intro.setClassName(ACTIVE_ITEM_STYLE, introActive);
-        menu.setClassName(ACTIVE_ITEM_STYLE, menuActive);
-        about.setClassName(ACTIVE_ITEM_STYLE, aboutActive);
-        contacts.setClassName(ACTIVE_ITEM_STYLE, contactsActive);
+        String segment = event.getLocation().getFirstSegment();
+        boolean homeActive = segment.equals(home.getHref());
+        boolean previewActive = segment.equals(preview.getHref());
+        boolean dishesActive = segment.equals(dishes.getHref());
+        boolean articlesActive = segment.equals(articles.getHref());
+        boolean galleryActive = segment.equals(gallery.getHref());
+        boolean reservationsActive = segment.equals(reservations.getHref());
+        boolean statisticsActive = segment.equals(statistics.getHref());
+        boolean appearanceActive = segment.equals(appearance.getHref());
+        boolean settingsActive = segment.equals(settings.getHref());
+
+        home.setClassName(ACTIVE_ITEM_STYLE, homeActive);
+        preview.setClassName(ACTIVE_ITEM_STYLE, previewActive);
+        dishes.setClassName(ACTIVE_ITEM_STYLE, dishesActive);
+        articles.setClassName(ACTIVE_ITEM_STYLE, articlesActive);
+        gallery.setClassName(ACTIVE_ITEM_STYLE, galleryActive);
         reservations.setClassName(ACTIVE_ITEM_STYLE, reservationsActive);
+        statistics.setClassName(ACTIVE_ITEM_STYLE, statisticsActive);
+        appearance.setClassName(ACTIVE_ITEM_STYLE, appearanceActive);
+        settings.setClassName(ACTIVE_ITEM_STYLE, settingsActive);
     }
 }

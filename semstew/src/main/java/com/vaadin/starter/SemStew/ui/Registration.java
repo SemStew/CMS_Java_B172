@@ -42,26 +42,11 @@ import java.util.Collection;
 
 @HtmlImport("frontend://styles/shared-styles.html")
 @Viewport("width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes")
-public class MainLayout extends Div
+public class Registration extends Div
         implements RouterLayout, PageConfigurator {
 
-    public MainLayout() {
-        Image image = new Image();
-        image.setSrc("https://scontent-frt3-2.xx.fbcdn.net/v/t35.0-12/s2048x2048/29680738_2052341935036421_876125089_o.png?_nc_cat=0&oh=72dbec5b54c6fb1e576570ecfe3c14aa&oe=5AD6807A");
-        image.addClassName("main-layout__picture");
+    public Registration() {
 
-        ComboBox<String> languages = new ComboBox<>("Languages");
-        languages.setItems("Czech","English");
-        languages.setValue("English");
-        languages.addClassName("main-layout__combo");
-
-        HorizontalLayout top = new HorizontalLayout();
-        top.addClassName("main-layout__top");
-
-        top.add(image,languages);
-        add(top);
-
-        addClassName("main-layout");
     }
 
     @Override

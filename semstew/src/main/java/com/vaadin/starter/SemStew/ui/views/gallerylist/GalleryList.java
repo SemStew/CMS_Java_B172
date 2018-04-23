@@ -1,4 +1,4 @@
-package com.vaadin.starter.SemStew.ui.views.menulist;
+package com.vaadin.starter.SemStew.ui.views.gallerylist;
 
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.grid.Grid;
@@ -31,9 +31,9 @@ import com.vaadin.starter.SemStew.ui.views.statisticslist.StatisticsList;
 
 import java.util.Collection;
 
-@Route(value = "menu", layout = MainLayout.class)
-@PageTitle("Menu List")
-public class MenuList extends VerticalLayout
+@Route(value = "gallery", layout = MainLayout.class)
+@PageTitle("Gallery List")
+public class GalleryList extends VerticalLayout
     implements AfterNavigationObserver {
 
     private static final String ACTIVE_ITEM_STYLE = "main-layout__nav-item--selected";
@@ -50,7 +50,7 @@ public class MenuList extends VerticalLayout
     private final H2 header = new H2();
     private final Grid<IntroConfig> actualities = new Grid<>();
 
-    public MenuList() {
+    public GalleryList() {
         init();
         addContent();
         addMenu();
@@ -58,7 +58,7 @@ public class MenuList extends VerticalLayout
     }
 
     private void init() {
-        addClassName("menu-list");
+        addClassName("gallery-list");
         setDefaultHorizontalComponentAlignment(Alignment.STRETCH);
     }
 
@@ -67,7 +67,7 @@ public class MenuList extends VerticalLayout
         content.setClassName("content");
         content.setAlignItems(Alignment.STRETCH);
 
-        header.setText("Menu");
+        header.setText("Gallery");
 
         actualities.setSelectionMode(Grid.SelectionMode.NONE);
 
