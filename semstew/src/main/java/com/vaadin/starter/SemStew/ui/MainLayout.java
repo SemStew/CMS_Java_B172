@@ -33,7 +33,6 @@ import com.vaadin.starter.SemStew.ui.views.contactsList.ContactsList;
 import com.vaadin.starter.SemStew.ui.views.introlist.IntroList;
 import com.vaadin.starter.SemStew.ui.views.menulist.MenuList;
 import com.vaadin.starter.SemStew.ui.views.reservationslist.ReservationsList;
-import com.vaadin.flow.component.textfield.TextField;
 
 import java.util.Collection;
 
@@ -53,19 +52,10 @@ public class MainLayout extends Div
         languages.addClassName("main-layout__combo");
 
         HorizontalLayout top = new HorizontalLayout();
-        HorizontalLayout bottom = new HorizontalLayout();
         top.addClassName("main-layout__top");
-        bottom.addClassName("main-layout__bottom");
-
-        Div foot = new Div ();
-        foot.addClassName("foot");
-
-        TextField foot__text = new TextField("Design and developed by DreamTeam © SemStew CMS");
-        foot.add(foot__text);
 
         top.add(image,languages);
-        bottom.add(foot);
-        add(top,bottom);
+        add(top);
 
         addClassName("main-layout");
     }

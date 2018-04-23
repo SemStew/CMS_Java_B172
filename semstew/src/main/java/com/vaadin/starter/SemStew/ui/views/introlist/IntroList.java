@@ -51,6 +51,7 @@ public class IntroList extends VerticalLayout
         init();
         addContent();
         addMenu();
+        addFoot();
     }
 
     private void init() {
@@ -110,6 +111,19 @@ public class IntroList extends VerticalLayout
         navigation.add(intro, menu, about, contacts, reservations);
 
         add(navigation);
+    }
+
+    private void addFoot () {
+        HorizontalLayout bottom = new HorizontalLayout();
+        bottom.addClassName("main-layout__bottom");
+        Div foot = new Div ();
+        foot.addClassName("foot");
+
+        Text foot__text = new Text("Design and developed by DreamTeam © SemStew CMS");
+        foot.add(foot__text);
+        bottom.add(foot);
+
+        add(bottom);
     }
 
     @Override
