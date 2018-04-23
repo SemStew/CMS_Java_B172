@@ -1,4 +1,4 @@
-package com.vaadin.starter.SemStew.ui.views.reservationslist;
+package com.vaadin.starter.SemStew.ui.views.orderslist;
 
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.grid.Grid;
@@ -28,13 +28,12 @@ import com.vaadin.starter.SemStew.ui.views.previewlist.PreviewList;
 import com.vaadin.starter.SemStew.ui.views.reservationslist.ReservationsList;
 import com.vaadin.starter.SemStew.ui.views.settingslist.SettingsList;
 import com.vaadin.starter.SemStew.ui.views.statisticslist.StatisticsList;
-import com.vaadin.starter.SemStew.ui.views.orderslist.OrdersList;
 
 import java.util.Collection;
 
-@Route(value = "admin/reservations", layout = MainLayout.class)
-@PageTitle("Reservations List")
-public class ReservationsList extends VerticalLayout
+@Route(value = "admin/orders", layout = MainLayout.class)
+@PageTitle("Orders List")
+public class OrdersList extends VerticalLayout
     implements AfterNavigationObserver {
 
     private static final String ACTIVE_ITEM_STYLE = "main-layout__nav-item--selected";
@@ -52,7 +51,7 @@ public class ReservationsList extends VerticalLayout
     private final H2 header = new H2();
     private final Grid<IntroConfig> actualities = new Grid<>();
 
-    public ReservationsList() {
+    public OrdersList() {
         init();
         addContent();
         addMenu();
@@ -60,7 +59,7 @@ public class ReservationsList extends VerticalLayout
     }
 
     private void init() {
-        addClassName("reservations-list");
+        addClassName("orders-list");
         setDefaultHorizontalComponentAlignment(Alignment.STRETCH);
     }
 
@@ -69,7 +68,7 @@ public class ReservationsList extends VerticalLayout
         content.setClassName("content");
         content.setAlignItems(Alignment.STRETCH);
 
-        header.setText("Reservations");
+        header.setText("Orders");
 
         actualities.setSelectionMode(Grid.SelectionMode.NONE);
 

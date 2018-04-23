@@ -31,12 +31,13 @@ import com.vaadin.flow.server.PageConfigurator;
 import com.vaadin.starter.SemStew.ui.views.appearancelist.AppearanceList;
 import com.vaadin.starter.SemStew.ui.views.articlelist.ArticleList;
 import com.vaadin.starter.SemStew.ui.views.gallerylist.GalleryList;
-import com.vaadin.starter.SemStew.ui.views.introlist.IntroList;
+import com.vaadin.starter.SemStew.ui.views.branchlist.BranchList;
 import com.vaadin.starter.SemStew.ui.views.menulist.MenuList;
 import com.vaadin.starter.SemStew.ui.views.previewlist.PreviewList;
 import com.vaadin.starter.SemStew.ui.views.reservationslist.ReservationsList;
 import com.vaadin.starter.SemStew.ui.views.settingslist.SettingsList;
 import com.vaadin.starter.SemStew.ui.views.statisticslist.StatisticsList;
+import com.vaadin.starter.SemStew.ui.views.orderslist.OrdersList;
 
 import java.util.Collection;
 

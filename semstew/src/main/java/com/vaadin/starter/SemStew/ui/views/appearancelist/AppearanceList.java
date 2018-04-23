@@ -22,27 +22,29 @@ import com.vaadin.flow.server.PageConfigurator;
 import com.vaadin.starter.SemStew.ui.views.appearancelist.AppearanceList;
 import com.vaadin.starter.SemStew.ui.views.articlelist.ArticleList;
 import com.vaadin.starter.SemStew.ui.views.gallerylist.GalleryList;
-import com.vaadin.starter.SemStew.ui.views.introlist.IntroList;
+import com.vaadin.starter.SemStew.ui.views.branchlist.BranchList;
 import com.vaadin.starter.SemStew.ui.views.menulist.MenuList;
 import com.vaadin.starter.SemStew.ui.views.previewlist.PreviewList;
 import com.vaadin.starter.SemStew.ui.views.reservationslist.ReservationsList;
 import com.vaadin.starter.SemStew.ui.views.settingslist.SettingsList;
 import com.vaadin.starter.SemStew.ui.views.statisticslist.StatisticsList;
+import com.vaadin.starter.SemStew.ui.views.orderslist.OrdersList;
 
 import java.util.Collection;
 
-@Route(value = "appearance", layout = MainLayout.class)
+@Route(value = "admin/appearance", layout = MainLayout.class)
 @PageTitle("Appearance List")
 public class AppearanceList extends VerticalLayout
     implements AfterNavigationObserver {
 
     private static final String ACTIVE_ITEM_STYLE = "main-layout__nav-item--selected";
-    private RouterLink home;
+    private RouterLink branch;
     private RouterLink preview;
     private RouterLink dishes;
     private RouterLink articles;
     private RouterLink gallery;
     private RouterLink reservations;
+    private RouterLink orders;
     private RouterLink statistics;
     private RouterLink appearance;
     private RouterLink settings;
@@ -83,9 +85,9 @@ public class AppearanceList extends VerticalLayout
         Div navigation = new Div(title);
         navigation.addClassName("nav");
 
-        home = new RouterLink(null,IntroList.class);
-        home.add(new Icon(VaadinIcons.HOME), new Text("Home"));
-        home.addClassName("nav-item");
+        branch = new RouterLink(null,BranchList.class);
+        branch.add(new Icon(VaadinIcons.HOME), new Text("Branch"));
+        branch.addClassName("nav-item");
 
         preview = new RouterLink(null, PreviewList.class);
         preview.add(new Icon(VaadinIcons.BROWSER), new Text("Preview"));
@@ -104,8 +106,12 @@ public class AppearanceList extends VerticalLayout
         gallery.addClassName("nav-item");
 
         reservations = new RouterLink(null, ReservationsList.class);
-        reservations.add(new Icon(VaadinIcons.NOTEBOOK), new Text("Reservations & Orders"));
+        reservations.add(new Icon(VaadinIcons.NOTEBOOK), new Text("Reservations"));
         reservations.addClassName("nav-item");
+
+        orders = new RouterLink(null, OrdersList.class);
+        orders.add(new Icon(VaadinIcons.ALARM), new Text("Orders"));
+        orders.addClassName("nav-item");
 
         statistics = new RouterLink(null, StatisticsList.class);
         statistics.add(new Icon(VaadinIcons.SPLINE_AREA_CHART), new Text("Statistics"));
@@ -119,7 +125,7 @@ public class AppearanceList extends VerticalLayout
         settings.add(new Icon(VaadinIcons.TOOLS), new Text("Settings"));
         settings.addClassName("nav-item");
 
-        navigation.add(home, preview, dishes, articles, gallery, reservations, statistics, appearance, settings);
+        navigation.add(branch, preview, dishes, articles, gallery, orders, reservations, statistics, appearance, settings);
 
         add(navigation);
     }
@@ -143,22 +149,24 @@ public class AppearanceList extends VerticalLayout
         // (note that this is triggered even for the error view)
 
         String segment = event.getLocation().getFirstSegment();
-        boolean homeActive = segment.equals(home.getHref());
+        boolean branchActive = segment.equals(branch.getHref());
         boolean previewActive = segment.equals(preview.getHref());
         boolean dishesActive = segment.equals(dishes.getHref());
         boolean articlesActive = segment.equals(articles.getHref());
         boolean galleryActive = segment.equals(gallery.getHref());
         boolean reservationsActive = segment.equals(reservations.getHref());
+        boolean ordersActive = segment.equals(orders.getHref());
         boolean statisticsActive = segment.equals(statistics.getHref());
         boolean appearanceActive = segment.equals(appearance.getHref());
         boolean settingsActive = segment.equals(settings.getHref());
 
-        home.setClassName(ACTIVE_ITEM_STYLE, homeActive);
+        branch.setClassName(ACTIVE_ITEM_STYLE, branchActive);
         preview.setClassName(ACTIVE_ITEM_STYLE, previewActive);
         dishes.setClassName(ACTIVE_ITEM_STYLE, dishesActive);
         articles.setClassName(ACTIVE_ITEM_STYLE, articlesActive);
         gallery.setClassName(ACTIVE_ITEM_STYLE, galleryActive);
         reservations.setClassName(ACTIVE_ITEM_STYLE, reservationsActive);
+        orders.setClassName(ACTIVE_ITEM_STYLE, ordersActive);
         statistics.setClassName(ACTIVE_ITEM_STYLE, statisticsActive);
         appearance.setClassName(ACTIVE_ITEM_STYLE, appearanceActive);
         settings.setClassName(ACTIVE_ITEM_STYLE, settingsActive);
