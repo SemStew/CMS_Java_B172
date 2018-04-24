@@ -28,6 +28,7 @@ import com.vaadin.flow.component.page.Viewport;
 import com.vaadin.flow.router.*;
 import com.vaadin.flow.server.InitialPageSettings;
 import com.vaadin.flow.server.PageConfigurator;
+import com.vaadin.starter.SemStew.backend.PostgreSQLConnection;
 import com.vaadin.starter.SemStew.ui.views.appearancelist.AppearanceList;
 import com.vaadin.starter.SemStew.ui.views.articlelist.ArticleList;
 import com.vaadin.starter.SemStew.ui.views.gallerylist.GalleryList;
@@ -47,6 +48,7 @@ public class MainLayout extends Div
         implements RouterLayout, PageConfigurator {
 
     public MainLayout() {
+        PostgreSQLConnection postgre = new PostgreSQLConnection();
         Image image = new Image();
         image.setSrc("https://scontent-frt3-2.xx.fbcdn.net/v/t35.0-12/s2048x2048/29680738_2052341935036421_876125089_o.png?_nc_cat=0&oh=72dbec5b54c6fb1e576570ecfe3c14aa&oe=5AD6807A");
         image.addClassName("main-layout__picture");
