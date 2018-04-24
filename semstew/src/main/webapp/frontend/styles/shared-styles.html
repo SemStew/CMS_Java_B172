@@ -40,7 +40,7 @@
                 margin-right: 16px;
             }
             .view-container {
-                margin: 0 calc(-50vw + 50%);
+                margin: 5% calc(-50vw + 50%);
                 padding: 0 calc(50vw - 50% + 16px);
                 flex: auto;
             }
@@ -76,6 +76,31 @@
             line-height: 1;
             letter-spacing: -0.02em;
             font-weight: 500;
+        }
+
+        .main-layout__picture{
+            align-content: center;
+            margin: auto;
+            width: 80%;
+            height: 20%;
+            background-color: var(--lumo-base-color);
+        }
+
+        .main-layout__combo{
+            align-content: end;
+            margin-left: 20%;
+            margin-right: 0;
+            margin-bottom: 0;
+            margin-top: 0;
+        }
+
+        .main-layout__top{
+            margin: 0 calc(-50vw + 50%);
+            padding: 0 calc(50vw - 50% + 16px);
+            width: 100%;
+            height: 20%;
+            background-color: var(--lumo-base-color);
+            max-height: 195px;
         }
 
         .main-layout > * {

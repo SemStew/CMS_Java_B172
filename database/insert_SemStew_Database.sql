@@ -2,25 +2,34 @@
 INSERT INTO LANGUAGES(name) VALUES ('English');
 INSERT INTO LANGUAGES(name) VALUES ('Czech');
 
+--admnis
+INSERT INTO ADMINS(name, password) VALUES ('Dante', 'heslo123');
+
+--restaurant
+INSERT INTO RESTAURANT(id_admin, name, ico, image) VALUES (1, 'Dream Restaurant', 12345678, 'https://scontent-frt3-2.xx.fbcdn.net/v/t35.0-12/s2048x2048/29680738_2052341935036421_876125089_o.png?_nc_cat=0&oh=72dbec5b54c6fb1e576570ecfe3c14aa&oe=5AD6807A');
+
+--branches
+INSERT INTO BRANCH(id_restaurant, address, phone, description, opening_hours) VALUES (1, 'Thákurova 1516', '465123945', 'Cool poboèka', 'Zavøeno nonstop');
+
 --categories
-INSERT INTO CATEGORIES(is_MENU_ITEM) VALUES (true);
-INSERT INTO CATEGORIES(is_MENU_ITEM) VALUES (true);
-INSERT INTO CATEGORIES(is_MENU_ITEM) VALUES (true);
-INSERT INTO CATEGORIES(is_MENU_ITEM) VALUES (true);
-INSERT INTO CATEGORIES(is_MENU_ITEM) VALUES (true);
-INSERT INTO CATEGORIES(is_MENU_ITEM) VALUES (true);
-INSERT INTO CATEGORIES(is_MENU_ITEM) VALUES (true);
-INSERT INTO CATEGORIES(is_MENU_ITEM) VALUES (true);
-INSERT INTO CATEGORIES(is_MENU_ITEM) VALUES (true);
-INSERT INTO CATEGORIES(is_MENU_ITEM) VALUES (true);
-INSERT INTO CATEGORIES(is_MENU_ITEM) VALUES (true);
-INSERT INTO CATEGORIES(is_MENU_ITEM) VALUES (false);
-INSERT INTO CATEGORIES(is_MENU_ITEM) VALUES (false);
-INSERT INTO CATEGORIES(is_MENU_ITEM) VALUES (false);
-INSERT INTO CATEGORIES(is_MENU_ITEM) VALUES (false);
-INSERT INTO CATEGORIES(is_MENU_ITEM) VALUES (false);
-INSERT INTO CATEGORIES(is_MENU_ITEM) VALUES (false);
-INSERT INTO CATEGORIES(is_MENU_ITEM) VALUES (false);
+INSERT INTO CATEGORIES(is_food) VALUES (true);
+INSERT INTO CATEGORIES(is_food) VALUES (true);
+INSERT INTO CATEGORIES(is_food) VALUES (true);
+INSERT INTO CATEGORIES(is_food) VALUES (true);
+INSERT INTO CATEGORIES(is_food) VALUES (true);
+INSERT INTO CATEGORIES(is_food) VALUES (true);
+INSERT INTO CATEGORIES(is_food) VALUES (true);
+INSERT INTO CATEGORIES(is_food) VALUES (true);
+INSERT INTO CATEGORIES(is_food) VALUES (true);
+INSERT INTO CATEGORIES(is_food) VALUES (true);
+INSERT INTO CATEGORIES(is_food) VALUES (true);
+INSERT INTO CATEGORIES(is_food) VALUES (false);
+INSERT INTO CATEGORIES(is_food) VALUES (false);
+INSERT INTO CATEGORIES(is_food) VALUES (false);
+INSERT INTO CATEGORIES(is_food) VALUES (false);
+INSERT INTO CATEGORIES(is_food) VALUES (false);
+INSERT INTO CATEGORIES(is_food) VALUES (false);
+INSERT INTO CATEGORIES(is_food) VALUES (false);
 
 --categories in english
 INSERT INTO CATEGORIES_NAME(id_category, id_language, description) VALUES (1, 1, 'Starters');
@@ -195,8 +204,8 @@ INSERT INTO MENU_ITEM_ALLERGEN(id_menu_item, id_allergen) VALUES (13, 7);
 INSERT INTO MENU_ITEM_ALLERGEN(id_menu_item, id_allergen) VALUES (14, 7);
 
 --rezervations
-INSERT INTO REZERVATION(r_date, time_from, n_table) VALUES ('2018-4-17', '16:00', 1);
-INSERT INTO REZERVATION(r_date, time_from, n_table) VALUES ('2018-4-19', '14:30', 3);
+INSERT INTO REZERVATION(id_branch, r_date, time_from, person, n_table) VALUES (1, '2018-4-17', '16:00', 'Dante Frajer', 1);
+INSERT INTO REZERVATION(id_branch, r_date, time_from, person, n_table) VALUES (1, '2018-4-19', '14:30', 'Dante Nefrajer', 3);
 
 --rezervation site
 INSERT INTO REZERVATION_CONFIG(id_language, header, table_number, time_from_desc) VALUES (1, 'Rezervations', 'Table number', 'Time');
@@ -209,22 +218,22 @@ INSERT INTO PERFORMANCE(name) VALUES('Obsluha');
 INSERT INTO PERFORMANCE(name) VALUES('Úèetní');
 
 --employees
-INSERT INTO EMPLOYEE(perform, name, surname, phone, mail) VALUES (1, 'Dante', 'Smith', NULL, NULL);
-INSERT INTO EMPLOYEE(perform, name, surname, phone, mail) VALUES (3, 'Angellica', 'Smith', NULL, NULL);
+INSERT INTO EMPLOYEE(perform, id_branch, name, surname, phone, mail) VALUES (1, 1, 'Dante', 'Smith', NULL, NULL);
+INSERT INTO EMPLOYEE(perform, id_branch, name, surname, phone, mail) VALUES (3, 1, 'Angellica', 'Smith', NULL, NULL);
 
 --orders
-INSERT INTO ORDERS(o_date, address) VALUES ('2018-4-17', 'Petøín 1284');
+INSERT INTO ORDERS(id_branch, o_date, person, address) VALUES (1, '2018-4-17', 'Some random guy', 'Petøín 1284');
 
 --order items
 INSERT INTO ORDER_ITEM(id_menu_item, id_order) VALUES (9, 1);
 INSERT INTO ORDER_ITEM(id_menu_item, id_order) VALUES (13, 1);
 
 --news
-INSERT INTO NEWS(n_date) VALUES ('2018-4-17');
+INSERT INTO NEWS(id_restaurant, n_date) VALUES (1, '2018-4-17');
 
 --news description
-INSERT INTO NEWS_NAME(id_news, id_language, description) VALUES (1, 1, 'Free drinks for people born in 17.4.');
-INSERT INTO NEWS_NAME(id_news, id_language, description) VALUES (1, 2, 'Nápoj zdarma pro lidi narozené 17.4.');
+INSERT INTO NEWS_NAME(id_news, id_language, header, description) VALUES (1, 1, 'Birthday action', 'Free drinks for people born in 17.4.');
+INSERT INTO NEWS_NAME(id_news, id_language, header, description) VALUES (1, 2, 'Narozenninová akce', 'Nápoj zdarma pro lidi narozené 17.4.');
 
 --main picture
 INSERT INTO GENERAL_CONFIG(url_main_image) VALUES ('https://scontent-frt3-2.xx.fbcdn.net/v/t35.0-12/s2048x2048/29680738_2052341935036421_876125089_o.png?_nc_cat=0&oh=72dbec5b54c6fb1e576570ecfe3c14aa&oe=5AD6807A');
@@ -238,8 +247,8 @@ INSERT INTO MENUS_CONFIG(id_language, header) VALUES (1, 'Menu');
 INSERT INTO MENUS_CONFIG(id_language, header) VALUES (2, 'Jídelníèek');
 
 --menus
-INSERT INTO MENUS(url_image) VALUES ('https://weneedfun.com/wp-content/uploads/2015/10/Delicious-Food-Photos-28.jpg');
-INSERT INTO MENUS(url_image) VALUES ('http://www.chezcora.com/public_upload/images/plat/Dejeuners/Brreuvages/thumbnails/Montage-smoothie_1000x1083-scale_max-600x400.png');
+INSERT INTO MENUS(id_branch, url_image) VALUES (1, 'https://weneedfun.com/wp-content/uploads/2015/10/Delicious-Food-Photos-28.jpg');
+INSERT INTO MENUS(id_branch, url_image) VALUES (1, 'http://www.chezcora.com/public_upload/images/plat/Dejeuners/Brreuvages/thumbnails/Montage-smoothie_1000x1083-scale_max-600x400.png');
 
 --menu items
 INSERT INTO MENUS_NAME(id_menu, id_language, description) VALUES (1, 1, 'Food');

@@ -16,23 +16,25 @@
 package com.vaadin.starter.SemStew.ui;
 
 import com.vaadin.flow.component.Text;
+import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcons;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.page.Viewport;
-import com.vaadin.flow.router.AfterNavigationEvent;
-import com.vaadin.flow.router.AfterNavigationObserver;
-import com.vaadin.flow.router.RouterLayout;
-import com.vaadin.flow.router.RouterLink;
+import com.vaadin.flow.router.*;
 import com.vaadin.flow.server.InitialPageSettings;
 import com.vaadin.flow.server.PageConfigurator;
 import com.vaadin.starter.SemStew.ui.views.aboutlist.AboutList;
-import com.vaadin.starter.SemStew.ui.views.categorieslist.CategoriesList;
 import com.vaadin.starter.SemStew.ui.views.contactsList.ContactsList;
+import com.vaadin.starter.SemStew.ui.views.introlist.IntroList;
 import com.vaadin.starter.SemStew.ui.views.menulist.MenuList;
-import com.vaadin.starter.SemStew.ui.views.reviewslist.ReviewsList;
+import com.vaadin.starter.SemStew.ui.views.reservationslist.ReservationsList;
+
+import java.util.Collection;
 
 /**
  * The main layout contains the header with the navigation buttons, and the
@@ -44,23 +46,41 @@ public class MainLayout extends Div
         implements RouterLayout, AfterNavigationObserver, PageConfigurator {
 
     private static final String ACTIVE_ITEM_STYLE = "main-layout__nav-item--selected";
-    private RouterLink categories;
-    private RouterLink reviews;
+    //private RouterLink categories;
+    //private RouterLink reviews;
+    private RouterLink intro;
     private RouterLink menu;
     private RouterLink about;
     private RouterLink contacts;
+    private RouterLink reservations;
 
     public MainLayout() {
         H2 title = new H2("SemStew restaurant example");
         title.addClassName("main-layout__title");
 
-        reviews = new RouterLink(null, ReviewsList.class);
-        reviews.add(new Icon(VaadinIcons.LIST), new Text("Reviews"));
-        reviews.addClassName("main-layout__nav-item");
+        Image image = new Image();
+        image.setSrc("https://scontent-frt3-2.xx.fbcdn.net/v/t35.0-12/s2048x2048/29680738_2052341935036421_876125089_o.png?_nc_cat=0&oh=72dbec5b54c6fb1e576570ecfe3c14aa&oe=5AD6807A");
+        image.addClassName("main-layout__picture");
 
-        categories = new RouterLink(null, CategoriesList.class);
+        ComboBox<String> languages = new ComboBox<>("Languages");
+        languages.setItems("Czech","English");
+        languages.setValue("English");
+        languages.addClassName("main-layout__combo");
+
+        HorizontalLayout top = new HorizontalLayout();
+        top.addClassName("main-layout__top");
+
+        /*reviews = new RouterLink(null, ReviewsList.class);
+        reviews.add(new Icon(VaadinIcons.LIST), new Text("Reviews"));
+        reviews.addClassName("main-layout__nav-item");*/
+
+        /*categories = new RouterLink(null, CategoriesList.class);
         categories.add(new Icon(VaadinIcons.ARCHIVES), new Text("Categories"));
-        categories.addClassName("main-layout__nav-item");
+        categories.addClassName("main-layout__nav-item");*/
+
+        intro = new RouterLink(null,IntroList.class);
+        intro.add(new Icon(VaadinIcons.BULLETS),new Text("Intro"));
+        intro.addClassName("main-layout__nav-item");
 
         menu = new RouterLink(null,MenuList.class);
         menu.add(new Icon(VaadinIcons.CROSS_CUTLERY), new Text("Menu"));
@@ -74,12 +94,17 @@ public class MainLayout extends Div
         contacts.add(new Icon(VaadinIcons.BOOK),new Text("Contacts"));
         contacts.addClassName("main-layout__nav-item");
 
-        Div navigation = new Div(reviews, categories,menu,about,contacts);
+        reservations = new RouterLink(null,ReservationsList.class);
+        reservations.add(new Icon(VaadinIcons.NOTEBOOK),new Text("Reservations"));
+        reservations.addClassName("main-layout__nav-item");
+
+        Div navigation = new Div(intro, menu, about, contacts,reservations);
         navigation.addClassName("main-layout__nav");
 
         Div header = new Div(title, navigation);
         header.addClassName("main-layout__header");
-        add(header);
+        top.add(image,languages);
+        add(top, header);
 
         addClassName("main-layout");
     }
@@ -89,17 +114,21 @@ public class MainLayout extends Div
         // updating the active menu item based on if either of views is active
         // (note that this is triggered even for the error view)
         String segment = event.getLocation().getFirstSegment();
-        boolean reviewsActive = segment.equals(reviews.getHref());
-        boolean categoriesActive = segment.equals(categories.getHref());
+        //boolean reviewsActive = segment.equals(reviews.getHref());
+        /*boolean categoriesActive = segment.equals(categories.getHref());*/
+        boolean introActive = segment.equals(intro.getHref());
         boolean menuActive = segment.equals(menu.getHref());
         boolean aboutActive = segment.equals(about.getHref());
         boolean contactsActive = segment.equals(contacts.getHref());
+        boolean reservationsActive = segment.equals(contacts.getHref());
 
-        reviews.setClassName(ACTIVE_ITEM_STYLE, reviewsActive);
-        categories.setClassName(ACTIVE_ITEM_STYLE, categoriesActive);
+        //reviews.setClassName(ACTIVE_ITEM_STYLE, reviewsActive);
+        /*categories.setClassName(ACTIVE_ITEM_STYLE, categoriesActive);*/
+        intro.setClassName(ACTIVE_ITEM_STYLE,introActive);
         menu.setClassName(ACTIVE_ITEM_STYLE,menuActive);
         about.setClassName(ACTIVE_ITEM_STYLE,aboutActive);
         contacts.setClassName(ACTIVE_ITEM_STYLE,contactsActive);
+        reservations.setClassName(ACTIVE_ITEM_STYLE,reservationsActive);
     }
 
     @Override

@@ -1,91 +1,67 @@
 package com.vaadin.starter.SemStew.backend;
 
 
-import java.io.Serializable;
+public class MenuItem {
 
-public class MenuItem implements Serializable {
-    private Long id = null;
-    private int price;
-    private String name;
-    private String description;
-    private Category category;
+  private long idMenuItem;
+  private long price;
+  private String imageName;
+  private String amount;
+  private long idUnit;
+  private long idCategory;
 
-    public MenuItem()
-    {
-        this.reset();
-    }
 
-    public MenuItem(int price, String name, String description, Category category)
-    {
-        this.price = price;
-        this.name = name;
-        this.description = description;
-        this.category = new Category(category);
-    }
+  public long getIdMenuItem() {
+    return idMenuItem;
+  }
 
-    public MenuItem(MenuItem other)
-    {
-        this(other.price,other.name,other.description,other.category);
-        this.id = other.id;
-    }
+  public void setIdMenuItem(long idMenuItem) {
+    this.idMenuItem = idMenuItem;
+  }
 
-    private void reset()
-    {
-        this.id = null;
-        this.price = 0;
-        this.name = "";
-        this.description = "";
-        this.category = null;
-    }
 
-    public Long getId() {
-        return id;
-    }
+  public long getPrice() {
+    return price;
+  }
 
-    public int getPrice() {
-        return price;
-    }
+  public void setPrice(long price) {
+    this.price = price;
+  }
 
-    public String getName() {
-        return name;
-    }
 
-    public String getDescription() {
-        return description;
-    }
+  public String getImageName() {
+    return imageName;
+  }
 
-    public Category getCategory() {
-        return category;
-    }
+  public void setImageName(String imageName) {
+    this.imageName = imageName;
+  }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
-    public void setPrice(int price) {
-        this.price = price;
-    }
+  public String getAmount() {
+    return amount;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public void setAmount(String amount) {
+    this.amount = amount;
+  }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
-    public void setCategory(Category category) {
-        this.category = category;
-    }
+  public long getIdUnit() {
+    return idUnit;
+  }
 
-    @Override
-    public String toString() {
-        return "MenuItem{" +
-                "id=" + id +
-                ", price=" + price +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", category=" + category +
-                '}';
-    }
+  public void setIdUnit(long idUnit) {
+    this.idUnit = idUnit;
+  }
+
+
+  public long getIdCategory() {
+    return idCategory;
+  }
+
+  public void setIdCategory(long idCategory) {
+    this.idCategory = idCategory;
+  }
+
 }
