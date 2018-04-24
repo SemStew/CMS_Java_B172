@@ -1,4 +1,4 @@
-package com.vaadin.starter.SemStew.ui.views.reservationslist;
+package com.vaadin.starter.SemStew.ui.views.appearancelist;
 
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.grid.Grid;
@@ -32,10 +32,10 @@ import com.vaadin.starter.SemStew.ui.views.orderslist.OrdersList;
 
 import java.util.Collection;
 
-@Route(value = "admin/reservations", layout = MainLayout.class)
-@PageTitle("Reservations List")
-public class ReservationsList extends VerticalLayout
-        implements AfterNavigationObserver {
+@Route(value = "admin/appearance", layout = MainLayout.class)
+@PageTitle("Appearance List")
+public class AppearanceList extends VerticalLayout
+    implements AfterNavigationObserver {
 
     private static final String ACTIVE_ITEM_STYLE = "main-layout__nav-item--selected";
     private RouterLink branch;
@@ -52,7 +52,7 @@ public class ReservationsList extends VerticalLayout
     private final H2 header = new H2();
     private final Grid<IntroConfig> actualities = new Grid<>();
 
-    public ReservationsList() {
+    public AppearanceList() {
         init();
         addContent();
         addMenu();
@@ -60,7 +60,7 @@ public class ReservationsList extends VerticalLayout
     }
 
     private void init() {
-        addClassName("reservations-list");
+        addClassName("appearance-list");
         setDefaultHorizontalComponentAlignment(Alignment.STRETCH);
     }
 
@@ -69,7 +69,7 @@ public class ReservationsList extends VerticalLayout
         content.setClassName("content");
         content.setAlignItems(Alignment.STRETCH);
 
-        header.setText("Reservations");
+        header.setText("Appearance");
 
         actualities.setSelectionMode(Grid.SelectionMode.NONE);
 
@@ -125,7 +125,7 @@ public class ReservationsList extends VerticalLayout
         settings.add(new Icon(VaadinIcons.TOOLS), new Text("Settings"));
         settings.addClassName("nav-item");
 
-        navigation.add(branch, preview, dishes, articles, gallery, orders,reservations, statistics, appearance, settings);
+        navigation.add(branch, preview, dishes, articles, gallery, orders, reservations, statistics, appearance, settings);
 
         add(navigation);
     }
