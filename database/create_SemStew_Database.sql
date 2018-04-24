@@ -3,9 +3,32 @@ CREATE TABLE LANGUAGES (
   name varchar(32)
 );
 
+CREATE TABLE ADMINS(
+  id_admin serial PRIMARY KEY,
+  name varchar(128) NOT NULL,
+  password varchar(256)
+);
+
+CREATE TABLE RESTAURANT(
+  id_restaurant serial PRIMARY KEY,
+  id_admin integer NOT NULL REFERENCES ADMINS(id_admin),
+  name varchar(128) NOT NULL,
+  ico decimal,
+  image text
+);
+
+CREATE TABLE BRANCH(
+  id_branch serial PRIMARY KEY,
+  id_restaurant integer NOT NULL REFERENCES RESTAURANT(id_restaurant),
+  address varchar(256),
+  phone varchar(16),
+  description text,
+  opening_hours text  
+);
+
 CREATE TABLE CATEGORIES(
   id_category serial PRIMARY KEY,
-  is_MENU_ITEM boolean NOT NULL
+  is_food boolean NOT NULL
 );
 
 CREATE TABLE CATEGORIES_NAME(
@@ -51,8 +74,10 @@ CREATE TABLE MENU_ITEM_ALLERGEN(
 );
 
 CREATE TABLE REZERVATION(
+  id_branch integer NOT NULL REFERENCES BRANCH(id_branch),
   r_date date NOT NULL,
   time_from time NOT NULL,
+  person varchar(128) NOT NULL,
   n_table integer NOT NULL
 );
 
@@ -71,6 +96,7 @@ CREATE TABLE PERFORMANCE(
 CREATE TABLE EMPLOYEE(
   id_employee serial PRIMARY KEY,
   perform integer REFERENCES PERFORMANCE(id_performance) NOT NULL,
+  id_branch integer REFERENCES BRANCH(id_branch) NOT NULL,
   name varchar(64) NOT NULL,
   surname varchar(64) NOT NULL,
   phone varchar(16),
@@ -79,7 +105,9 @@ CREATE TABLE EMPLOYEE(
 
 CREATE TABLE ORDERS(
   id_order serial PRIMARY KEY,
+  id_branch integer NOT NULL REFERENCES BRANCH(id_branch),
   o_date date NOT NULL,
+  person varchar(128),
   address text NOT NULL
 );
 
@@ -90,12 +118,14 @@ CREATE TABLE ORDER_ITEM(
 
 CREATE TABLE NEWS(
   id_news serial PRIMARY KEY,
+  id_restaurant integer NOT NULL REFERENCES RESTAURANT(id_restaurant),
   n_date date NOT NULL  
 );
 
 CREATE TABLE NEWS_NAME(
   id_news integer REFERENCES NEWS(id_news) NOT NULL,
   id_language integer NOT NULL REFERENCES LANGUAGES(id_language) NOT NULL,
+  header varchar(128) NOT NULL,
   description text NOT NULL
 );
 
@@ -117,6 +147,7 @@ CREATE TABLE MENUS_CONFIG(
 
 CREATE TABLE MENUS(
   id_menu serial PRIMARY KEY,
+  id_branch integer NOT NULL REFERENCES BRANCH(id_branch),
   url_image text NOT NULL
 );
 

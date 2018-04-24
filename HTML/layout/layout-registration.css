@@ -1,0 +1,57 @@
+/* CSS Document 
+   special for registration*/
+
+button {
+	width: 100%;
+	font-family: Arial;
+	font-size: 0.9rem;
+}
+
+/* Desktops */
+@media only screen and (min-width: 768px) {
+	div.main {
+		background-color: #0450fb;
+		border: 1px solid #2d314b;
+		box-shadow: 2px 2px 4px #2a2c5a;
+		width: 33%;
+		margin: 2rem auto;
+		padding: 0.5rem;
+	}
+
+	div.content {
+		background-color: white;
+		border: 1px solid #2d314b;
+		margin: auto;
+		padding: 0.2rem;
+		width: auto;
+	}
+
+	div.form {
+		background-color: white;
+		padding: 0.5rem;
+		text-align: center;
+	}
+
+	div.wrapper {
+		display: block;
+	}
+
+	div.text {
+		width: 35%;
+		float: left;
+		text-align: right;
+		margin: 0.1rem;
+		padding: 0.1rem 0 0.1rem 0.1rem;
+	}
+
+	div.input {
+		width: 62%;
+		float: right;
+		margin: 0.1rem;
+		padding: 0.1rem 0.1rem 0.1rem 0.1rem;
+	}
+
+	div.input input {
+		width: 99%;
+	}
+}

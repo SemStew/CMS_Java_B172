@@ -35,7 +35,7 @@ import java.util.Collection;
 @Route(value = "admin/dishes", layout = MainLayout.class)
 @PageTitle("Dishes List")
 public class MenuList extends VerticalLayout
-    implements AfterNavigationObserver {
+        implements AfterNavigationObserver {
 
     private static final String ACTIVE_ITEM_STYLE = "main-layout__nav-item--selected";
     private RouterLink branch;

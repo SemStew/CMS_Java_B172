@@ -35,7 +35,7 @@ import java.util.Collection;
 @Route(value = "admin/reservations", layout = MainLayout.class)
 @PageTitle("Reservations List")
 public class ReservationsList extends VerticalLayout
-    implements AfterNavigationObserver {
+        implements AfterNavigationObserver {
 
     private static final String ACTIVE_ITEM_STYLE = "main-layout__nav-item--selected";
     private RouterLink branch;
