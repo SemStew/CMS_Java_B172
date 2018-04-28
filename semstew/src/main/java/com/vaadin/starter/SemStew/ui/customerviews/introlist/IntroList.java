@@ -1,4 +1,4 @@
-package com.vaadin.starter.SemStew.ui.views.introlist;
+package com.vaadin.starter.SemStew.ui.customerviews.introlist;
 
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.grid.Grid;
@@ -7,11 +7,12 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.starter.SemStew.backend.IntroConfig;
-import com.vaadin.starter.SemStew.ui.MainLayout;
+import com.vaadin.starter.SemStew.ui.CustomerLayout;
 
-@Route(value = "", layout = MainLayout.class)
+@Route(value = "", layout = CustomerLayout.class)
 @PageTitle("Intro List")
 public class IntroList extends VerticalLayout {
+    private final Text introText = new Text("");
     private final H2 header = new H2();
     private final Grid<IntroConfig> actualities = new Grid<>();
 
@@ -30,14 +31,15 @@ public class IntroList extends VerticalLayout {
     private void addContent()
     {
         VerticalLayout content = new VerticalLayout();
-        content.setClassName("view-container");
         content.setAlignItems(Alignment.STRETCH);
+
+        introText.setText("Temporary description");
 
         header.setText("Actualities");
 
         actualities.setSelectionMode(Grid.SelectionMode.NONE);
 
-        content.add(new Text("temporary description"),header,actualities);
+        content.add(introText, header, actualities);
         add(content);
     }
 }

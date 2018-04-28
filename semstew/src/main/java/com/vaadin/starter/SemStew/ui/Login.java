@@ -28,6 +28,7 @@ public class Login extends VerticalLayout {
     private void init()
     {
         addClassName("login");
+        setDefaultHorizontalComponentAlignment(Alignment.STRETCH);
     }
 
     private void addContent()

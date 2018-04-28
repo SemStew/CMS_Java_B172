@@ -40,6 +40,7 @@ public class Registration extends VerticalLayout {
     private void init()
     {
         addClassName("registration");
+        setDefaultHorizontalComponentAlignment(Alignment.STRETCH);
     }
 
     private void addContent()
