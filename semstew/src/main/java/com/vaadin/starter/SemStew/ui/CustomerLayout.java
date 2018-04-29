@@ -55,30 +55,39 @@ public class CustomerLayout extends Div
         body.setDefaultHorizontalComponentAlignment(FlexComponent.Alignment.STRETCH);
 
         HorizontalLayout nav = new HorizontalLayout();
-
+        nav.addClassName("navigation");
         name.setText("SemStew Restaurant");
-        name.addClassName("title");
+
+        Div names = new Div();
+        names.addClassName("title");
+        names.add(name);
 
         Div navigation = new Div();
+        navigation.addClassName("nav");
 
         intro = new RouterLink(null,IntroList.class);
-        intro.add(new Icon(VaadinIcons.GLOBE), new Text("Info"));
+        intro.add(new Icon(VaadinIcons.GLOBE), new Text("Home"));
+        intro.addClassName("nav-item");
 
         menus = new RouterLink(null, MenusList.class);
-        menus.add(new Icon(VaadinIcons.CROSS_CUTLERY), new Text("Menus"));
+        menus.add(new Icon(VaadinIcons.CROSS_CUTLERY), new Text("Menu"));
+        menus.addClassName("nav-item");
 
         contacts = new RouterLink(null, ContactsList.class);
         contacts.add(new Icon(VaadinIcons.PHONE), new Text("Contacts"));
+        contacts.addClassName("nav-item");
 
         about = new RouterLink(null, AboutList.class);
         about.add(new Icon(VaadinIcons.INFO), new Text("About"));
+        about.addClassName("nav-item");
 
         reservations = new RouterLink(null,ReservationList.class);
         reservations.add(new Icon(VaadinIcons.NOTEBOOK), new Text("Reservations"));
+        reservations.addClassName("nav-item");
 
         navigation.add(intro, menus, contacts, about, reservations);
 
-        nav.add(name, navigation);
+        nav.add(names, navigation);
 
         body.add(nav);
 

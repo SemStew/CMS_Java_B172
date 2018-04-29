@@ -34,7 +34,7 @@ import com.vaadin.starter.SemStew.ui.views.orderslist.OrdersList;
 import java.util.Collection;
 
 @Route(value = "admin", layout = MainLayout.class)
-@PageTitle("Branch List")
+@PageTitle("Branch List | Admin")
 public class BranchList extends VerticalLayout
     implements AfterNavigationObserver {
 

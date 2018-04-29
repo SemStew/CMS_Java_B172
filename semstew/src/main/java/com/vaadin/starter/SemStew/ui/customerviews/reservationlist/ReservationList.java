@@ -10,7 +10,7 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.starter.SemStew.ui.CustomerLayout;
 
 @Route(value = "reservations", layout = CustomerLayout.class)
-@PageTitle("Reservations")
+@PageTitle("Reservations | Home")
 public class ReservationList extends VerticalLayout {
     private final H2 header = new H2();
     private final DatePicker date = new DatePicker();
@@ -23,6 +23,7 @@ public class ReservationList extends VerticalLayout {
     {
         init();
         addContent();
+
     }
 
     private void init()
@@ -34,6 +35,7 @@ public class ReservationList extends VerticalLayout {
     private void addContent()
     {
         VerticalLayout content = new VerticalLayout();
+        content.addClassName("form");
         content.setDefaultHorizontalComponentAlignment(Alignment.STRETCH);
 
         header.setText("Reservations");
@@ -44,7 +46,10 @@ public class ReservationList extends VerticalLayout {
         table.setLabel("Table number:");
 
         confirm.setText("Confirm");
+        confirm.addClassName("btn_style");
 
-        add(header, date, time, person, table, confirm);
+        content.add(header, date, time, person, table, confirm);
+
+        add(content);
     }
 }

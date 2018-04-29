@@ -34,7 +34,7 @@ import com.vaadin.starter.SemStew.ui.*;
 import java.util.Collection;
 
 @Route(value = "admin/statistics", layout = MainLayout.class)
-@PageTitle("Statistics List")
+@PageTitle("Statistics List | Admin")
 public class StatisticsList extends VerticalLayout
     implements AfterNavigationObserver {
 

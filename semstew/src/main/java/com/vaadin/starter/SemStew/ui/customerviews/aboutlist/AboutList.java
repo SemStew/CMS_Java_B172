@@ -9,7 +9,7 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.starter.SemStew.ui.CustomerLayout;
 
 @Route(value = "about", layout = CustomerLayout.class)
-@PageTitle("About")
+@PageTitle("About | Home")
 public class AboutList extends VerticalLayout {
     private final H2 header = new H2();
     private final Text description = new Text("");

@@ -34,7 +34,7 @@ import com.vaadin.starter.SemStew.ui.*;
 import java.util.Collection;
 
 @Route(value = "admin/gallery", layout = MainLayout.class)
-@PageTitle("Gallery List")
+@PageTitle("Gallery List | Admin")
 public class GalleryList extends VerticalLayout
     implements AfterNavigationObserver {
 

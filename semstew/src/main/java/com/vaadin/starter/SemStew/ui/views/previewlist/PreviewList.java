@@ -34,7 +34,7 @@ import com.vaadin.starter.SemStew.ui.*;
 import java.util.Collection;
 
 @Route(value = "admin/preview", layout = MainLayout.class)
-@PageTitle("Preview List")
+@PageTitle("Preview List | Admin")
 public class PreviewList extends VerticalLayout
     implements AfterNavigationObserver {
 

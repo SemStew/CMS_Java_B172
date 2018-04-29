@@ -35,7 +35,7 @@ import com.vaadin.starter.SemStew.ui.*;
 import java.util.Collection;
 
 @Route(value = "admin/dishes", layout = MainLayout.class)
-@PageTitle("Dishes List")
+@PageTitle("Dishes List | Admin")
 public class MenuList extends VerticalLayout
         implements AfterNavigationObserver {
 

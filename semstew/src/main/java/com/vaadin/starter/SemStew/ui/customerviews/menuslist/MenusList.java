@@ -9,7 +9,7 @@ import com.vaadin.starter.SemStew.backend.Menus;
 import com.vaadin.starter.SemStew.ui.CustomerLayout;
 
 @Route(value = "menus", layout = CustomerLayout.class)
-@PageTitle("Menus")
+@PageTitle("Menu | Home")
 public class MenusList extends VerticalLayout {
     private final H2 header = new H2();
     private final Grid<Menus> menus = new Grid<>();
@@ -18,11 +18,12 @@ public class MenusList extends VerticalLayout {
     {
         init();
         addContent();
+
     }
 
     private void init()
     {
-        setClassName("menus");
+        setClassName("menu");
         setDefaultHorizontalComponentAlignment(Alignment.STRETCH);
     }
 
@@ -31,7 +32,7 @@ public class MenusList extends VerticalLayout {
         VerticalLayout content = new VerticalLayout();
         content.setDefaultHorizontalComponentAlignment(Alignment.STRETCH);
 
-        header.setText("Menus");
+        header.setText("Menu");
 
         content.add(header, menus);
 

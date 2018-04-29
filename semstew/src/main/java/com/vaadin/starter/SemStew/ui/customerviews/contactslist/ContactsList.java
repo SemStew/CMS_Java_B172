@@ -10,7 +10,7 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.starter.SemStew.ui.CustomerLayout;
 
 @Route(value = "contacts", layout = CustomerLayout.class)
-@PageTitle("Contacts")
+@PageTitle("Contacts | Home")
 public class ContactsList extends VerticalLayout {
     private final H2 header = new H2();
     private final Text description = new Text("");
@@ -31,10 +31,12 @@ public class ContactsList extends VerticalLayout {
     private void addContent()
     {
         VerticalLayout content = new VerticalLayout();
+        content.addClassName("content");
         content.setDefaultHorizontalComponentAlignment(Alignment.STRETCH);
         HorizontalLayout subcontent = new HorizontalLayout();
         VerticalLayout imageContainer = new VerticalLayout();
         imageContainer.setDefaultHorizontalComponentAlignment(Alignment.STRETCH);
+        imageContainer.addClassName("pictures");
 
         header.setText("Contacts");
         description.setText("Temporary text placeholder");

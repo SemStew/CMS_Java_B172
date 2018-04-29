@@ -10,7 +10,7 @@ import com.vaadin.starter.SemStew.backend.IntroConfig;
 import com.vaadin.starter.SemStew.ui.CustomerLayout;
 
 @Route(value = "", layout = CustomerLayout.class)
-@PageTitle("Intro List")
+@PageTitle("Home")
 public class IntroList extends VerticalLayout {
     private final Text introText = new Text("");
     private final H2 header = new H2();

@@ -68,12 +68,15 @@ public class Registration extends VerticalLayout {
         email.setPrefixComponent(new Icon(VaadinIcons.AT));
         restaurantName.setLabel("Restaurant name:");
         registrationButton.setText("Register");
+        Div buttons = new Div ();
+        buttons.addClassName("buttons");
+        buttons.add(registrationButton);
 
         passwords.add(password, passwordRepeat);
 
         names.add(forname, surname);
 
-        content.add(header, userName, passwords, names, ico, email, restaurantName, registrationButton);
+        content.add(header, userName, passwords, names, ico, email, restaurantName, buttons);
         add(content);
     }
 
