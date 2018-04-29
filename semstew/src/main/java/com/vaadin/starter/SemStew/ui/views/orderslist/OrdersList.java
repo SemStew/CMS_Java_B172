@@ -28,6 +28,7 @@ import com.vaadin.starter.SemStew.ui.views.previewlist.PreviewList;
 import com.vaadin.starter.SemStew.ui.views.reservationslist.ReservationsList;
 import com.vaadin.starter.SemStew.ui.views.settingslist.SettingsList;
 import com.vaadin.starter.SemStew.ui.views.statisticslist.StatisticsList;
+import com.vaadin.starter.SemStew.ui.*;
 
 import java.util.Collection;
 
@@ -47,6 +48,7 @@ public class OrdersList extends VerticalLayout
     private RouterLink statistics;
     private RouterLink appearance;
     private RouterLink settings;
+    private RouterLink logout;
 
     private final H2 header = new H2();
     private final Grid<IntroConfig> actualities = new Grid<>();
@@ -124,7 +126,11 @@ public class OrdersList extends VerticalLayout
         settings.add(new Icon(VaadinIcons.TOOLS), new Text("Settings"));
         settings.addClassName("nav-item");
 
-        navigation.add(branch, preview, dishes, articles, gallery, orders,reservations, statistics, appearance, settings);
+        logout = new RouterLink(null, Login.class);
+        logout.add(new Icon(VaadinIcons.CIRCLE), new Text("Log out"));
+        logout.addClassName("nav-item");
+
+        navigation.add(branch, preview, dishes, articles, gallery, orders, reservations, statistics, appearance, settings, logout);
 
         add(navigation);
     }
@@ -158,6 +164,7 @@ public class OrdersList extends VerticalLayout
         boolean statisticsActive = segment.equals(statistics.getHref());
         boolean appearanceActive = segment.equals(appearance.getHref());
         boolean settingsActive = segment.equals(settings.getHref());
+        boolean logoutActive = segment.equals(logout.getHref());
 
         branch.setClassName(ACTIVE_ITEM_STYLE, branchActive);
         preview.setClassName(ACTIVE_ITEM_STYLE, previewActive);
@@ -169,5 +176,6 @@ public class OrdersList extends VerticalLayout
         statistics.setClassName(ACTIVE_ITEM_STYLE, statisticsActive);
         appearance.setClassName(ACTIVE_ITEM_STYLE, appearanceActive);
         settings.setClassName(ACTIVE_ITEM_STYLE, settingsActive);
+        settings.setClassName(ACTIVE_ITEM_STYLE, logoutActive);
     }
 }

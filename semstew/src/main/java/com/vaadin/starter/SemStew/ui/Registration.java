@@ -4,6 +4,7 @@ import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcons;
@@ -35,11 +36,12 @@ public class Registration extends VerticalLayout {
     {
         init();
         addContent();
+        addFoot();
     }
 
     private void init()
     {
-        addClassName("registration");
+        addClassName("logreg");
         setDefaultHorizontalComponentAlignment(Alignment.STRETCH);
     }
 
@@ -47,6 +49,7 @@ public class Registration extends VerticalLayout {
     {
         VerticalLayout content = new VerticalLayout();
         content.setAlignItems(Alignment.STRETCH);
+        content.addClassName("logreg_style");
 
         HorizontalLayout passwords = new HorizontalLayout();
         passwords.setAlignItems(Alignment.STRETCH);
@@ -54,12 +57,11 @@ public class Registration extends VerticalLayout {
         HorizontalLayout names = new HorizontalLayout();
         names.setAlignItems(Alignment.STRETCH);
 
-
         header.setText("Registration");
-        userName.setLabel("User name:");
+        userName.setLabel("Username:");
         password.setLabel("Password:");
-        passwordRepeat.setLabel("Repeat password:");
-        forname.setLabel("Forname:");
+        passwordRepeat.setLabel("Confirm password:");
+        forname.setLabel("Forename:");
         surname.setLabel("Surname:");
         ico.setLabel("ICO:");
         email.setLabel("Email:");
@@ -73,5 +75,18 @@ public class Registration extends VerticalLayout {
 
         content.add(header, userName, passwords, names, ico, email, restaurantName, registrationButton);
         add(content);
+    }
+
+    private void addFoot () {
+        HorizontalLayout bottom = new HorizontalLayout();
+        bottom.addClassName("main-layout__bottom");
+        Div foot = new Div();
+        foot.addClassName("foot");
+
+        Text foot__text = new Text("Design and developed by DreamTeam © SemStew CMS");
+        foot.add(foot__text);
+        bottom.add(foot);
+
+        add(bottom);
     }
 }
