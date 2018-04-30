@@ -6,6 +6,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.starter.SemStew.backend.IntroConfig;
+import com.vaadin.starter.SemStew.ui.Login;
 import com.vaadin.starter.SemStew.ui.MainLayout;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.dependency.HtmlImport;
@@ -33,7 +34,7 @@ import com.vaadin.starter.SemStew.ui.views.orderslist.OrdersList;
 import java.util.Collection;
 
 @Route(value = "admin", layout = MainLayout.class)
-@PageTitle("Branch List")
+@PageTitle("Branch List | Admin")
 public class BranchList extends VerticalLayout
     implements AfterNavigationObserver {
 
@@ -48,6 +49,7 @@ public class BranchList extends VerticalLayout
     private RouterLink statistics;
     private RouterLink appearance;
     private RouterLink settings;
+    private RouterLink logout;
 
     private final H2 header = new H2();
     private final Grid<IntroConfig> actualities = new Grid<>();
@@ -125,7 +127,11 @@ public class BranchList extends VerticalLayout
         settings.add(new Icon(VaadinIcons.TOOLS), new Text("Settings"));
         settings.addClassName("nav-item");
 
-        navigation.add(branch, preview, dishes, articles, gallery, orders, reservations, statistics, appearance, settings);
+        logout = new RouterLink(null, Login.class);
+        logout.add(new Icon(VaadinIcons.CIRCLE), new Text("Log out"));
+        logout.addClassName("nav-item");
+
+        navigation.add(branch, preview, dishes, articles, gallery, orders, reservations, statistics, appearance, settings, logout);
 
         add(navigation);
     }
@@ -159,6 +165,7 @@ public class BranchList extends VerticalLayout
         boolean statisticsActive = segment.equals(statistics.getHref());
         boolean appearanceActive = segment.equals(appearance.getHref());
         boolean settingsActive = segment.equals(settings.getHref());
+        boolean logoutActive = segment.equals(logout.getHref());
 
         branch.setClassName(ACTIVE_ITEM_STYLE, branchActive);
         preview.setClassName(ACTIVE_ITEM_STYLE, previewActive);
@@ -170,5 +177,6 @@ public class BranchList extends VerticalLayout
         statistics.setClassName(ACTIVE_ITEM_STYLE, statisticsActive);
         appearance.setClassName(ACTIVE_ITEM_STYLE, appearanceActive);
         settings.setClassName(ACTIVE_ITEM_STYLE, settingsActive);
+        settings.setClassName(ACTIVE_ITEM_STYLE, logoutActive);
     }
 }
