@@ -1,11 +1,20 @@
 package com.vaadin.starter.SemStew.backend;
 
+import JOOQ.tables.AllergensName;
+import JOOQ.tables.records.AboutUsConfigRecord;
+import com.vaadin.starter.SemStew.backend.Services.AboutUsConfigService;
+import org.jooq.DSLContext;
+import org.jooq.Record;
+import org.jooq.SQLDialect;
+import org.jooq.impl.DSL;
+
 import java.sql.DriverManager;
 import java.sql.Connection;
 import java.sql.SQLException;
 
 public class PostgreSQLConnection {
     private static Connection con;
+    protected static DSLContext ctx;
 
     public PostgreSQLConnection(){
         try{
@@ -26,8 +35,6 @@ public class PostgreSQLConnection {
                     + e.toString());
             return;
         }
-
-        System.out.println("Connection was set succesfully...");
     }
 
     public static Connection getConnection(){
