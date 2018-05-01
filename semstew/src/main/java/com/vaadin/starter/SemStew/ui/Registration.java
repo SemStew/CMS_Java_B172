@@ -1,58 +1,95 @@
-/*
- * Copyright 2000-2017 Vaadin Ltd.
- *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
- * the License.
- */
 package com.vaadin.starter.SemStew.ui;
 
 import com.vaadin.flow.component.Text;
-import com.vaadin.flow.component.combobox.ComboBox;
-import com.vaadin.flow.component.dependency.HtmlImport;
-import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H2;
-import com.vaadin.flow.component.html.Image;
+import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcons;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
-import com.vaadin.flow.component.page.Viewport;
-import com.vaadin.flow.router.*;
-import com.vaadin.flow.server.InitialPageSettings;
-import com.vaadin.flow.server.PageConfigurator;
-import com.vaadin.starter.SemStew.ui.views.appearancelist.AppearanceList;
-import com.vaadin.starter.SemStew.ui.views.articlelist.ArticleList;
-import com.vaadin.starter.SemStew.ui.views.gallerylist.GalleryList;
-import com.vaadin.starter.SemStew.ui.views.branchlist.BranchList;
-import com.vaadin.starter.SemStew.ui.views.menulist.MenuList;
-import com.vaadin.starter.SemStew.ui.views.previewlist.PreviewList;
-import com.vaadin.starter.SemStew.ui.views.reservationslist.ReservationsList;
-import com.vaadin.starter.SemStew.ui.views.settingslist.SettingsList;
-import com.vaadin.starter.SemStew.ui.views.statisticslist.StatisticsList;
-import com.vaadin.starter.SemStew.ui.views.orderslist.OrdersList;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.textfield.PasswordField;
+import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.router.PageTitle;
+import com.vaadin.flow.router.Route;
+import com.vaadin.starter.SemStew.backend.IntroConfig;
+import com.vaadin.starter.SemStew.ui.MainLayout;
 
-import java.util.Collection;
 
-@HtmlImport("frontend://styles/shared-styles.html")
-@Viewport("width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes")
-public class Registration extends Div
-        implements RouterLayout, PageConfigurator {
+@Route(value = "registration", layout = MainLayout.class)
+@PageTitle("Registration")
+public class Registration extends VerticalLayout {
+    private final H2 header = new H2();
+    private final TextField userName = new TextField();
+    private final PasswordField password = new PasswordField();
+    private final PasswordField passwordRepeat = new PasswordField();
+    private final TextField forname = new TextField();
+    private final TextField surname = new TextField();
+    private final TextField ico = new TextField();
+    private final TextField email = new TextField();
+    private final TextField restaurantName = new TextField();
+    private final Button registrationButton = new Button();
 
-    public Registration() {
-
+    public Registration()
+    {
+        init();
+        addContent();
+        addFoot();
     }
 
-    @Override
-    public void configurePage(InitialPageSettings settings) {
-        settings.addMetaTag("apple-mobile-web-app-capable", "yes");
-        settings.addMetaTag("apple-mobile-web-app-status-bar-style", "black");
+    private void init()
+    {
+        addClassName("logreg");
+        setDefaultHorizontalComponentAlignment(Alignment.STRETCH);
+    }
+
+    private void addContent()
+    {
+        VerticalLayout content = new VerticalLayout();
+        content.setAlignItems(Alignment.STRETCH);
+        content.addClassName("logreg_style");
+
+        HorizontalLayout passwords = new HorizontalLayout();
+        passwords.setAlignItems(Alignment.STRETCH);
+
+        HorizontalLayout names = new HorizontalLayout();
+        names.setAlignItems(Alignment.STRETCH);
+
+        header.setText("Registration");
+        userName.setLabel("Username:");
+        password.setLabel("Password:");
+        passwordRepeat.setLabel("Confirm password:");
+        forname.setLabel("Forename:");
+        surname.setLabel("Surname:");
+        ico.setLabel("ICO:");
+        email.setLabel("Email:");
+        email.setPrefixComponent(new Icon(VaadinIcons.AT));
+        restaurantName.setLabel("Restaurant name:");
+        registrationButton.setText("Register");
+        Div buttons = new Div ();
+        buttons.addClassName("buttons");
+        buttons.add(registrationButton);
+
+        passwords.add(password, passwordRepeat);
+
+        names.add(forname, surname);
+
+        content.add(header, userName, passwords, names, ico, email, restaurantName, buttons);
+        add(content);
+    }
+
+    private void addFoot () {
+        HorizontalLayout bottom = new HorizontalLayout();
+        bottom.addClassName("main-layout__bottom");
+        Div foot = new Div();
+        foot.addClassName("foot");
+
+        Text foot__text = new Text("Design and developed by DreamTeam © SemStew CMS");
+        foot.add(foot__text);
+        bottom.add(foot);
+
+        add(bottom);
     }
 }
