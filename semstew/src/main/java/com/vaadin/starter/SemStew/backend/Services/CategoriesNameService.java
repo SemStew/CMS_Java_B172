@@ -56,6 +56,40 @@ public class CategoriesNameService {
         SelectCategoriesNameService();
     }
 
+    // Record by ID
+    public CategoriesNameRecord CategoriesNameById(Integer id)
+    {
+        ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
+        CategoriesName tmp = new CategoriesName();
+        for(CategoriesNameRecord res : ctx.selectFrom(tmp).where(tmp.ID_CATEGORY.eq(id)))
+            return res;
+        return null;
+    }
+
+    // Record by name
+    public  CategoriesNameRecord CategoriesByName(String name)
+    {
+        ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
+        CategoriesName tmp = new CategoriesName();
+        for(CategoriesNameRecord res: ctx.selectFrom(tmp).where(tmp.DESCRIPTION.eq(name)))
+            return res;
+        return null;
+    }
+
+    // Only descriptions
+    public List<String> CategoriesDescriptions()
+    {
+        ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
+        CategoriesName tmp = new CategoriesName();
+        List<String> ret = new ArrayList<>();
+        for(CategoriesNameRecord res : ctx.selectFrom(tmp).where(tmp.ID_LANGUAGE.eq(1)))
+        {
+            ret.add(res.getDescription());
+        }
+
+        return ret;
+    }
+
     public List<CategoriesNameRecord> getConfigs() {
         return configs;
     }

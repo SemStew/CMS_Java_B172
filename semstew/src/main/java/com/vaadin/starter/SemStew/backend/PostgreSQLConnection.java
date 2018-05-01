@@ -29,7 +29,7 @@ public class PostgreSQLConnection {
 
         try{
             con = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/SemStew",
-                    "postgres", "postolka11");
+                    "postgres", "postgres");
         } catch (SQLException e){
             System.out.println("Couln't connect to database due to an exception: "
                     + e.toString());

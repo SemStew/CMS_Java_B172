@@ -53,7 +53,6 @@ public class ArticleList extends VerticalLayout
     private RouterLink logout;
 
     private final H2 header = new H2();
-    private final Grid<IntroConfig> actualities = new Grid<>();
 
     public ArticleList() {
         init();
@@ -73,8 +72,6 @@ public class ArticleList extends VerticalLayout
         content.setAlignItems(Alignment.STRETCH);
 
         header.setText("Articles");
-
-        actualities.setSelectionMode(Grid.SelectionMode.NONE);
 
         content.add(header);
 

@@ -1,11 +1,18 @@
 package com.vaadin.starter.SemStew.ui.views.branchlist;
 
+import JOOQ.tables.Branch;
+import JOOQ.tables.records.BranchRecord;
 import com.vaadin.flow.component.Text;
+import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.starter.SemStew.backend.IntroConfig;
+import com.vaadin.starter.SemStew.backend.Services.BranchService;
 import com.vaadin.starter.SemStew.ui.Login;
 import com.vaadin.starter.SemStew.ui.MainLayout;
 import com.vaadin.flow.component.combobox.ComboBox;
@@ -32,6 +39,7 @@ import com.vaadin.starter.SemStew.ui.views.statisticslist.StatisticsList;
 import com.vaadin.starter.SemStew.ui.views.orderslist.OrdersList;
 
 import java.util.Collection;
+import java.util.List;
 
 @Route(value = "admin", layout = MainLayout.class)
 @PageTitle("Branch List | Admin")
@@ -52,7 +60,11 @@ public class BranchList extends VerticalLayout
     private RouterLink logout;
 
     private final H2 header = new H2();
-    private final Grid<IntroConfig> actualities = new Grid<>();
+    private BranchService branchServis = new BranchService();
+    private final Grid<BranchRecord> gridBranch = new Grid<>();
+    private List<BranchRecord> branchRecords;
+    private final Button editButton = new Button();
+    private final Dialog editDialog = new Dialog();
 
     public BranchList() {
         init();
@@ -71,13 +83,108 @@ public class BranchList extends VerticalLayout
         content.setClassName("content");
         content.setAlignItems(Alignment.STRETCH);
 
+
         header.setText("Branches");
 
-        actualities.setSelectionMode(Grid.SelectionMode.NONE);
+        branchRecords = branchServis.getConfigs();
 
-        content.add(header);
+        gridBranch.setItems(branchRecords);
+        gridBranch.addColumn(BranchRecord::getIdBranch).setHeader("ID branch");
+        gridBranch.addColumn(BranchRecord::getAddress).setHeader("Address");
+        gridBranch.addColumn(BranchRecord::getPhone).setHeader("Phone");
+        gridBranch.addColumn(BranchRecord::getOpeningHours).setHeader("Openning hours");
+        gridBranch.addColumn(BranchRecord::getDescription).setHeader("Description");
+        gridBranch.addColumn(BranchRecord::getIdRestaurant).setHeader("ID restaurant");
+
+        setUpDialog();
+
+        editButton.setText("Edit");
+
+        editButton.addClickListener(buttonClickEvent -> {
+            editDialog.open();
+        });
+
+        content.add(header, gridBranch, editButton);
 
         add(content);
+    }
+
+    private void setUpDialog()
+    {
+        editDialog.setCloseOnOutsideClick(true);
+        editDialog.setCloseOnEsc(true);
+
+        VerticalLayout content_layout = new VerticalLayout();
+        HorizontalLayout buttons = new HorizontalLayout();
+
+        Label descriptionLabel = new Label("Edit");
+
+        TextField idBranch = new TextField("ID branch");
+        TextField address = new TextField("Address");
+        TextField phone = new TextField("Phone");
+        TextField openHours = new TextField("Opening Hours");
+        TextField description = new TextField("Description");
+        TextField idRestaurant = new TextField("ID restaurant");
+
+        Button insert = new Button("Insert");
+        Button update = new Button("Update");
+        Button delete = new Button("Delete");
+        Button close = new Button("Close");
+
+        Label infoLabel = new Label();
+
+        insert.addClickListener(buttonClickEvent -> {
+           BranchRecord tmp = new BranchRecord();
+           tmp.setIdBranch(Integer.parseInt(idBranch.getValue()));
+           tmp.setAddress(address.getValue());
+           tmp.setPhone(phone.getValue());
+           tmp.setOpeningHours(openHours.getValue());
+           tmp.setDescription(description.getValue());
+           tmp.setIdRestaurant(Integer.parseInt(idRestaurant.getValue()));
+
+           branchServis.InsertBranchService(tmp);
+           infoLabel.setText("Inserted");
+           branchRecords = branchServis.getConfigs();
+           gridBranch.setItems(branchRecords);
+        });
+
+        update.addClickListener(buttonClickEvent ->{
+            BranchRecord tmp = new BranchRecord();
+            tmp.setIdBranch(Integer.parseInt(idBranch.getValue()));
+            tmp.setAddress(address.getValue());
+            tmp.setPhone(phone.getValue());
+            tmp.setOpeningHours(openHours.getValue());
+            tmp.setDescription(description.getValue());
+            tmp.setIdRestaurant(Integer.parseInt(idRestaurant.getValue()));
+
+            branchServis.UpdateBranchService(tmp);
+            infoLabel.setText("Updated");
+            branchRecords = branchServis.getConfigs();
+            gridBranch.setItems(branchRecords);
+        });
+
+        delete.addClickListener(buttonClickEvent -> {
+            BranchRecord tmp = new BranchRecord();
+            tmp.setIdBranch(Integer.parseInt(idBranch.getValue()));
+            tmp.setAddress(address.getValue());
+            tmp.setPhone(phone.getValue());
+            tmp.setOpeningHours(openHours.getValue());
+            tmp.setDescription(description.getValue());
+            tmp.setIdRestaurant(Integer.parseInt(idRestaurant.getValue()));
+
+            branchServis.DeleteBranchService(tmp);
+            infoLabel.setText("Deleted");
+            branchRecords = branchServis.getConfigs();
+            gridBranch.setItems(branchRecords);
+        });
+
+        close.addClickListener(buttonClickEvent -> {
+            editDialog.close();
+        });
+
+        buttons.add(insert,update,delete,close);
+        content_layout.add(descriptionLabel,idBranch,address,phone,openHours,description,idRestaurant,buttons,infoLabel);
+        editDialog.add(content_layout);
     }
 
     private void addMenu() {

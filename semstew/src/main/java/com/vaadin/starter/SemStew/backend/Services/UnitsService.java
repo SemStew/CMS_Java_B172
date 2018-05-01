@@ -54,6 +54,44 @@ public class UnitsService {
         SelectUnitsService();
     }
 
+
+    // records by id
+    public UnitsRecord UnitById(Integer id)
+    {
+        ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
+        Units tmp = new Units();
+        for(UnitsRecord res : ctx.selectFrom(tmp).where(tmp.ID_UNIT.eq(id)))
+        {
+            return res;
+        }
+
+        return null;
+    }
+
+    // records by name
+    public UnitsRecord UnitByName(String name)
+    {
+        ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
+        Units tmp = new Units();
+        for(UnitsRecord res : ctx.selectFrom(tmp).where(tmp.DESCRIPTION.eq(name)))
+            return res;
+        return null;
+    }
+
+    // only description
+    public List<String> UnitsDescription()
+    {
+        ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
+        Units tmp = new Units();
+        List<String> ret = new ArrayList<>();
+        for(UnitsRecord res : ctx.selectFrom(tmp))
+        {
+            ret.add(res.getDescription());
+        }
+
+        return ret;
+    }
+
     public List<UnitsRecord> getConfigs() {
         return configs;
     }

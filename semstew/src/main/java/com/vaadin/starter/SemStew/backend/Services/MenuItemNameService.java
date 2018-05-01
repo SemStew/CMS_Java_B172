@@ -2,6 +2,7 @@ package com.vaadin.starter.SemStew.backend.Services;
 
 import JOOQ.tables.MenuItemName;
 import JOOQ.tables.records.MenuItemNameRecord;
+import JOOQ.tables.records.MenuItemRecord;
 import com.vaadin.starter.SemStew.backend.PostgreSQLConnection;
 import org.jooq.DSLContext;
 import org.jooq.Record;
@@ -53,6 +54,16 @@ public class MenuItemNameService {
         MenuItemName tmp = new MenuItemName();
         ctx.delete(tmp).where(tmp.ID_LANGUAGE.eq(a.getIdLanguage())).and(tmp.ID_MENU_ITEM.eq(a.getIdMenuItem())).execute();
         SelectMenuItemNameService();
+    }
+
+    // Item by id
+    public MenuItemNameRecord ItemNameById(Integer id)
+    {
+        ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
+        MenuItemName tmp = new MenuItemName();
+        for(MenuItemNameRecord res : ctx.selectFrom(tmp).where(tmp.ID_MENU_ITEM.eq(id)))
+            return res;
+        return null;
     }
 
     public List<MenuItemNameRecord> getConfigs() {

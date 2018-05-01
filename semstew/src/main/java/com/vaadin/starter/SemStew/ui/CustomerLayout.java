@@ -1,11 +1,10 @@
 package com.vaadin.starter.SemStew.ui;
 
+import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.dependency.HtmlImport;
-import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H2;
-import com.vaadin.flow.component.html.Image;
+import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcons;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
@@ -18,12 +17,14 @@ import com.vaadin.flow.router.RouterLayout;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.InitialPageSettings;
 import com.vaadin.flow.server.PageConfigurator;
+import com.vaadin.starter.SemStew.backend.PostgreSQLConnection;
 import com.vaadin.starter.SemStew.ui.customerviews.aboutlist.AboutList;
 import com.vaadin.starter.SemStew.ui.customerviews.contactslist.ContactsList;
 import com.vaadin.starter.SemStew.ui.customerviews.introlist.IntroList;
 import com.vaadin.starter.SemStew.ui.customerviews.menuslist.MenusList;
 import com.vaadin.starter.SemStew.ui.customerviews.reservationlist.ReservationList;
 
+import javax.swing.text.html.parser.ContentModel;
 
 @HtmlImport("frontend://styles/customer-styles.html")
 @Viewport("width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes")
@@ -39,6 +40,7 @@ public class CustomerLayout extends Div
     private final HorizontalLayout bottom = new HorizontalLayout();
 
     public CustomerLayout() {
+        PostgreSQLConnection postgre = new PostgreSQLConnection();
         Image image = new Image();
         image.setSrc("https://scontent-frt3-2.xx.fbcdn.net/v/t35.0-12/s2048x2048/29680738_2052341935036421_876125089_o.png?_nc_cat=0&oh=72dbec5b54c6fb1e576570ecfe3c14aa&oe=5AD6807A");
         image.addClassName("main-layout__picture");
@@ -94,6 +96,8 @@ public class CustomerLayout extends Div
         bottom.addClassName("main-layout__bottom");
         Div foot = new Div();
         foot.addClassName("foot");
+
+
 
         Text foot__text = new Text("Design and developed by DreamTeam © SemStew CMS");
         foot.add(foot__text);

@@ -52,7 +52,6 @@ public class AppearanceList extends VerticalLayout
     private RouterLink logout;
 
     private final H2 header = new H2();
-    private final Grid<IntroConfig> actualities = new Grid<>();
 
     public AppearanceList() {
         init();
@@ -72,8 +71,6 @@ public class AppearanceList extends VerticalLayout
         content.setAlignItems(Alignment.STRETCH);
 
         header.setText("Appearance");
-
-        actualities.setSelectionMode(Grid.SelectionMode.NONE);
 
         content.add(header);
 

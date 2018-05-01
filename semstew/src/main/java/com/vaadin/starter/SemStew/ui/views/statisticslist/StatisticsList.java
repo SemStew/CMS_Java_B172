@@ -52,7 +52,6 @@ public class StatisticsList extends VerticalLayout
     private RouterLink logout;
 
     private final H2 header = new H2();
-    private final Grid<IntroConfig> actualities = new Grid<>();
 
     public StatisticsList() {
         init();
@@ -72,8 +71,6 @@ public class StatisticsList extends VerticalLayout
         content.setAlignItems(Alignment.STRETCH);
 
         header.setText("Statistics");
-
-        actualities.setSelectionMode(Grid.SelectionMode.NONE);
 
         content.add(header);
 

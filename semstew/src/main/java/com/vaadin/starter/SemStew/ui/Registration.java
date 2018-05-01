@@ -1,10 +1,14 @@
 package com.vaadin.starter.SemStew.ui;
 
+import JOOQ.tables.Admins;
+import JOOQ.tables.records.AdminsRecord;
+import JOOQ.tables.records.RestaurantRecord;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcons;
@@ -14,8 +18,11 @@ import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vaadin.starter.SemStew.backend.IntroConfig;
-import com.vaadin.starter.SemStew.ui.MainLayout;
+import com.vaadin.starter.SemStew.backend.Services.AdminsService;
+import com.vaadin.starter.SemStew.backend.Services.RestaurantService;
+
+import java.math.BigDecimal;
+import java.util.List;
 
 
 @Route(value = "registration", layout = MainLayout.class)
@@ -31,6 +38,9 @@ public class Registration extends VerticalLayout {
     private final TextField email = new TextField();
     private final TextField restaurantName = new TextField();
     private final Button registrationButton = new Button();
+    private final Label infoLabel = new Label();
+    private AdminsService admin = new AdminsService();
+    private RestaurantService rest = new RestaurantService();
 
     public Registration()
     {
@@ -72,11 +82,39 @@ public class Registration extends VerticalLayout {
         buttons.addClassName("buttons");
         buttons.add(registrationButton);
 
+        registrationButton.addClickListener(buttonClickEvent -> {
+            if(!password.getValue().equals(passwordRepeat.getValue()))
+            {
+                infoLabel.setText("Passwords are different");
+                return;
+            }
+            AdminsRecord tmp = new AdminsRecord();
+            tmp.setName(userName.getValue());
+            tmp.setPassword(password.getValue());
+            tmp.setIdAdmin(2);
+            admin.InsertAdminsService(tmp);
+            RestaurantRecord tmp2 = new RestaurantRecord();
+            tmp2.setIco(new BigDecimal(ico.getValue()));
+            tmp2.setName(restaurantName.getValue());
+            tmp2.setImage("none");
+            tmp2.setIdRestaurant(2);
+            List<AdminsRecord> admins = admin.getConfigs();
+            for(AdminsRecord it : admins)
+            {
+                if(it.getName().equals(tmp.getName()) && it.getPassword().equals(tmp.getPassword()))
+                {
+                    tmp2.setIdAdmin(it.getIdAdmin());
+                    break;
+                }
+            }
+            infoLabel.setText("Added");
+        });
+
         passwords.add(password, passwordRepeat);
 
         names.add(forname, surname);
 
-        content.add(header, userName, passwords, names, ico, email, restaurantName, buttons);
+        content.add(header, userName, passwords, names, ico, email, restaurantName, buttons,infoLabel);
         add(content);
     }
 
