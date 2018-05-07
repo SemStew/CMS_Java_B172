@@ -82,7 +82,7 @@ public class AboutUsConfigService {
         public void UpdateUnitsService(UnitsRecord a){
             ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
             Units tmp = new Units();
-            ctx.update(tmp).set(tmp.DESCRIPTION, a.getDescription()).
+            ctx.update(tmp).set(tmp.NAME, a.getName()).
                     where(tmp.ID_UNIT.eq(a.getIdUnit())).execute();
             SelectUnitsService();
         }
@@ -91,7 +91,7 @@ public class AboutUsConfigService {
         public void InsertUnitsService(UnitsRecord a){
             ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
             Units tmp = new Units();
-            ctx.insertInto(tmp).columns(tmp.DESCRIPTION).values(a.getDescription()).execute();
+            ctx.insertInto(tmp).columns(tmp.NAME).values(a.getName()).execute();
             SelectUnitsService();
         }
 
@@ -122,7 +122,7 @@ public class AboutUsConfigService {
         {
             ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
             Units tmp = new Units();
-            for(UnitsRecord res : ctx.selectFrom(tmp).where(tmp.DESCRIPTION.eq(name)))
+            for(UnitsRecord res : ctx.selectFrom(tmp).where(tmp.NAME.eq(name)))
                 return res;
             return null;
         }
@@ -135,7 +135,7 @@ public class AboutUsConfigService {
             List<String> ret = new ArrayList<>();
             for(UnitsRecord res : ctx.selectFrom(tmp))
             {
-                ret.add(res.getDescription());
+                ret.add(res.getName());
             }
 
             return ret;

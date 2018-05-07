@@ -9,73 +9,83 @@ INSERT INTO ADMINS(name, password) VALUES ('Dante', 'heslo123');
 INSERT INTO RESTAURANT(id_admin, name, ico, image) VALUES (1, 'Dream Restaurant', 12345678, 'https://scontent-frt3-2.xx.fbcdn.net/v/t35.0-12/s2048x2048/29680738_2052341935036421_876125089_o.png?_nc_cat=0&oh=72dbec5b54c6fb1e576570ecfe3c14aa&oe=5AD6807A');
 
 --branches
-INSERT INTO BRANCH(id_restaurant, address, phone, description, opening_hours) VALUES (1, 'Th·kurova 1516', '465123945', 'Cool poboËka', 'Zav¯eno nonstop');
+INSERT INTO BRANCH(id_restaurant, address, phone, description, opening_hours) VALUES (1, 'Th√°kurova 1516', '465123945', 'Cool poboƒçka', 'Zav≈ôeno nonstop');
+
+--main categories
+INSERT INTO MAIN_CATEGORIES DEFAULT VALUES;
+INSERT INTO MAIN_CATEGORIES DEFAULT VALUES;
+
+--main categories names
+INSERT INTO MAIN_CATEGORIES_NAME(id_main_category, id_language, name) VALUES (1, 1, 'Food');
+INSERT INTO MAIN_CATEGORIES_NAME(id_main_category, id_language, name) VALUES (2, 1, 'Beverages');
+INSERT INTO MAIN_CATEGORIES_NAME(id_main_category, id_language, name) VALUES (1, 2, 'J√≠dlo');
+INSERT INTO MAIN_CATEGORIES_NAME(id_main_category, id_language, name) VALUES (2, 2, 'N√°poje');
 
 --categories
-INSERT INTO CATEGORIES(is_food) VALUES (true);
-INSERT INTO CATEGORIES(is_food) VALUES (true);
-INSERT INTO CATEGORIES(is_food) VALUES (true);
-INSERT INTO CATEGORIES(is_food) VALUES (true);
-INSERT INTO CATEGORIES(is_food) VALUES (true);
-INSERT INTO CATEGORIES(is_food) VALUES (true);
-INSERT INTO CATEGORIES(is_food) VALUES (true);
-INSERT INTO CATEGORIES(is_food) VALUES (true);
-INSERT INTO CATEGORIES(is_food) VALUES (true);
-INSERT INTO CATEGORIES(is_food) VALUES (true);
-INSERT INTO CATEGORIES(is_food) VALUES (true);
-INSERT INTO CATEGORIES(is_food) VALUES (false);
-INSERT INTO CATEGORIES(is_food) VALUES (false);
-INSERT INTO CATEGORIES(is_food) VALUES (false);
-INSERT INTO CATEGORIES(is_food) VALUES (false);
-INSERT INTO CATEGORIES(is_food) VALUES (false);
-INSERT INTO CATEGORIES(is_food) VALUES (false);
-INSERT INTO CATEGORIES(is_food) VALUES (false);
+INSERT INTO CATEGORIES(id_main_category) VALUES (1);
+INSERT INTO CATEGORIES(id_main_category) VALUES (1);
+INSERT INTO CATEGORIES(id_main_category) VALUES (1);
+INSERT INTO CATEGORIES(id_main_category) VALUES (1);
+INSERT INTO CATEGORIES(id_main_category) VALUES (1);
+INSERT INTO CATEGORIES(id_main_category) VALUES (1);
+INSERT INTO CATEGORIES(id_main_category) VALUES (1);
+INSERT INTO CATEGORIES(id_main_category) VALUES (1);
+INSERT INTO CATEGORIES(id_main_category) VALUES (1);
+INSERT INTO CATEGORIES(id_main_category) VALUES (1);
+INSERT INTO CATEGORIES(id_main_category) VALUES (1);
+INSERT INTO CATEGORIES(id_main_category) VALUES (2);
+INSERT INTO CATEGORIES(id_main_category) VALUES (2);
+INSERT INTO CATEGORIES(id_main_category) VALUES (2);
+INSERT INTO CATEGORIES(id_main_category) VALUES (2);
+INSERT INTO CATEGORIES(id_main_category) VALUES (2);
+INSERT INTO CATEGORIES(id_main_category) VALUES (2);
+INSERT INTO CATEGORIES(id_main_category) VALUES (2);
 
 --categories in english
-INSERT INTO CATEGORIES_NAME(id_category, id_language, description) VALUES (1, 1, 'Starters');
-INSERT INTO CATEGORIES_NAME(id_category, id_language, description) VALUES (2, 1, 'Soups');
-INSERT INTO CATEGORIES_NAME(id_category, id_language, description) VALUES (3, 1, 'Salads');
-INSERT INTO CATEGORIES_NAME(id_category, id_language, description) VALUES (4, 1, 'Traditional cousine');
-INSERT INTO CATEGORIES_NAME(id_category, id_language, description) VALUES (5, 1, 'Pasta');
-INSERT INTO CATEGORIES_NAME(id_category, id_language, description) VALUES (6, 1, 'Specialities');
-INSERT INTO CATEGORIES_NAME(id_category, id_language, description) VALUES (7, 1, 'Vegetarian MENU_ITEM');
-INSERT INTO CATEGORIES_NAME(id_category, id_language, description) VALUES (8, 1, 'For kids');
-INSERT INTO CATEGORIES_NAME(id_category, id_language, description) VALUES (9, 1, 'Desserts');
-INSERT INTO CATEGORIES_NAME(id_category, id_language, description) VALUES (10, 1, 'Side dishes');
-INSERT INTO CATEGORIES_NAME(id_category, id_language, description) VALUES (11, 1, 'Sauces');
-INSERT INTO CATEGORIES_NAME(id_category, id_language, description) VALUES (12, 1, 'Alcohol free');
-INSERT INTO CATEGORIES_NAME(id_category, id_language, description) VALUES (13, 1, 'Warm beverages');
-INSERT INTO CATEGORIES_NAME(id_category, id_language, description) VALUES (14, 1, 'Apperitives');
-INSERT INTO CATEGORIES_NAME(id_category, id_language, description) VALUES (15, 1, 'Wine');
-INSERT INTO CATEGORIES_NAME(id_category, id_language, description) VALUES (16, 1, 'Liquers');
-INSERT INTO CATEGORIES_NAME(id_category, id_language, description) VALUES (17, 1, 'Destialtes');
-INSERT INTO CATEGORIES_NAME(id_category, id_language, description) VALUES (18, 1, 'Drinks');
+INSERT INTO CATEGORIES_NAME(id_category, id_language, name) VALUES (1, 1, 'Starters');
+INSERT INTO CATEGORIES_NAME(id_category, id_language, name) VALUES (2, 1, 'Soups');
+INSERT INTO CATEGORIES_NAME(id_category, id_language, name) VALUES (3, 1, 'Salads');
+INSERT INTO CATEGORIES_NAME(id_category, id_language, name) VALUES (4, 1, 'Traditional cousine');
+INSERT INTO CATEGORIES_NAME(id_category, id_language, name) VALUES (5, 1, 'Pasta');
+INSERT INTO CATEGORIES_NAME(id_category, id_language, name) VALUES (6, 1, 'Specialities');
+INSERT INTO CATEGORIES_NAME(id_category, id_language, name) VALUES (7, 1, 'Vegetarian MENU_ITEM');
+INSERT INTO CATEGORIES_NAME(id_category, id_language, name) VALUES (8, 1, 'For kids');
+INSERT INTO CATEGORIES_NAME(id_category, id_language, name) VALUES (9, 1, 'Desserts');
+INSERT INTO CATEGORIES_NAME(id_category, id_language, name) VALUES (10, 1, 'Side dishes');
+INSERT INTO CATEGORIES_NAME(id_category, id_language, name) VALUES (11, 1, 'Sauces');
+INSERT INTO CATEGORIES_NAME(id_category, id_language, name) VALUES (12, 1, 'Alcohol free');
+INSERT INTO CATEGORIES_NAME(id_category, id_language, name) VALUES (13, 1, 'Warm beverages');
+INSERT INTO CATEGORIES_NAME(id_category, id_language, name) VALUES (14, 1, 'Apperitives');
+INSERT INTO CATEGORIES_NAME(id_category, id_language, name) VALUES (15, 1, 'Wine');
+INSERT INTO CATEGORIES_NAME(id_category, id_language, name) VALUES (16, 1, 'Liquers');
+INSERT INTO CATEGORIES_NAME(id_category, id_language, name) VALUES (17, 1, 'Destialtes');
+INSERT INTO CATEGORIES_NAME(id_category, id_language, name) VALUES (18, 1, 'Drinks');
 
 --categories in czech
-INSERT INTO CATEGORIES_NAME(id_category, id_language, description) VALUES (1, 2, 'P¯edkrmy');
-INSERT INTO CATEGORIES_NAME(id_category, id_language, description) VALUES (2, 2, 'PolÈvky');
-INSERT INTO CATEGORIES_NAME(id_category, id_language, description) VALUES (3, 2, 'Sal·ty');
-INSERT INTO CATEGORIES_NAME(id_category, id_language, description) VALUES (4, 2, 'TradiËnÌ kuchynÏ');
-INSERT INTO CATEGORIES_NAME(id_category, id_language, description) VALUES (5, 2, 'TÏstoviny');
-INSERT INTO CATEGORIES_NAME(id_category, id_language, description) VALUES (6, 2, 'Speciality');
-INSERT INTO CATEGORIES_NAME(id_category, id_language, description) VALUES (7, 2, 'Bezmas· jÌdla');
-INSERT INTO CATEGORIES_NAME(id_category, id_language, description) VALUES (8, 2, 'Pro dÏti');
-INSERT INTO CATEGORIES_NAME(id_category, id_language, description) VALUES (9, 2, 'Dezerty');
-INSERT INTO CATEGORIES_NAME(id_category, id_language, description) VALUES (10, 2, 'P¯Ìlohy');
-INSERT INTO CATEGORIES_NAME(id_category, id_language, description) VALUES (11, 2, 'Om·Ëky');
-INSERT INTO CATEGORIES_NAME(id_category, id_language, description) VALUES (12, 2, 'NealkoholickÈ n·poje');
-INSERT INTO CATEGORIES_NAME(id_category, id_language, description) VALUES (13, 2, 'TeplÈ n·poje');
-INSERT INTO CATEGORIES_NAME(id_category, id_language, description) VALUES (14, 2, 'Aperitivy');
-INSERT INTO CATEGORIES_NAME(id_category, id_language, description) VALUES (15, 2, 'VÌno');
-INSERT INTO CATEGORIES_NAME(id_category, id_language, description) VALUES (16, 2, 'LikÈry');
-INSERT INTO CATEGORIES_NAME(id_category, id_language, description) VALUES (17, 2, 'Destil·ty');
+INSERT INTO CATEGORIES_NAME(id_category, id_language, name) VALUES (1, 2, 'P≈ôedkrmy');
+INSERT INTO CATEGORIES_NAME(id_category, id_language, name) VALUES (2, 2, 'Pol√©vky');
+INSERT INTO CATEGORIES_NAME(id_category, id_language, name) VALUES (3, 2, 'Sal√°ty');
+INSERT INTO CATEGORIES_NAME(id_category, id_language, name) VALUES (4, 2, 'Tradiƒçn√≠ kuchynƒõ');
+INSERT INTO CATEGORIES_NAME(id_category, id_language, name) VALUES (5, 2, 'Tƒõstoviny');
+INSERT INTO CATEGORIES_NAME(id_category, id_language, name) VALUES (6, 2, 'Speciality');
+INSERT INTO CATEGORIES_NAME(id_category, id_language, name) VALUES (7, 2, 'Bezmas√° j√≠dla');
+INSERT INTO CATEGORIES_NAME(id_category, id_language, name) VALUES (8, 2, 'Pro dƒõti');
+INSERT INTO CATEGORIES_NAME(id_category, id_language, name) VALUES (9, 2, 'Dezerty');
+INSERT INTO CATEGORIES_NAME(id_category, id_language, name) VALUES (10, 2, 'P≈ô√≠lohy');
+INSERT INTO CATEGORIES_NAME(id_category, id_language, name) VALUES (11, 2, 'Om√°ƒçky');
+INSERT INTO CATEGORIES_NAME(id_category, id_language, name) VALUES (12, 2, 'Nealkoholick√© n√°poje');
+INSERT INTO CATEGORIES_NAME(id_category, id_language, name) VALUES (13, 2, 'Tepl√© n√°poje');
+INSERT INTO CATEGORIES_NAME(id_category, id_language, name) VALUES (14, 2, 'Aperitivy');
+INSERT INTO CATEGORIES_NAME(id_category, id_language, name) VALUES (15, 2, 'V√≠no');
+INSERT INTO CATEGORIES_NAME(id_category, id_language, name) VALUES (16, 2, 'Lik√©ry');
+INSERT INTO CATEGORIES_NAME(id_category, id_language, name) VALUES (17, 2, 'Destil√°ty');
 
 --units
-INSERT INTO UNITS(description) VALUES ('g');
-INSERT INTO UNITS(description) VALUES ('pcs');
-INSERT INTO UNITS(description) VALUES ('ks');
-INSERT INTO UNITS(description) VALUES ('l');
-INSERT INTO UNITS(description) VALUES ('cl');
+INSERT INTO UNITS(name) VALUES ('g');
+INSERT INTO UNITS(name) VALUES ('pcs');
+INSERT INTO UNITS(name) VALUES ('ks');
+INSERT INTO UNITS(name) VALUES ('l');
+INSERT INTO UNITS(name) VALUES ('cl');
 
 --MENU_ITEM
 INSERT INTO MENU_ITEM(price, image_name, amount, id_unit, id_category) VALUES (60, 'http://pivarenbudik.sk/wp-content/uploads/2013/04/utopenec.jpg', 2, 2, 1);
@@ -124,25 +134,25 @@ INSERT INTO MENU_ITEM_NAME(id_menu_item, id_language, name, description) VALUES 
 INSERT INTO MENU_ITEM_NAME(id_menu_item, id_language, name, description) VALUES (21, 1, 'Jameson whiskey', NULL);
 
 --MENU_ITEM in czech
-INSERT INTO MENU_ITEM_NAME(id_menu_item, id_language, name, description) VALUES (1, 2, 'Utopenec', 'Utopenec nakl·dan˝ v octu s paprikou, cibulÌ a pep¯em.');
-INSERT INTO MENU_ITEM_NAME(id_menu_item, id_language, name, description) VALUES (2, 2, 'PikantnÌ topinka', 'Topinka s hovÏzÌm a pikantnÌ smÏsÌ.');
-INSERT INTO MENU_ITEM_NAME(id_menu_item, id_language, name, description) VALUES (3, 2, 'Ku¯ecÌ v˝var', 'V˝var s ku¯ecÌm mase, zeleninou a tÏstovinami.');
-INSERT INTO MENU_ITEM_NAME(id_menu_item, id_language, name, description) VALUES (4, 2, 'Gul·öov· polÈvka', 'Gul·öov· polÈvka s hovÏzÌm a bramborami.');
-INSERT INTO MENU_ITEM_NAME(id_menu_item, id_language, name, description) VALUES (5, 2, 'Caeser sal·t', 'Sal·t s cherry rajËaty, ku¯ecÌm, krutony a dresingem.');
-INSERT INTO MENU_ITEM_NAME(id_menu_item, id_language, name, description) VALUES (6, 2, 'Balk·n sal·t', 'Sal·t s Ëern˝mi olivami, paprikou, rajËaty a balk·nsk˝m s˝rem.');
-INSERT INTO MENU_ITEM_NAME(id_menu_item, id_language, name, description) VALUES (7, 2, 'HovÏzÌ gul·ö', 'Gul·ö s hovÏzÌm a knedlÌky.');
-INSERT INTO MENU_ITEM_NAME(id_menu_item, id_language, name, description) VALUES (8, 2, 'Roast beef s americk˝mi bramborami', NULL);
-INSERT INTO MENU_ITEM_NAME(id_menu_item, id_language, name, description) VALUES (9, 2, 'Spaghetti carbonara', 'Spaghetti se s˝rovou om·Ëkou a parmez·nem.');
-INSERT INTO MENU_ITEM_NAME(id_menu_item, id_language, name, description) VALUES (10, 2, 'Lasagne', 'Italsk˝ tÏstovinov˝ pokrm z hovÏzÌho masa s rajËaty a mozzarellou.');
-INSERT INTO MENU_ITEM_NAME(id_menu_item, id_language, name, description) VALUES (11, 2, 'Smaûen˝ s˝r', 'Smaûen˝ eidam s hranolky.');
-INSERT INTO MENU_ITEM_NAME(id_menu_item, id_language, name, description) VALUES (12, 2, 'MÌchan· vajÌËka s chlebem', NULL);
-INSERT INTO MENU_ITEM_NAME(id_menu_item, id_language, name, description) VALUES (13, 2, 'Panna cotta', 'Jemn˝ krÈm s ovocem.');
-INSERT INTO MENU_ITEM_NAME(id_menu_item, id_language, name, description) VALUES (14, 2, 'PalaËinky', 'PalaËinky s ovocem a vanilkovou zmrzlinou.');
+INSERT INTO MENU_ITEM_NAME(id_menu_item, id_language, name, description) VALUES (1, 2, 'Utopenec', 'Utopenec nakl√°dan√Ω v octu s paprikou, cibul√≠ a pep≈ôem.');
+INSERT INTO MENU_ITEM_NAME(id_menu_item, id_language, name, description) VALUES (2, 2, 'Pikantn√≠ topinka', 'Topinka s hovƒõz√≠m a pikantn√≠ smƒõs√≠.');
+INSERT INTO MENU_ITEM_NAME(id_menu_item, id_language, name, description) VALUES (3, 2, 'Ku≈ôec√≠ v√Ωvar', 'V√Ωvar s ku≈ôec√≠m mase, zeleninou a tƒõstovinami.');
+INSERT INTO MENU_ITEM_NAME(id_menu_item, id_language, name, description) VALUES (4, 2, 'Gul√°≈°ov√° pol√©vka', 'Gul√°≈°ov√° pol√©vka s hovƒõz√≠m a bramborami.');
+INSERT INTO MENU_ITEM_NAME(id_menu_item, id_language, name, description) VALUES (5, 2, 'Caeser sal√°t', 'Sal√°t s cherry rajƒçaty, ku≈ôec√≠m, krutony a dresingem.');
+INSERT INTO MENU_ITEM_NAME(id_menu_item, id_language, name, description) VALUES (6, 2, 'Balk√°n sal√°t', 'Sal√°t s ƒçern√Ωmi olivami, paprikou, rajƒçaty a balk√°nsk√Ωm s√Ωrem.');
+INSERT INTO MENU_ITEM_NAME(id_menu_item, id_language, name, description) VALUES (7, 2, 'Hovƒõz√≠ gul√°≈°', 'Gul√°≈° s hovƒõz√≠m a knedl√≠ky.');
+INSERT INTO MENU_ITEM_NAME(id_menu_item, id_language, name, description) VALUES (8, 2, 'Roast beef s americk√Ωmi bramborami', NULL);
+INSERT INTO MENU_ITEM_NAME(id_menu_item, id_language, name, description) VALUES (9, 2, 'Spaghetti carbonara', 'Spaghetti se s√Ωrovou om√°ƒçkou a parmez√°nem.');
+INSERT INTO MENU_ITEM_NAME(id_menu_item, id_language, name, description) VALUES (10, 2, 'Lasagne', 'Italsk√Ω tƒõstovinov√Ω pokrm z hovƒõz√≠ho masa s rajƒçaty a mozzarellou.');
+INSERT INTO MENU_ITEM_NAME(id_menu_item, id_language, name, description) VALUES (11, 2, 'Sma≈æen√Ω s√Ωr', 'Sma≈æen√Ω eidam s hranolky.');
+INSERT INTO MENU_ITEM_NAME(id_menu_item, id_language, name, description) VALUES (12, 2, 'M√≠chan√° vaj√≠ƒçka s chlebem', NULL);
+INSERT INTO MENU_ITEM_NAME(id_menu_item, id_language, name, description) VALUES (13, 2, 'Panna cotta', 'Jemn√Ω kr√©m s ovocem.');
+INSERT INTO MENU_ITEM_NAME(id_menu_item, id_language, name, description) VALUES (14, 2, 'Palaƒçinky', 'Palaƒçinky s ovocem a vanilkovou zmrzlinou.');
 INSERT INTO MENU_ITEM_NAME(id_menu_item, id_language, name, description) VALUES (15, 2, 'Hranolky', NULL);
-INSERT INTO MENU_ITEM_NAME(id_menu_item, id_language, name, description) VALUES (16, 2, 'Americk˝ brambor', NULL);
-INSERT INTO MENU_ITEM_NAME(id_menu_item, id_language, name, description) VALUES (17, 2, 'PomeranËov˝ dûus', NULL);
-INSERT INTO MENU_ITEM_NAME(id_menu_item, id_language, name, description) VALUES (18, 2, 'JableËn˝ dûus', NULL);
-INSERT INTO MENU_ITEM_NAME(id_menu_item, id_language, name, description) VALUES (19, 2, 'Zelen˝ Ëaj', NULL);
+INSERT INTO MENU_ITEM_NAME(id_menu_item, id_language, name, description) VALUES (16, 2, 'Americk√Ω brambor', NULL);
+INSERT INTO MENU_ITEM_NAME(id_menu_item, id_language, name, description) VALUES (17, 2, 'Pomeranƒçov√Ω d≈æus', NULL);
+INSERT INTO MENU_ITEM_NAME(id_menu_item, id_language, name, description) VALUES (18, 2, 'Jableƒçn√Ω d≈æus', NULL);
+INSERT INTO MENU_ITEM_NAME(id_menu_item, id_language, name, description) VALUES (19, 2, 'Zelen√Ω ƒçaj', NULL);
 INSERT INTO MENU_ITEM_NAME(id_menu_item, id_language, name, description) VALUES (20, 2, 'Absinth', NULL);
 INSERT INTO MENU_ITEM_NAME(id_menu_item, id_language, name, description) VALUES (21, 2, 'Jameson whiskey', NULL);
 
@@ -180,19 +190,19 @@ INSERT INTO ALLERGENS_NAME(id_allergen, id_language, allergen) VALUES (14, 1, 'S
 
 --allergens in czech
 INSERT INTO ALLERGENS_NAME(id_allergen, id_language, allergen) VALUES (1, 2, 'Celer');
-INSERT INTO ALLERGENS_NAME(id_allergen, id_language, allergen) VALUES (2, 2, 'Obiloviny obsahujÌcÌ lepek');
-INSERT INTO ALLERGENS_NAME(id_allergen, id_language, allergen) VALUES (3, 2, 'Kor˝öi');
+INSERT INTO ALLERGENS_NAME(id_allergen, id_language, allergen) VALUES (2, 2, 'Obiloviny obsahuj√≠c√≠ lepek');
+INSERT INTO ALLERGENS_NAME(id_allergen, id_language, allergen) VALUES (3, 2, 'Kor√Ω≈°i');
 INSERT INTO ALLERGENS_NAME(id_allergen, id_language, allergen) VALUES (4, 2, 'Vejce');
 INSERT INTO ALLERGENS_NAME(id_allergen, id_language, allergen) VALUES (5, 2, 'Ryby');
-INSERT INTO ALLERGENS_NAME(id_allergen, id_language, allergen) VALUES (6, 2, 'VlËÌ bob (lupina)');
-INSERT INTO ALLERGENS_NAME(id_allergen, id_language, allergen) VALUES (7, 2, 'MlÈko');
-INSERT INTO ALLERGENS_NAME(id_allergen, id_language, allergen) VALUES (8, 2, 'MÏkk˝öi');
-INSERT INTO ALLERGENS_NAME(id_allergen, id_language, allergen) VALUES (9, 2, 'Ho¯cice');
-INSERT INTO ALLERGENS_NAME(id_allergen, id_language, allergen) VALUES (10, 2, 'Sko¯·pkovÈ plody');
-INSERT INTO ALLERGENS_NAME(id_allergen, id_language, allergen) VALUES (11, 2, 'AraöÌdy');
-INSERT INTO ALLERGENS_NAME(id_allergen, id_language, allergen) VALUES (12, 2, 'Sezamov· semÌnka');
-INSERT INTO ALLERGENS_NAME(id_allergen, id_language, allergen) VALUES (13, 2, 'SÛja');
-INSERT INTO ALLERGENS_NAME(id_allergen, id_language, allergen) VALUES (14, 2, 'Oxid si¯iËit˝');
+INSERT INTO ALLERGENS_NAME(id_allergen, id_language, allergen) VALUES (6, 2, 'Vlƒç√≠ bob (lupina)');
+INSERT INTO ALLERGENS_NAME(id_allergen, id_language, allergen) VALUES (7, 2, 'Ml√©ko');
+INSERT INTO ALLERGENS_NAME(id_allergen, id_language, allergen) VALUES (8, 2, 'Mƒõkk√Ω≈°i');
+INSERT INTO ALLERGENS_NAME(id_allergen, id_language, allergen) VALUES (9, 2, 'Ho≈ôcice');
+INSERT INTO ALLERGENS_NAME(id_allergen, id_language, allergen) VALUES (10, 2, 'O≈ôechy');
+INSERT INTO ALLERGENS_NAME(id_allergen, id_language, allergen) VALUES (11, 2, 'Ara≈°√≠dy');
+INSERT INTO ALLERGENS_NAME(id_allergen, id_language, allergen) VALUES (12, 2, 'Sezamov√° sem√≠nka');
+INSERT INTO ALLERGENS_NAME(id_allergen, id_language, allergen) VALUES (13, 2, 'S√≥ja');
+INSERT INTO ALLERGENS_NAME(id_allergen, id_language, allergen) VALUES (14, 2, 'Oxid si≈ôiƒçit√Ω');
 
 --allergens in food
 INSERT INTO MENU_ITEM_ALLERGEN(id_menu_item, id_allergen) VALUES (6, 7);
@@ -203,26 +213,26 @@ INSERT INTO MENU_ITEM_ALLERGEN(id_menu_item, id_allergen) VALUES (12, 4);
 INSERT INTO MENU_ITEM_ALLERGEN(id_menu_item, id_allergen) VALUES (13, 7);
 INSERT INTO MENU_ITEM_ALLERGEN(id_menu_item, id_allergen) VALUES (14, 7);
 
---rezervations
-INSERT INTO REZERVATION(id_branch, r_date, time_from, person, n_table) VALUES (1, '2018-4-17', '16:00', 'Dante Frajer', 1);
-INSERT INTO REZERVATION(id_branch, r_date, time_from, person, n_table) VALUES (1, '2018-4-19', '14:30', 'Dante Nefrajer', 3);
+--RESERVATIONs
+INSERT INTO RESERVATION(id_branch, r_date, time_from, person, n_table) VALUES (1, '2018-4-17', '16:00', 'Dante Frajer', 1);
+INSERT INTO RESERVATION(id_branch, r_date, time_from, person, n_table) VALUES (1, '2018-4-19', '14:30', 'Dante Nefrajer', 3);
 
---rezervation site
-INSERT INTO REZERVATION_CONFIG(id_language, header, table_number, time_from_desc) VALUES (1, 'Rezervations', 'Table number', 'Time');
-INSERT INTO REZERVATION_CONFIG(id_language, header, table_number, time_from_desc) VALUES (1, 'Rezervace', '»Ìslo stolu', '»as rezervace');
+--RESERVATION site
+INSERT INTO RESERVATION_CONFIG(id_language, header, table_number, time_from_desc) VALUES (1, 'RESERVATIONs', 'Table number', 'Time');
+INSERT INTO RESERVATION_CONFIG(id_language, header, table_number, time_from_desc) VALUES (1, 'Rezervace', 'ƒå√≠slo stolu', 'ƒåas rezervace');
 
 --performace roles
-INSERT INTO PERFORMANCE(name) VALUES('Majitel');
-INSERT INTO PERFORMANCE(name) VALUES('Kucha¯/ka');
-INSERT INTO PERFORMANCE(name) VALUES('Obsluha');
-INSERT INTO PERFORMANCE(name) VALUES('⁄ËetnÌ');
+INSERT INTO ROLE(name) VALUES('Majitel');
+INSERT INTO ROLE(name) VALUES('Kucha≈ô/ka');
+INSERT INTO ROLE(name) VALUES('Obsluha');
+INSERT INTO ROLE(name) VALUES('√öƒçetn√≠');
 
 --employees
-INSERT INTO EMPLOYEE(perform, id_branch, name, surname, phone, mail) VALUES (1, 1, 'Dante', 'Smith', NULL, NULL);
-INSERT INTO EMPLOYEE(perform, id_branch, name, surname, phone, mail) VALUES (3, 1, 'Angellica', 'Smith', NULL, NULL);
+INSERT INTO EMPLOYEE(role, id_branch, name, surname, phone, mail) VALUES (1, 1, 'Dante', 'Smith', NULL, NULL);
+INSERT INTO EMPLOYEE(role, id_branch, name, surname, phone, mail) VALUES (3, 1, 'Angellica', 'Smith', NULL, NULL);
 
 --orders
-INSERT INTO ORDERS(id_branch, o_date, person, address) VALUES (1, '2018-4-17', 'Some random guy', 'Pet¯Ìn 1284');
+INSERT INTO ORDERS(id_branch, o_date, person, address) VALUES (1, '2018-4-17', 'Some random guy', 'Pet≈ô√≠n 1284');
 
 --order items
 INSERT INTO ORDER_ITEM(id_menu_item, id_order) VALUES (9, 1);
@@ -233,18 +243,18 @@ INSERT INTO NEWS(id_restaurant, n_date) VALUES (1, '2018-4-17');
 
 --news description
 INSERT INTO NEWS_NAME(id_news, id_language, header, description) VALUES (1, 1, 'Birthday action', 'Free drinks for people born in 17.4.');
-INSERT INTO NEWS_NAME(id_news, id_language, header, description) VALUES (1, 2, 'Narozenninov· akce', 'N·poj zdarma pro lidi narozenÈ 17.4.');
+INSERT INTO NEWS_NAME(id_news, id_language, header, description) VALUES (1, 2, 'Narozenninov√° akce', 'N√°poj zdarma pro lidi narozen√© 17.4.');
 
 --main picture
 INSERT INTO GENERAL_CONFIG(url_main_image) VALUES ('https://scontent-frt3-2.xx.fbcdn.net/v/t35.0-12/s2048x2048/29680738_2052341935036421_876125089_o.png?_nc_cat=0&oh=72dbec5b54c6fb1e576570ecfe3c14aa&oe=5AD6807A');
 
 --introduction
 INSERT INTO INTRO_CONFIG(id_language, header, short_description, news_header) VALUES (1, 'Introduction', 'Welcome!\nHere are some of recent events:', 'News and events');
-INSERT INTO INTRO_CONFIG(id_language, header, short_description, news_header) VALUES (2, '⁄vod', 'VÌtejte!\nZde jsou informace o aktu·lnÌch akcÌch:', 'Aktuality a akce');
+INSERT INTO INTRO_CONFIG(id_language, header, short_description, news_header) VALUES (2, '√övod', 'V√≠tejte!\nZde jsou informace o aktu√°ln√≠ch akc√≠ch:', 'Aktuality a akce');
 
 --menu config
 INSERT INTO MENUS_CONFIG(id_language, header) VALUES (1, 'Menu');
-INSERT INTO MENUS_CONFIG(id_language, header) VALUES (2, 'JÌdelnÌËek');
+INSERT INTO MENUS_CONFIG(id_language, header) VALUES (2, 'J√≠deln√≠ƒçek');
 
 --menus
 INSERT INTO MENUS(id_branch, url_image) VALUES (1, 'https://weneedfun.com/wp-content/uploads/2015/10/Delicious-Food-Photos-28.jpg');
@@ -253,13 +263,13 @@ INSERT INTO MENUS(id_branch, url_image) VALUES (1, 'http://www.chezcora.com/publ
 --menu items
 INSERT INTO MENUS_NAME(id_menu, id_language, description) VALUES (1, 1, 'Food');
 INSERT INTO MENUS_NAME(id_menu, id_language, description) VALUES (2, 1, 'Beverages');
-INSERT INTO MENUS_NAME(id_menu, id_language, description) VALUES (1, 2, 'JÌdlo');
-INSERT INTO MENUS_NAME(id_menu, id_language, description) VALUES (2, 2, 'N·poje');
+INSERT INTO MENUS_NAME(id_menu, id_language, description) VALUES (1, 2, 'J√≠dlo');
+INSERT INTO MENUS_NAME(id_menu, id_language, description) VALUES (2, 2, 'N√°poje');
 
 --about us
 INSERT INTO ABOUT_US_CONFIG(id_language, header, description, fotogallery_header) VALUES (1, 'About us', 'We are the best', 'Fotogallery');
-INSERT INTO ABOUT_US_CONFIG(id_language, header, description, fotogallery_header) VALUES (2, 'O n·s', 'Jsme nejlepöÌ', 'Fotogalerie');
+INSERT INTO ABOUT_US_CONFIG(id_language, header, description, fotogallery_header) VALUES (2, 'O n√°s', 'Jsme nejlep≈°√≠', 'Fotogalerie');
 
 --contact
-INSERT INTO CONTACT_CONFIG(id_language, header, description, url_image1, url_image2) VALUES (1, 'Contact', 'Find us on FIT CVUT CZ!!!', NULL, NULL);
-INSERT INTO CONTACT_CONFIG(id_language, header, description, url_image1, url_image2) VALUES (2, 'Kontakt', 'NajdÏte n·s na FIT CVUT CZ!!!', NULL, NULL);
+INSERT INTO CONTACT_CONFIG(id_language, header, description, url_image_map, url_image_restaurant) VALUES (1, 'Contact', 'Find us on FIT CVUT CZ!!!', NULL, NULL);
+INSERT INTO CONTACT_CONFIG(id_language, header, description, url_image_map, url_image_restaurant) VALUES (2, 'Kontakt', 'Najdete n√°s na FIT CVUT CZ!!!', NULL, NULL);

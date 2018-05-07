@@ -32,7 +32,7 @@ public class EmployeeService {
     public void UpdateEmployeeService(EmployeeRecord a){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         Employee tmp = new Employee();
-        ctx.update(tmp).set(tmp.ID_BRANCH, a.getIdBranch()).set(tmp.MAIL, a.getMail()).set(tmp.PERFORM, a.getPerform()).
+        ctx.update(tmp).set(tmp.ID_BRANCH, a.getIdBranch()).set(tmp.MAIL, a.getMail()).set(tmp.ROLE, a.getRole()).
                         set(tmp.NAME, a.getName()).set(tmp.PHONE, a.getPhone()).set(tmp.SURNAME, a.getSurname()).
                 where(tmp.ID_EMPLOYEE.eq(a.getIdEmployee())).execute();
         SelectEmployeeService();
@@ -42,8 +42,8 @@ public class EmployeeService {
     public void InsertEmployeeService(EmployeeRecord a){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         Employee tmp = new Employee();
-        ctx.insertInto(tmp).columns(tmp.ID_BRANCH, tmp.MAIL, tmp.NAME, tmp.PERFORM, tmp.PHONE, tmp.SURNAME).
-                values(a.getIdBranch(), a.getMail(), a.getName(), a.getPerform(), a.getPhone(), a.getSurname()).execute();
+        ctx.insertInto(tmp).columns(tmp.ID_BRANCH, tmp.MAIL, tmp.NAME, tmp.ROLE, tmp.PHONE, tmp.SURNAME).
+                values(a.getIdBranch(), a.getMail(), a.getName(), a.getRole(), a.getPhone(), a.getSurname()).execute();
         SelectEmployeeService();
     }
 

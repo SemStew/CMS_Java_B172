@@ -26,20 +26,30 @@ CREATE TABLE BRANCH(
   opening_hours text  
 );
 
+CREATE TABLE MAIN_CATEGORIES(
+  id_main_category serial PRIMARY KEY
+);
+
+CREATE TABLE MAIN_CATEGORIES_NAME(
+  id_main_category integer NOT NULL REFERENCES MAIN_CATEGORIES(id_main_category),
+  id_language integer NOT NULL REFERENCES LANGUAGES(id_language),
+  name text NOT NULL
+);
+
 CREATE TABLE CATEGORIES(
   id_category serial PRIMARY KEY,
-  is_food boolean NOT NULL
+  id_main_category integer REFERENCES MAIN_CATEGORIES(id_main_category)
 );
 
 CREATE TABLE CATEGORIES_NAME(
   id_category integer NOT NULL REFERENCES CATEGORIES(id_category),
   id_language integer NOT NULL REFERENCES LANGUAGES(id_language),
-  description text NOT NULL
+  name text NOT NULL
 );
 
 CREATE TABLE UNITS(
   id_unit serial PRIMARY KEY,
-  description varchar(16) NOT NULL
+  name varchar(16) NOT NULL
 );
 
 CREATE TABLE MENU_ITEM(
@@ -73,7 +83,7 @@ CREATE TABLE MENU_ITEM_ALLERGEN(
   id_allergen integer REFERENCES ALLERGENS(id_allergen) NOT NULL
 );
 
-CREATE TABLE REZERVATION(
+CREATE TABLE RESERVATION(
   id_branch integer NOT NULL REFERENCES BRANCH(id_branch),
   r_date date NOT NULL,
   time_from time NOT NULL,
@@ -81,21 +91,21 @@ CREATE TABLE REZERVATION(
   n_table integer NOT NULL
 );
 
-CREATE TABLE REZERVATION_CONFIG(
+CREATE TABLE RESERVATION_CONFIG(
   id_language integer NOT NULL REFERENCES LANGUAGES(id_language) NOT NULL,
   header varchar(128) NOT NULL,
   table_number varchar(64) NOT NULL,
   time_from_desc varchar(64) NOT NULL
 );
 
-CREATE TABLE PERFORMANCE(
-  id_performance serial PRIMARY KEY,
+CREATE TABLE ROLE(
+  id_role serial PRIMARY KEY,
   name varchar(64)
 );
 
 CREATE TABLE EMPLOYEE(
   id_employee serial PRIMARY KEY,
-  perform integer REFERENCES PERFORMANCE(id_performance) NOT NULL,
+  role integer REFERENCES ROLE(id_role) NOT NULL,
   id_branch integer REFERENCES BRANCH(id_branch) NOT NULL,
   name varchar(64) NOT NULL,
   surname varchar(64) NOT NULL,
@@ -168,6 +178,6 @@ CREATE TABLE CONTACT_CONFIG(
   id_language integer NOT NULL REFERENCES LANGUAGES(id_language) NOT NULL,
   header varchar(128) NOT NULL,
   description text NOT NULL,
-  url_image1 text,
-  url_image2 text
+  url_image_map text,
+  url_image_restaurant text
 );

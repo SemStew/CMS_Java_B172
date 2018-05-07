@@ -32,7 +32,7 @@ public class CategoriesNameService {
     public void UpdateCategoriesNameService(CategoriesNameRecord a){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         CategoriesName tmp = new CategoriesName();
-        ctx.update(tmp).set(tmp.DESCRIPTION, a.getDescription()).
+        ctx.update(tmp).set(tmp.NAME, a.getName()).
                 where(tmp.ID_CATEGORY.eq(a.getIdCategory())).and(tmp.ID_LANGUAGE.eq(a.getIdLanguage())).execute();
         SelectCategoriesNameService();
     }
@@ -41,8 +41,8 @@ public class CategoriesNameService {
     public void InsertCategoriesNameService(CategoriesNameRecord a){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         CategoriesName tmp = new CategoriesName();
-        ctx.insertInto(tmp).columns(tmp.ID_CATEGORY, tmp.ID_LANGUAGE, tmp.DESCRIPTION).
-                values(a.getIdCategory(), a.getIdLanguage(), a.getDescription()).execute();
+        ctx.insertInto(tmp).columns(tmp.ID_CATEGORY, tmp.ID_LANGUAGE, tmp.NAME).
+                values(a.getIdCategory(), a.getIdLanguage(), a.getName()).execute();
         SelectCategoriesNameService();
     }
 
@@ -69,7 +69,7 @@ public class CategoriesNameService {
     {
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         CategoriesName tmp = new CategoriesName();
-        for(CategoriesNameRecord res: ctx.selectFrom(tmp).where(tmp.DESCRIPTION.eq(name)))
+        for(CategoriesNameRecord res: ctx.selectFrom(tmp).where(tmp.NAME.eq(name)))
             return res;
         return null;
     }
@@ -82,7 +82,7 @@ public class CategoriesNameService {
         List<String> ret = new ArrayList<>();
         for(CategoriesNameRecord res : ctx.selectFrom(tmp).where(tmp.ID_LANGUAGE.eq(1)))
         {
-            ret.add(res.getDescription());
+            ret.add(res.getName());
         }
 
         return ret;

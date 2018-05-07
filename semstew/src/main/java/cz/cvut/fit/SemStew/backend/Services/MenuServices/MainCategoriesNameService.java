@@ -1,0 +1,94 @@
+package cz.cvut.fit.SemStew.backend.Services.MenuServices;
+
+import JOOQ.tables.MainCategoriesName;
+import JOOQ.tables.records.MainCategoriesNameRecord;
+import cz.cvut.fit.SemStew.backend.PostgreSQLConnection;
+import org.jooq.DSLContext;
+import org.jooq.SQLDialect;
+import org.jooq.impl.DSL;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class MainCategoriesNameService {
+    private List<MainCategoriesNameRecord> configs;
+    private DSLContext ctx;
+
+    public MainCategoriesNameService() {
+        SelectMainCategoriesNameService();
+    }
+
+    //select
+    public void SelectMainCategoriesNameService(){
+        ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
+        configs = new ArrayList<MainCategoriesNameRecord>();
+        MainCategoriesName a = new MainCategoriesName();
+        for (MainCategoriesNameRecord rec : ctx.selectFrom(a).where(a.ID_LANGUAGE.eq(1))) {
+            configs.add(rec);
+        }
+    }
+
+    //update
+    public void UpdateMainCategoriesNameService(MainCategoriesNameRecord a){
+        ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
+        MainCategoriesName tmp = new MainCategoriesName();
+        ctx.update(tmp).set(tmp.NAME, a.getName()).
+                where(tmp.ID_MAIN_CATEGORY.eq(a.getIdMainCategory())).and(tmp.ID_LANGUAGE.eq(a.getIdLanguage())).execute();
+        SelectMainCategoriesNameService();
+    }
+
+    //insert
+    public void InsertMainCategoriesNameService(MainCategoriesNameRecord a){
+        ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
+        MainCategoriesName tmp = new MainCategoriesName();
+        ctx.insertInto(tmp).columns(tmp.ID_MAIN_CATEGORY, tmp.ID_LANGUAGE, tmp.NAME).
+                values(a.getIdMainCategory(), a.getIdLanguage(), a.getName()).execute();
+        SelectMainCategoriesNameService();
+    }
+
+    //delete
+    public void DeleteMainCategoriesNameService(MainCategoriesNameRecord a){
+        ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
+        MainCategoriesName tmp = new MainCategoriesName();
+        ctx.delete(tmp).where(tmp.ID_MAIN_CATEGORY.eq(a.getIdMainCategory())).and(tmp.ID_LANGUAGE.eq(a.getIdLanguage())).execute();
+        SelectMainCategoriesNameService();
+    }
+
+    // Record by ID
+    public MainCategoriesNameRecord MainCategoriesNameById(Integer id)
+    {
+        ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
+        MainCategoriesName tmp = new MainCategoriesName();
+        for(MainCategoriesNameRecord res : ctx.selectFrom(tmp).where(tmp.ID_MAIN_CATEGORY.eq(id)))
+            return res;
+        return null;
+    }
+
+    // Record by name
+    public  MainCategoriesNameRecord CategoriesByName(String name)
+    {
+        ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
+        MainCategoriesName tmp = new MainCategoriesName();
+        for(MainCategoriesNameRecord res: ctx.selectFrom(tmp).where(tmp.NAME.eq(name)))
+            return res;
+        return null;
+    }
+
+    // Only descriptions
+    public List<String> CategoriesDescriptions()
+    {
+        ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
+        MainCategoriesName tmp = new MainCategoriesName();
+        List<String> ret = new ArrayList<>();
+        for(MainCategoriesNameRecord res : ctx.selectFrom(tmp).where(tmp.ID_LANGUAGE.eq(1)))
+        {
+            ret.add(res.getName());
+        }
+
+        return ret;
+    }
+
+    public List<MainCategoriesNameRecord> getConfigs() {
+        return configs;
+    }
+}

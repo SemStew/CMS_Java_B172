@@ -154,7 +154,7 @@
                         <driver>org.postgresql.Driver</driver>
                         <url>jdbc:postgresql:SemStew</url>
                         <user>postgres</user>
-                        <password>postgres</password>
+                        <password>postolka11</password>
                     </jdbc>
 
                     <!-- Generator parameters -->

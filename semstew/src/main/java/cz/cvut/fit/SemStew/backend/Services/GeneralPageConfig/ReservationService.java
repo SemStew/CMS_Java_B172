@@ -1,7 +1,7 @@
 package cz.cvut.fit.SemStew.backend.Services.GeneralPageConfig;
 
-import JOOQ.tables.Rezervation;
-import JOOQ.tables.records.RezervationRecord;
+import JOOQ.tables.Reservation;
+import JOOQ.tables.records.ReservationRecord;
 import cz.cvut.fit.SemStew.backend.PostgreSQLConnection;
 import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
@@ -10,44 +10,44 @@ import org.jooq.impl.DSL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RezervationService {
-    private List<RezervationRecord> configs;
+public class ReservationService {
+    private List<ReservationRecord> configs;
     private DSLContext ctx;
 
-    public RezervationService() {
-        SelectRezervationService();
+    public ReservationService() {
+        SelectReservationService();
     }
 
     //select
-    public void SelectRezervationService(){
+    public void SelectReservationService(){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
-        configs = new ArrayList<RezervationRecord>();
-        Rezervation a = new Rezervation();
-        for (RezervationRecord rec : ctx.selectFrom(a)) {
+        configs = new ArrayList<ReservationRecord>();
+        Reservation a = new Reservation();
+        for (ReservationRecord rec : ctx.selectFrom(a)) {
             configs.add(rec);
         }
     }
 
     //update
-    public void UpdateRezervationService(RezervationRecord a){
-        SelectRezervationService();
+    public void UpdateReservationService(ReservationRecord a){
+        SelectReservationService();
     }
 
     //insert
-    public void InsertRezervationService(RezervationRecord a){
+    public void InsertReservationService(ReservationRecord a){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
-        Rezervation tmp = new Rezervation();
+        Reservation tmp = new Reservation();
         ctx.insertInto(tmp).columns(tmp.ID_BRANCH, tmp.N_TABLE, tmp.PERSON, tmp.R_DATE, tmp.TIME_FROM).
                 values(a.getIdBranch(), a.getNTable(), a.getPerson(), a.getRDate(), a.getTimeFrom()).execute();
-        SelectRezervationService();
+        SelectReservationService();
     }
 
     //delete
-    public void DeleteRezervationService(RezervationRecord a){
-        SelectRezervationService();
+    public void DeleteReservationService(ReservationRecord a){
+        SelectReservationService();
     }
 
-    public List<RezervationRecord> getConfigs() {
+    public List<ReservationRecord> getConfigs() {
         return configs;
     }
 }

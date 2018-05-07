@@ -32,7 +32,7 @@ public class CategoriesService {
     public void UpdateCategoriesService(CategoriesRecord a){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         Categories tmp = new Categories();
-        ctx.update(tmp).set(tmp.IS_FOOD, a.getIsFood()).
+        ctx.update(tmp).set(tmp.ID_MAIN_CATEGORY, a.getIdMainCategory()).
                 where(tmp.ID_CATEGORY.eq(a.getIdCategory())).execute();
         SelectCategoriesService();
     }
@@ -41,8 +41,8 @@ public class CategoriesService {
     public void InsertCategoriesService(CategoriesRecord a){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         Categories tmp = new Categories();
-        ctx.insertInto(tmp).columns(tmp.IS_FOOD).
-                values(a.getIsFood()).execute();
+        ctx.insertInto(tmp).columns(tmp.ID_MAIN_CATEGORY).
+                values(a.getIdMainCategory()).execute();
         SelectCategoriesService();
     }
 

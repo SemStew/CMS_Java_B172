@@ -45,9 +45,9 @@ public class MenuItemRepresantation {
         imageAddress = inItem.getImageName();
         price = inItem.getPrice();
 
-        categoryDescription = inCategoryName.getDescription();
+        categoryDescription = inCategoryName.getName();
 
-        unitDescription = unitsIn.getDescription();
+        unitDescription = unitsIn.getName();
     }
 
     public MenuItemRecord GetItemRecord()

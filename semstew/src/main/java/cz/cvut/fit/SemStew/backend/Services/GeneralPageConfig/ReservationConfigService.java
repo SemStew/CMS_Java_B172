@@ -1,7 +1,7 @@
 package cz.cvut.fit.SemStew.backend.Services.GeneralPageConfig;
 
-import JOOQ.tables.RezervationConfig;
-import JOOQ.tables.records.RezervationConfigRecord;
+import JOOQ.tables.ReservationConfig;
+import JOOQ.tables.records.ReservationConfigRecord;
 import cz.cvut.fit.SemStew.backend.PostgreSQLConnection;
 import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
@@ -10,48 +10,48 @@ import org.jooq.impl.DSL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RezervationConfigService {
-    private List<RezervationConfigRecord> configs;
+public class ReservationConfigService {
+    private List<ReservationConfigRecord> configs;
     private DSLContext ctx;
 
-    public RezervationConfigService() {
-        SelectRezervationConfigService();
+    public ReservationConfigService() {
+        SelectReservationConfigService();
     }
 
     //select
-    public void SelectRezervationConfigService(){
+    public void SelectReservationConfigService(){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
-        configs = new ArrayList<RezervationConfigRecord>();
-        RezervationConfig a = new RezervationConfig();
-        for (RezervationConfigRecord rec : ctx.selectFrom(a).where(a.ID_LANGUAGE.eq(1))) {
+        configs = new ArrayList<ReservationConfigRecord>();
+        ReservationConfig a = new ReservationConfig();
+        for (ReservationConfigRecord rec : ctx.selectFrom(a).where(a.ID_LANGUAGE.eq(1))) {
             configs.add(rec);
         }
     }
 
     //update
-    public void UpdateRezervationConfigService(RezervationConfigRecord a){
+    public void UpdateReservationConfigService(ReservationConfigRecord a){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
-        RezervationConfig tmp = new RezervationConfig();
+        ReservationConfig tmp = new ReservationConfig();
         ctx.update(tmp).set(tmp.HEADER, a.getHeader()).set(tmp.TABLE_NUMBER, a.getTableNumber()).
                 set(tmp.TIME_FROM_DESC, a.getTimeFromDesc()).where(tmp.ID_LANGUAGE.eq(a.getIdLanguage())).execute();
-        SelectRezervationConfigService();
+        SelectReservationConfigService();
     }
 
     //insert
-    public void InsertRezervationConfigService(RezervationConfigRecord a){
+    public void InsertReservationConfigService(ReservationConfigRecord a){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
-        RezervationConfig tmp = new RezervationConfig();
+        ReservationConfig tmp = new ReservationConfig();
         ctx.insertInto(tmp).columns(tmp.HEADER, tmp.ID_LANGUAGE, tmp.TABLE_NUMBER, tmp.TIME_FROM_DESC).
                 values(a.getHeader(), a.getIdLanguage(), a.getTableNumber(), a.getTimeFromDesc()).execute();
-        SelectRezervationConfigService();
+        SelectReservationConfigService();
     }
 
     //delete
-    public void DeleteRezervationConfigService(RezervationConfigRecord a){
-        SelectRezervationConfigService();
+    public void DeleteReservationConfigService(ReservationConfigRecord a){
+        SelectReservationConfigService();
     }
 
-    public List<RezervationConfigRecord> getConfigs() {
+    public List<ReservationConfigRecord> getConfigs() {
         return configs;
     }
 }
