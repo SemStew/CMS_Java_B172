@@ -4,14 +4,15 @@ import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.icon.VaadinIcons;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.router.PageTitle;
-import com.vaadin.flow.router.Route;
-import com.vaadin.flow.router.RouterLayout;
-import com.vaadin.flow.router.RouterLink;
+import com.vaadin.flow.router.*;
+import com.vaadin.flow.server.VaadinService;
+import cz.cvut.fit.SemStew.ui.customerviews.introlist.IntroList;
 import cz.cvut.fit.SemStew.ui.views.branchlist.BranchList;
 
 
@@ -20,7 +21,7 @@ import cz.cvut.fit.SemStew.ui.views.branchlist.BranchList;
 public class Login extends VerticalLayout
     implements RouterLayout {
     private RouterLink register;
-    private RouterLink admin;
+    private RouterLink back;
     private final H2 header = new H2();
     private final TextField userName = new TextField();
     private final PasswordField password = new PasswordField();
@@ -46,6 +47,8 @@ public class Login extends VerticalLayout
         content.setAlignItems(Alignment.STRETCH);
         content.addClassName("logreg_style");
 
+        HorizontalLayout topHead = new HorizontalLayout();
+
         header.setText("Login");
         userName.setLabel("Username:");
         password.setLabel("Password:");
@@ -54,16 +57,26 @@ public class Login extends VerticalLayout
         registrationButton.setText("Register");
         registrationButton.addClassName("btn_style");
 
+        back = new RouterLink(null,IntroList.class);
+        back.add(new Icon(VaadinIcons.CLOSE));
+        back.addClassName("back_style");
+
         register = new RouterLink(null, Registration.class);
         register.add(registrationButton);
-        admin = new RouterLink(null, BranchList.class);
-        admin.add(loginButton);
+
+        loginButton.addClickListener(buttonClickEvent ->
+        {
+           userName.setValue("Test");
+            VaadinService.getCurrentRequest().getWrappedSession().setAttribute("myvalue","logged");
+           loginButton.getUI().ifPresent(ui -> ui.navigate("admin"));
+        });
 
         Div buttons = new Div ();
         buttons.addClassName("buttons");
-        buttons.add(register,admin);
+        buttons.add(register,loginButton);
 
-        content.add(header, userName, password, buttons);
+        topHead.add(header, back);
+        content.add(topHead, userName, password, buttons);
         add(content);
     }
 

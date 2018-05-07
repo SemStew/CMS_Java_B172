@@ -8,6 +8,7 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.VaadinService;
 import cz.cvut.fit.SemStew.backend.Services.GeneralPageConfig.ContactConfigService;
 import cz.cvut.fit.SemStew.ui.CustomerLayout;
 

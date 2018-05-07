@@ -24,6 +24,7 @@ import com.vaadin.flow.component.page.Viewport;
 import com.vaadin.flow.router.*;
 import com.vaadin.flow.server.InitialPageSettings;
 import com.vaadin.flow.server.PageConfigurator;
+import com.vaadin.flow.server.VaadinService;
 import cz.cvut.fit.SemStew.backend.PostgreSQLConnection;
 
 @HtmlImport("frontend://styles/shared-styles.html")

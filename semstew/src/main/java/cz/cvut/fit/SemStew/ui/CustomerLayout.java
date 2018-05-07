@@ -1,6 +1,7 @@
 package cz.cvut.fit.SemStew.ui;
 
 import com.vaadin.flow.component.Text;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.html.*;
@@ -16,6 +17,7 @@ import com.vaadin.flow.router.RouterLayout;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.InitialPageSettings;
 import com.vaadin.flow.server.PageConfigurator;
+import com.vaadin.flow.server.VaadinService;
 import cz.cvut.fit.SemStew.backend.PostgreSQLConnection;
 import cz.cvut.fit.SemStew.ui.customerviews.aboutlist.AboutList;
 import cz.cvut.fit.SemStew.ui.customerviews.contactslist.ContactsList;
@@ -45,7 +47,16 @@ public class CustomerLayout extends Div
         ComboBox<String> languages = new ComboBox<>("Languages");
         languages.setItems("Czech","English");
         languages.setValue("English");
-        languages.addClassName("main-layout__combo");
+
+        Button loginButton = new Button("Login");
+
+        VerticalLayout comboLogin = new VerticalLayout();
+        comboLogin.addClassName("main-layout__combo");
+
+        RouterLink login = new RouterLink(null,Login.class);
+        login.add(loginButton);
+
+        comboLogin.add(languages, login);
 
         HorizontalLayout top = new HorizontalLayout();
         top.addClassName("main-layout__top");
@@ -100,7 +111,7 @@ public class CustomerLayout extends Div
         foot.add(foot__text);
         bottom.add(foot);
 
-        top.add(image,languages);
+        top.add(image,comboLogin);
 
         add(top, body, bottom);
 

@@ -11,6 +11,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.server.VaadinService;
 import cz.cvut.fit.SemStew.backend.Services.GeneralPageConfig.BranchService;
 import cz.cvut.fit.SemStew.ui.MainLayout;
 import cz.cvut.fit.SemStew.ui.views.GeneralAdminList;
@@ -45,6 +46,8 @@ public class BranchList extends GeneralAdminList {
 
 
         header.setText("Branches");
+
+        //header.setText(VaadinService.getCurrentRequest().getWrappedSession().getAttribute("myvalue").toString());
 
         branchRecords = branchServis.getConfigs();
 
