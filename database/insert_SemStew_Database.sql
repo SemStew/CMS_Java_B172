@@ -6,7 +6,7 @@ INSERT INTO LANGUAGES(name) VALUES ('Czech');
 INSERT INTO ADMINS(name, password) VALUES ('Dante', 'heslo123');
 
 --restaurant
-INSERT INTO RESTAURANT(id_admin, name, ico, image) VALUES (1, 'Dream Restaurant', 12345678, 'https://scontent-frt3-2.xx.fbcdn.net/v/t35.0-12/s2048x2048/29680738_2052341935036421_876125089_o.png?_nc_cat=0&oh=72dbec5b54c6fb1e576570ecfe3c14aa&oe=5AD6807A');
+INSERT INTO RESTAURANT(id_admin, name, ico, image) VALUES (1, 'Dream Restaurant', 12345678, 'https://image.ibb.co/eu23fd/dream_Team_Logo.png');
 
 --branches
 INSERT INTO BRANCH(id_restaurant, address, phone, description, opening_hours) VALUES (1, 'Thákurova 1516', '465123945', 'Cool pobočka', 'Zavřeno nonstop');

@@ -11,21 +11,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RestaurantService {
-    private List<RestaurantRecord> configs;
     private DSLContext ctx;
 
-    public RestaurantService() {
-        SelectRestaurantService();
-    }
+    public RestaurantService() {}
 
     //select
-    public void SelectRestaurantService(){
+    public List<RestaurantRecord> SelectRestaurantService(){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
-        configs = new ArrayList<RestaurantRecord>();
+        List<RestaurantRecord> configs = new ArrayList<RestaurantRecord>();
         Restaurant a = new Restaurant();
         for (RestaurantRecord rec : ctx.selectFrom(a)) {
             configs.add(rec);
         }
+
+        return configs;
     }
 
     //update
@@ -34,7 +33,6 @@ public class RestaurantService {
         Restaurant tmp = new Restaurant();
         ctx.update(tmp).set(tmp.NAME, a.getName()).set(tmp.ICO, a.getIco()).set(tmp.IMAGE, a.getImage()).
                 set(tmp.ID_ADMIN, a.getIdAdmin()).where(tmp.ID_RESTAURANT.eq(a.getIdRestaurant())).execute();
-        SelectRestaurantService();
     }
 
     //insert
@@ -43,7 +41,6 @@ public class RestaurantService {
         Restaurant tmp = new Restaurant();
         ctx.insertInto(tmp).columns(tmp.NAME, tmp.ICO, tmp.ID_ADMIN, tmp.IMAGE).
                 values(a.getName(), a.getIco(), a.getIdAdmin(), a.getImage()).execute();
-        SelectRestaurantService();
     }
 
     //delete
@@ -51,10 +48,19 @@ public class RestaurantService {
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         Restaurant tmp = new Restaurant();
         ctx.delete(tmp).where(tmp.ID_RESTAURANT.eq(a.getIdRestaurant())).execute();
-        SelectRestaurantService();
+    }
+
+    // getSingleInstance
+    public  RestaurantRecord GetInstance()
+    {
+        ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
+        Restaurant tmp = new Restaurant();
+        for(RestaurantRecord rec : ctx.selectFrom(tmp))
+            return rec;
+        return null;
     }
 
     public List<RestaurantRecord> getConfigs() {
-        return configs;
+        return SelectRestaurantService();
     }
 }

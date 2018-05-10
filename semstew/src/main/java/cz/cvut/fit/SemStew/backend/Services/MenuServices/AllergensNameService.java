@@ -11,21 +11,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AllergensNameService {
-    private List<AllergensNameRecord> configs;
     private DSLContext ctx;
 
-    public AllergensNameService() {
-        SelectAllergensNameService();
-    }
+    public AllergensNameService() {}
 
     //select
-    public void SelectAllergensNameService(){
+    public List<AllergensNameRecord> SelectAllergensNameService(){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
-        configs = new ArrayList<AllergensNameRecord>();
+        List<AllergensNameRecord> configs = new ArrayList<AllergensNameRecord>();
         AllergensName a = new AllergensName();
         for (AllergensNameRecord rec : ctx.selectFrom(a).where(a.ID_LANGUAGE.eq(1))) {
             configs.add(rec);
         }
+
+        return configs;
     }
 
     //update
@@ -34,7 +33,6 @@ public class AllergensNameService {
         AllergensName tmp = new AllergensName();
         ctx.update(tmp).set(tmp.ALLERGEN, a.getAllergen()).
                 where(tmp.ID_ALLERGEN.eq(a.getIdAllergen())).and(tmp.ID_LANGUAGE.eq(a.getIdLanguage())).execute();
-        SelectAllergensNameService();
     }
 
     //insert
@@ -43,7 +41,6 @@ public class AllergensNameService {
         AllergensName tmp = new AllergensName();
         ctx.insertInto(tmp).columns(tmp.ID_ALLERGEN, tmp.ID_LANGUAGE, tmp.ALLERGEN).
                 values(a.getIdAllergen(), a.getIdLanguage(), a.getAllergen()).execute();
-        SelectAllergensNameService();
     }
 
     //delete
@@ -51,10 +48,9 @@ public class AllergensNameService {
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         AllergensName tmp = new AllergensName();
         ctx.delete(tmp).where(tmp.ID_ALLERGEN.eq(a.getIdAllergen())).and(tmp.ID_LANGUAGE.eq(a.getIdLanguage())).execute();
-        SelectAllergensNameService();
     }
 
     public List<AllergensNameRecord> getConfigs() {
-        return configs;
+        return SelectAllergensNameService();
     }
 }

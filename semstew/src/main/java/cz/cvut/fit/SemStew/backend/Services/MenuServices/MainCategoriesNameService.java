@@ -11,21 +11,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainCategoriesNameService {
-    private List<MainCategoriesNameRecord> configs;
     private DSLContext ctx;
 
-    public MainCategoriesNameService() {
-        SelectMainCategoriesNameService();
-    }
+    public MainCategoriesNameService() {}
 
     //select
-    public void SelectMainCategoriesNameService(){
+    public List<MainCategoriesNameRecord> SelectMainCategoriesNameService(){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
-        configs = new ArrayList<MainCategoriesNameRecord>();
+        List<MainCategoriesNameRecord> configs = new ArrayList<MainCategoriesNameRecord>();
         MainCategoriesName a = new MainCategoriesName();
         for (MainCategoriesNameRecord rec : ctx.selectFrom(a).where(a.ID_LANGUAGE.eq(1))) {
             configs.add(rec);
         }
+
+        return configs;
     }
 
     //update
@@ -34,7 +33,6 @@ public class MainCategoriesNameService {
         MainCategoriesName tmp = new MainCategoriesName();
         ctx.update(tmp).set(tmp.NAME, a.getName()).
                 where(tmp.ID_MAIN_CATEGORY.eq(a.getIdMainCategory())).and(tmp.ID_LANGUAGE.eq(a.getIdLanguage())).execute();
-        SelectMainCategoriesNameService();
     }
 
     //insert
@@ -43,7 +41,6 @@ public class MainCategoriesNameService {
         MainCategoriesName tmp = new MainCategoriesName();
         ctx.insertInto(tmp).columns(tmp.ID_MAIN_CATEGORY, tmp.ID_LANGUAGE, tmp.NAME).
                 values(a.getIdMainCategory(), a.getIdLanguage(), a.getName()).execute();
-        SelectMainCategoriesNameService();
     }
 
     //delete
@@ -51,7 +48,6 @@ public class MainCategoriesNameService {
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         MainCategoriesName tmp = new MainCategoriesName();
         ctx.delete(tmp).where(tmp.ID_MAIN_CATEGORY.eq(a.getIdMainCategory())).and(tmp.ID_LANGUAGE.eq(a.getIdLanguage())).execute();
-        SelectMainCategoriesNameService();
     }
 
     // Record by ID
@@ -89,6 +85,6 @@ public class MainCategoriesNameService {
     }
 
     public List<MainCategoriesNameRecord> getConfigs() {
-        return configs;
+        return SelectMainCategoriesNameService();
     }
 }

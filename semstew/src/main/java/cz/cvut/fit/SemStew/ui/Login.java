@@ -1,9 +1,11 @@
 package cz.cvut.fit.SemStew.ui;
 
+import JOOQ.tables.records.AdminsRecord;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcons;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -12,8 +14,11 @@ import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.*;
 import com.vaadin.flow.server.VaadinService;
+import cz.cvut.fit.SemStew.backend.Services.GeneralPageConfig.AdminsService;
 import cz.cvut.fit.SemStew.ui.customerviews.introlist.IntroList;
 import cz.cvut.fit.SemStew.ui.views.branchlist.BranchList;
+
+import java.util.List;
 
 
 @Route(value = "login", layout = MainLayout.class)
@@ -27,6 +32,8 @@ public class Login extends VerticalLayout
     private final PasswordField password = new PasswordField();
     private final Button loginButton = new Button();
     private final Button registrationButton = new Button();
+    private final Label infoLabel = new Label();
+    private final AdminsService admin = new AdminsService();
 
     public Login()
     {
@@ -51,7 +58,11 @@ public class Login extends VerticalLayout
 
         header.setText("Login");
         userName.setLabel("Username:");
+        userName.setErrorMessage("Enter your username");
+        userName.setRequired(true);
         password.setLabel("Password:");
+        password.setErrorMessage("Enter your password");
+        password.setRequired(true);
         loginButton.setText("Log in");
         loginButton.addClassName("btn_style");
         registrationButton.setText("Register");
@@ -66,9 +77,31 @@ public class Login extends VerticalLayout
 
         loginButton.addClickListener(buttonClickEvent ->
         {
-           userName.setValue("Test");
-            VaadinService.getCurrentRequest().getWrappedSession().setAttribute("myvalue","logged");
-           loginButton.getUI().ifPresent(ui -> ui.navigate("admin"));
+            List<AdminsRecord> admins = admin.getConfigs();
+            boolean found = false;
+            if(userName.isEmpty() || password.isEmpty()){
+                if(userName.isEmpty())
+                    userName.setInvalid(true);
+                if(password.isEmpty())
+                    password.setInvalid(true);
+                return;
+            }
+
+            for(AdminsRecord adminsRecord : admins)
+            {
+                if(adminsRecord.getName().equals(userName.getValue())
+                        && adminsRecord.getPassword().equals(password.getValue()))
+                {
+                    found = true;
+                    break;
+                }
+            }
+            if(found) {
+                VaadinService.getCurrentRequest().getWrappedSession().setAttribute("myvalue", "logged");
+                loginButton.getUI().ifPresent(ui -> ui.navigate("admin"));
+            } else {
+                infoLabel.setText("User name or password incorrect");
+            }
         });
 
         Div buttons = new Div ();
@@ -76,7 +109,7 @@ public class Login extends VerticalLayout
         buttons.add(register,loginButton);
 
         topHead.add(header, back);
-        content.add(topHead, userName, password, buttons);
+        content.add(topHead, userName, password, buttons, infoLabel);
         add(content);
     }
 

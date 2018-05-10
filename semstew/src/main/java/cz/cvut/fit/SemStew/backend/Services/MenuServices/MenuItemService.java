@@ -11,21 +11,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MenuItemService {
-    private List<MenuItemRecord> configs;
     private DSLContext ctx;
 
-    public MenuItemService() {
-        SelectMenuItemService();
-    }
+    public MenuItemService() {}
 
     //select
-    public void SelectMenuItemService(){
+    public List<MenuItemRecord> SelectMenuItemService(){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
-        configs = new ArrayList<MenuItemRecord>();
+        List<MenuItemRecord> configs = new ArrayList<MenuItemRecord>();
         MenuItem a = new MenuItem();
         for (MenuItemRecord rec : ctx.selectFrom(a)) {
             configs.add(rec);
         }
+
+        return configs;
     }
 
     //update
@@ -35,7 +34,6 @@ public class MenuItemService {
         ctx.update(tmp).set(tmp.AMOUNT, a.getAmount()).set(tmp.ID_UNIT, a.getIdUnit()).
                         set(tmp.IMAGE_NAME, a.getImageName()).set(tmp.PRICE, a.getPrice()).
                         where(tmp.ID_CATEGORY.eq(a.getIdCategory())).and(tmp.ID_MENU_ITEM.eq(a.getIdMenuItem())).execute();
-        SelectMenuItemService();
     }
 
     //insert
@@ -44,7 +42,6 @@ public class MenuItemService {
         MenuItem tmp = new MenuItem();
         ctx.insertInto(tmp).columns(tmp.ID_MENU_ITEM, tmp.ID_CATEGORY, tmp.AMOUNT, tmp.ID_UNIT, tmp.IMAGE_NAME, tmp.PRICE).
                 values(a.getIdMenuItem(), a.getIdCategory(), a.getAmount(), a.getIdUnit(), a.getImageName(), a.getPrice()).execute();
-        SelectMenuItemService();
     }
 
     //delete
@@ -52,10 +49,9 @@ public class MenuItemService {
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         MenuItem tmp = new MenuItem();
         ctx.delete(tmp).where(tmp.ID_CATEGORY.eq(a.getIdCategory())).and(tmp.ID_MENU_ITEM.eq(a.getIdMenuItem())).execute();
-        SelectMenuItemService();
     }
 
     public List<MenuItemRecord> getConfigs() {
-        return configs;
+        return SelectMenuItemService();
     }
 }

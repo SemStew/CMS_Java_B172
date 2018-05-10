@@ -41,7 +41,7 @@ public class CustomerLayout extends Div
     public CustomerLayout() {
         PostgreSQLConnection postgre = new PostgreSQLConnection();
         Image image = new Image();
-        image.setSrc("https://scontent-frt3-2.xx.fbcdn.net/v/t35.0-12/s2048x2048/29680738_2052341935036421_876125089_o.png?_nc_cat=0&oh=72dbec5b54c6fb1e576570ecfe3c14aa&oe=5AD6807A");
+        image.setSrc("https://image.ibb.co/eu23fd/dream_Team_Logo.png");
         image.addClassName("main-layout__picture");
 
         ComboBox<String> languages = new ComboBox<>("Languages");

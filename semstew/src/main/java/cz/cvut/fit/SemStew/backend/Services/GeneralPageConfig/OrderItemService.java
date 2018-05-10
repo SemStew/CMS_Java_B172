@@ -11,26 +11,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrderItemService {
-    private List<OrderItemRecord> configs;
     private DSLContext ctx;
 
-    public OrderItemService() {
-        SelectOrderItemService();
-    }
+    public OrderItemService() {}
 
     //select
-    public void SelectOrderItemService(){
+    public List<OrderItemRecord> SelectOrderItemService(){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
-        configs = new ArrayList<OrderItemRecord>();
+        List<OrderItemRecord> configs = new ArrayList<OrderItemRecord>();
         OrderItem a = new OrderItem();
         for (OrderItemRecord rec : ctx.selectFrom(a)) {
             configs.add(rec);
         }
+
+        return configs;
     }
 
     //update
     public void UpdateOrderItemService(OrderItemRecord a){
-        SelectOrderItemService();
+        System.out.println("Method not implemented");
     }
 
     //insert
@@ -39,7 +38,6 @@ public class OrderItemService {
         OrderItem tmp = new OrderItem();
         ctx.insertInto(tmp).columns(tmp.ID_MENU_ITEM, tmp.ID_ORDER).
                 values(a.getIdMenuItem(), a.getIdOrder()).execute();
-        SelectOrderItemService();
     }
 
     //delete
@@ -47,10 +45,9 @@ public class OrderItemService {
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         OrderItem tmp = new OrderItem();
         ctx.delete(tmp).where(tmp.ID_MENU_ITEM.eq(a.getIdMenuItem())).and(tmp.ID_ORDER.eq(a.getIdOrder())).execute();
-        SelectOrderItemService();
     }
 
     public List<OrderItemRecord> getConfigs() {
-        return configs;
+        return SelectOrderItemService();
     }
 }

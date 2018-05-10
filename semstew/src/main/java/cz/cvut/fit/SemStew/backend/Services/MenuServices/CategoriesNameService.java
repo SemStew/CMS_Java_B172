@@ -11,21 +11,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CategoriesNameService {
-    private List<CategoriesNameRecord> configs;
     private DSLContext ctx;
 
-    public CategoriesNameService() {
-        SelectCategoriesNameService();
-    }
+    public CategoriesNameService() {}
 
     //select
-    public void SelectCategoriesNameService(){
+    public List<CategoriesNameRecord> SelectCategoriesNameService(){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
-        configs = new ArrayList<CategoriesNameRecord>();
+        List<CategoriesNameRecord> configs = new ArrayList<CategoriesNameRecord>();
         CategoriesName a = new CategoriesName();
         for (CategoriesNameRecord rec : ctx.selectFrom(a).where(a.ID_LANGUAGE.eq(1))) {
             configs.add(rec);
         }
+
+        return configs;
     }
 
     //update
@@ -34,7 +33,6 @@ public class CategoriesNameService {
         CategoriesName tmp = new CategoriesName();
         ctx.update(tmp).set(tmp.NAME, a.getName()).
                 where(tmp.ID_CATEGORY.eq(a.getIdCategory())).and(tmp.ID_LANGUAGE.eq(a.getIdLanguage())).execute();
-        SelectCategoriesNameService();
     }
 
     //insert
@@ -43,7 +41,6 @@ public class CategoriesNameService {
         CategoriesName tmp = new CategoriesName();
         ctx.insertInto(tmp).columns(tmp.ID_CATEGORY, tmp.ID_LANGUAGE, tmp.NAME).
                 values(a.getIdCategory(), a.getIdLanguage(), a.getName()).execute();
-        SelectCategoriesNameService();
     }
 
     //delete
@@ -51,7 +48,6 @@ public class CategoriesNameService {
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         CategoriesName tmp = new CategoriesName();
         ctx.delete(tmp).where(tmp.ID_CATEGORY.eq(a.getIdCategory())).and(tmp.ID_LANGUAGE.eq(a.getIdLanguage())).execute();
-        SelectCategoriesNameService();
     }
 
     // Record by ID
@@ -89,6 +85,6 @@ public class CategoriesNameService {
     }
 
     public List<CategoriesNameRecord> getConfigs() {
-        return configs;
+        return SelectCategoriesNameService();
     }
 }

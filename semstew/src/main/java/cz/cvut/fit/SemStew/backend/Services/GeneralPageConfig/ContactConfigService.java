@@ -11,39 +11,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ContactConfigService {
-    private List<ContactConfigRecord> configs;
     private DSLContext ctx;
 
-    public ContactConfigService() {
-        SelectContactConfigService();
-    }
+    public ContactConfigService() {}
 
     //select
-    public void SelectContactConfigService(){
+    public List<ContactConfigRecord> SelectContactConfigService(){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
-        configs = new ArrayList<ContactConfigRecord>();
+        List<ContactConfigRecord> configs = new ArrayList<ContactConfigRecord>();
         ContactConfig a = new ContactConfig();
         for (ContactConfigRecord rec : ctx.selectFrom(a).where(a.ID_LANGUAGE.eq(1))) {
             configs.add(rec);
         }
+
+        return configs;
     }
 
     //update
     public void UpdateContactConfigService(ContactConfigRecord a){
-        SelectContactConfigService();
+        System.out.println("Method not implemented");
     }
 
     //insert
     public void InsertContactConfigService(ContactConfigRecord a){
-        SelectContactConfigService();
+        System.out.println("Method not implemented");
     }
 
     //delete
     public void DeleteContactConfigService(ContactConfigRecord a){
-        SelectContactConfigService();
+        System.out.println("Method not implemented");
     }
 
     public List<ContactConfigRecord> getConfigs() {
-        return configs;
+        return SelectContactConfigService();
     }
 }

@@ -11,21 +11,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BranchService {
-    private List<BranchRecord> configs;
     private DSLContext ctx;
 
-    public BranchService() {
-        SelectBranchService();
-    }
+    public BranchService() {}
 
     //select
-    public void SelectBranchService(){
+    public List<BranchRecord> SelectBranchService(){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
-        configs = new ArrayList<BranchRecord>();
+        List<BranchRecord> configs = new ArrayList<BranchRecord>();
         Branch a = new Branch();
         for (BranchRecord rec : ctx.selectFrom(a)) {
             configs.add(rec);
         }
+
+        return configs;
     }
 
     //update
@@ -35,7 +34,6 @@ public class BranchService {
         ctx.update(tmp).set(tmp.ADDRESS, a.getAddress()).set(tmp.DESCRIPTION, a.getDescription()).
                         set(tmp.PHONE, a.getPhone()).set(tmp.OPENING_HOURS, a.getOpeningHours()).
                 where(tmp.ID_RESTAURANT.eq(a.getIdRestaurant())).and(tmp.ID_BRANCH.eq(a.getIdBranch())).execute();
-        SelectBranchService();
     }
 
     //insert
@@ -44,7 +42,6 @@ public class BranchService {
         Branch tmp = new Branch();
         ctx.insertInto(tmp).columns(tmp.ID_RESTAURANT, tmp.ADDRESS, tmp.DESCRIPTION, tmp.PHONE, tmp.OPENING_HOURS).
                 values(a.getIdRestaurant(), a.getAddress(), a.getDescription(), a.getPhone(), a.getOpeningHours()).execute();
-        SelectBranchService();
     }
 
     //delete
@@ -52,10 +49,9 @@ public class BranchService {
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         Branch tmp = new Branch();
         ctx.delete(tmp).where(tmp.ID_BRANCH.eq(a.getIdBranch())).execute();
-        SelectBranchService();
     }
 
     public List<BranchRecord> getConfigs() {
-        return configs;
+        return SelectBranchService();
     }
 }

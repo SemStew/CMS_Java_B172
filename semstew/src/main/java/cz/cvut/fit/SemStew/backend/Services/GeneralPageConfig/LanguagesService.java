@@ -11,21 +11,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LanguagesService {
-    private List<LanguagesRecord> configs;
     private DSLContext ctx;
 
-    public LanguagesService() {
-        SelectLanguagesService();
-    }
+    public LanguagesService() {}
 
     //select
-    public void SelectLanguagesService(){
+    public List<LanguagesRecord> SelectLanguagesService(){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
-        configs = new ArrayList<LanguagesRecord>();
+        List<LanguagesRecord> configs = new ArrayList<LanguagesRecord>();
         Languages a = new Languages();
         for (LanguagesRecord rec : ctx.selectFrom(a).where(a.ID_LANGUAGE.eq(1))) {
             configs.add(rec);
         }
+
+        return configs;
     }
 
     //update
@@ -34,7 +33,6 @@ public class LanguagesService {
         Languages tmp = new Languages();
         ctx.update(tmp).set(tmp.NAME, a.getName()).
                 where(tmp.ID_LANGUAGE.eq(a.getIdLanguage())).execute();
-        SelectLanguagesService();
     }
 
     //insert
@@ -42,7 +40,6 @@ public class LanguagesService {
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         Languages tmp = new Languages();
         ctx.insertInto(tmp).columns(tmp.NAME).values(a.getName()).execute();
-        SelectLanguagesService();
     }
 
     //delete
@@ -50,10 +47,9 @@ public class LanguagesService {
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         Languages tmp = new Languages();
         ctx.delete(tmp).where(tmp.ID_LANGUAGE.eq(a.getIdLanguage())).execute();
-        SelectLanguagesService();
     }
 
     public List<LanguagesRecord> getConfigs() {
-        return configs;
+        return SelectLanguagesService();
     }
 }

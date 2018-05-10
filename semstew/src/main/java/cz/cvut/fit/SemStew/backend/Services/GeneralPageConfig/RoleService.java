@@ -11,21 +11,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RoleService {
-    private List<RoleRecord> configs;
     private DSLContext ctx;
 
-    public RoleService() {
-        SelectRoleService();
-    }
+    public RoleService() {}
 
     //select
-    public void SelectRoleService(){
+    public List<RoleRecord> SelectRoleService(){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
-        configs = new ArrayList<RoleRecord>();
+        List<RoleRecord> configs = new ArrayList<RoleRecord>();
         Role a = new Role();
         for (RoleRecord rec : ctx.selectFrom(a)) {
             configs.add(rec);
         }
+
+        return configs;
     }
 
     //update
@@ -34,7 +33,6 @@ public class RoleService {
         Role tmp = new Role();
         ctx.update(tmp).set(tmp.NAME, a.getName()).
                 where(tmp.ID_ROLE.eq(a.getIdRole())).execute();
-        SelectRoleService();
     }
 
     //insert
@@ -42,7 +40,6 @@ public class RoleService {
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         Role tmp = new Role();
         ctx.insertInto(tmp).columns(tmp.NAME).values(a.getName()).execute();
-        SelectRoleService();
     }
 
     //delete
@@ -50,10 +47,9 @@ public class RoleService {
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         Role tmp = new Role();
         ctx.delete(tmp).where(tmp.ID_ROLE.eq(a.getIdRole())).execute();
-        SelectRoleService();
     }
 
     public List<RoleRecord> getConfigs() {
-        return configs;
+        return SelectRoleService();
     }
 }

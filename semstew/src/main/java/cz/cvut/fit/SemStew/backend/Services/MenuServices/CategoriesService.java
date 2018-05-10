@@ -11,21 +11,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CategoriesService {
-    private List<CategoriesRecord> configs;
     private DSLContext ctx;
 
-    public CategoriesService() {
-        SelectCategoriesService();
-    }
+    public CategoriesService() {}
 
     //select
-    public void SelectCategoriesService(){
+    public List<CategoriesRecord> SelectCategoriesService(){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
-        configs = new ArrayList<CategoriesRecord>();
+        List<CategoriesRecord> configs = new ArrayList<CategoriesRecord>();
         Categories a = new Categories();
         for (CategoriesRecord rec : ctx.selectFrom(a)) {
             configs.add(rec);
         }
+
+        return configs;
     }
 
     //update
@@ -34,7 +33,6 @@ public class CategoriesService {
         Categories tmp = new Categories();
         ctx.update(tmp).set(tmp.ID_MAIN_CATEGORY, a.getIdMainCategory()).
                 where(tmp.ID_CATEGORY.eq(a.getIdCategory())).execute();
-        SelectCategoriesService();
     }
 
     //insert
@@ -43,7 +41,6 @@ public class CategoriesService {
         Categories tmp = new Categories();
         ctx.insertInto(tmp).columns(tmp.ID_MAIN_CATEGORY).
                 values(a.getIdMainCategory()).execute();
-        SelectCategoriesService();
     }
 
     //delete
@@ -51,10 +48,9 @@ public class CategoriesService {
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         Categories tmp = new Categories();
         ctx.delete(tmp).where(tmp.ID_CATEGORY.eq(a.getIdCategory())).execute();
-        SelectCategoriesService();
     }
 
     public List<CategoriesRecord> getConfigs() {
-        return configs;
+        return SelectCategoriesService();
     }
 }

@@ -11,26 +11,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MenuItemAllergenService {
-    private List<MenuItemAllergenRecord> configs;
     private DSLContext ctx;
 
-    public MenuItemAllergenService() {
-        SelectMenuItemAllergenService();
-    }
+    public MenuItemAllergenService() {}
 
     //select
-    public void SelectMenuItemAllergenService(){
+    public List<MenuItemAllergenRecord> SelectMenuItemAllergenService(){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
-        configs = new ArrayList<MenuItemAllergenRecord>();
+        List<MenuItemAllergenRecord> configs = new ArrayList<MenuItemAllergenRecord>();
         MenuItemAllergen a = new MenuItemAllergen();
         for (MenuItemAllergenRecord rec : ctx.selectFrom(a)) {
             configs.add(rec);
         }
+
+        return configs;
     }
 
     //update
     public void UpdateMenuItemAllergenService(MenuItemAllergenRecord a){
-        SelectMenuItemAllergenService();
+        System.out.println("Method not implemented");
     }
 
     //insert
@@ -38,7 +37,6 @@ public class MenuItemAllergenService {
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         MenuItemAllergen tmp = new MenuItemAllergen();
         ctx.insertInto(tmp).columns(tmp.ID_ALLERGEN, tmp.ID_MENU_ITEM).values(a.getIdAllergen(), a.getIdMenuItem()).execute();
-        SelectMenuItemAllergenService();
     }
 
     //delete
@@ -46,10 +44,9 @@ public class MenuItemAllergenService {
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         MenuItemAllergen tmp = new MenuItemAllergen();
         ctx.delete(tmp).where(tmp.ID_ALLERGEN.eq(a.getIdAllergen())).and(tmp.ID_MENU_ITEM.eq(a.getIdMenuItem())).execute();
-        SelectMenuItemAllergenService();
     }
 
     public List<MenuItemAllergenRecord> getConfigs() {
-        return configs;
+        return SelectMenuItemAllergenService();
     }
 }

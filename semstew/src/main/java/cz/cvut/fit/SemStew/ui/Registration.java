@@ -17,6 +17,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLayout;
 import com.vaadin.flow.router.RouterLink;
+import cz.cvut.fit.SemStew.backend.CorrectnessControler;
 import cz.cvut.fit.SemStew.backend.Services.GeneralPageConfig.AdminsService;
 import cz.cvut.fit.SemStew.backend.Services.GeneralPageConfig.RestaurantService;
 
@@ -92,9 +93,16 @@ public class Registration extends VerticalLayout
         buttons.add(back,registrationButton);
 
         registrationButton.addClickListener(buttonClickEvent -> {
-            if(!password.getValue().equals(passwordRepeat.getValue()))
-            {
+            if(!password.getValue().equals(passwordRepeat.getValue())) {
                 infoLabel.setText("Passwords are different");
+                return;
+            }
+            if(!CorrectnessControler.OnlyNumbers(ico.getValue())){
+                infoLabel.setText("ICO is numbers only");
+                return;
+            }
+            if(UINotFilled()){
+                infoLabel.setText("Fill all fields");
                 return;
             }
             AdminsRecord tmp = new AdminsRecord();
@@ -123,6 +131,12 @@ public class Registration extends VerticalLayout
 
         content.add(header, userName, passwords, names, ico, email, restaurantName, buttons,infoLabel);
         add(content);
+    }
+
+    private boolean UINotFilled()
+    {
+        return (userName.isEmpty() || password.isEmpty() || passwordRepeat.isEmpty() || forname.isEmpty()
+                || surname.isEmpty() || ico.isEmpty() || email.isEmpty() || restaurantName.isEmpty());
     }
 
     private void addFoot () {
