@@ -52,6 +52,15 @@ public class AboutUsConfigService {
         ctx.delete(tmp).where(tmp.ID_LANGUAGE.eq(a.getIdLanguage())).execute();
     }
 
+    // get by language id
+    public AboutUsConfigRecord GetByLanguageId(int id){
+        ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
+        AboutUsConfig tmp = new AboutUsConfig();
+        for(AboutUsConfigRecord rec : ctx.selectFrom(tmp).where(tmp.ID_LANGUAGE.eq(id)))
+            return rec;
+        return null;
+    }
+
     public List<AboutUsConfigRecord> getConfigs() {
         return SelectAllAboutUsConfigService();
     }

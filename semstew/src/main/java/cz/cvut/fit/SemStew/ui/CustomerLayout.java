@@ -1,5 +1,6 @@
 package cz.cvut.fit.SemStew.ui;
 
+import JOOQ.tables.records.LanguagesRecord;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
@@ -19,11 +20,16 @@ import com.vaadin.flow.server.InitialPageSettings;
 import com.vaadin.flow.server.PageConfigurator;
 import com.vaadin.flow.server.VaadinService;
 import cz.cvut.fit.SemStew.backend.PostgreSQLConnection;
+import cz.cvut.fit.SemStew.backend.Services.GeneralPageConfig.GeneralConfigService;
+import cz.cvut.fit.SemStew.backend.Services.GeneralPageConfig.LanguagesService;
 import cz.cvut.fit.SemStew.ui.customerviews.aboutlist.AboutList;
 import cz.cvut.fit.SemStew.ui.customerviews.contactslist.ContactsList;
 import cz.cvut.fit.SemStew.ui.customerviews.introlist.IntroList;
 import cz.cvut.fit.SemStew.ui.customerviews.menuslist.MenusList;
 import cz.cvut.fit.SemStew.ui.customerviews.reservationlist.ReservationList;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @HtmlImport("frontend://styles/customer-styles.html")
 @Viewport("width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes")
@@ -37,16 +43,40 @@ public class CustomerLayout extends Div
     private RouterLink about;
     private RouterLink reservations;
     private final HorizontalLayout bottom = new HorizontalLayout();
+    private final GeneralConfigService generalService = new GeneralConfigService();
+    private final LanguagesService languagesService = new LanguagesService();
 
     public CustomerLayout() {
         PostgreSQLConnection postgre = new PostgreSQLConnection();
         Image image = new Image();
-        image.setSrc("https://image.ibb.co/eu23fd/dream_Team_Logo.png");
+        image.setSrc(generalService.GetInstance().getUrlMainImage());
         image.addClassName("main-layout__picture");
 
+        List<LanguagesRecord> languagesRecords = languagesService.getConfigs();
+
+        List<String> languageNames = new ArrayList<>();
+
+        for(LanguagesRecord rec : languagesRecords)
+            languageNames.add(rec.getName());
+
         ComboBox<String> languages = new ComboBox<>("Languages");
-        languages.setItems("Czech","English");
-        languages.setValue("English");
+        languages.setItems(languageNames);
+        languages.setValue(languageNames.get(0));
+
+        if(VaadinService.getCurrentRequest().getWrappedSession().getAttribute("language") == null) {
+            VaadinService.getCurrentRequest().getWrappedSession().setAttribute("language", languageNames.get(0));
+        }else
+            languages.setValue(VaadinService.getCurrentRequest().getWrappedSession().getAttribute("language").toString());
+
+        languages.addValueChangeListener(valueChangeEvent -> {
+            if(languageNames.stream().filter(name -> name.equals(languages.getValue())).count() == 0){
+                languages.setErrorMessage("Select existing language");
+                languages.setInvalid(true);
+                return;
+            }
+            VaadinService.getCurrentRequest().getWrappedSession().setAttribute("language",languages.getValue());
+            this.getUI().ifPresent(ui -> ui.getPage().reload());
+        });
 
         Button loginButton = new Button("Login");
 

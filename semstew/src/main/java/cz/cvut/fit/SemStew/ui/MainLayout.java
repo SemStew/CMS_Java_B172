@@ -15,6 +15,7 @@
  */
 package cz.cvut.fit.SemStew.ui;
 
+import JOOQ.tables.records.LanguagesRecord;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.html.Div;
@@ -26,22 +27,51 @@ import com.vaadin.flow.server.InitialPageSettings;
 import com.vaadin.flow.server.PageConfigurator;
 import com.vaadin.flow.server.VaadinService;
 import cz.cvut.fit.SemStew.backend.PostgreSQLConnection;
+import cz.cvut.fit.SemStew.backend.Services.GeneralPageConfig.GeneralConfigService;
+import cz.cvut.fit.SemStew.backend.Services.GeneralPageConfig.LanguagesService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @HtmlImport("frontend://styles/shared-styles.html")
 @Viewport("width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes")
 public class MainLayout extends Div
         implements RouterLayout, PageConfigurator {
 
+        private final GeneralConfigService generalService = new GeneralConfigService();
+        private final LanguagesService languagesService = new LanguagesService();
+
     public MainLayout() {
         PostgreSQLConnection postgre = new PostgreSQLConnection();
         Image image = new Image();
-        image.setSrc("https://scontent-frt3-2.xx.fbcdn.net/v/t35.0-12/s2048x2048/29680738_2052341935036421_876125089_o.png?_nc_cat=0&oh=72dbec5b54c6fb1e576570ecfe3c14aa&oe=5AD6807A");
+        image.setSrc(generalService.GetInstance().getUrlMainImage());
         image.addClassName("main-layout__picture");
 
+        List<LanguagesRecord> languagesRecords = languagesService.getConfigs();
+        List<String> languageNames = new ArrayList<>();
+
+        for(LanguagesRecord rec : languagesRecords)
+            languageNames.add(rec.getName());
+
         ComboBox<String> languages = new ComboBox<>("Languages");
-        languages.setItems("Czech","English");
-        languages.setValue("English");
+        languages.setItems(languageNames);
+        languages.setValue(languageNames.get(0));
         languages.addClassName("main-layout__combo");
+
+        if(VaadinService.getCurrentRequest().getWrappedSession().getAttribute("language") == null)
+            VaadinService.getCurrentRequest().getWrappedSession().setAttribute("language",languageNames.get(0));
+        else
+            languages.setValue(VaadinService.getCurrentRequest().getWrappedSession().getAttribute("language").toString());
+
+        languages.addValueChangeListener(valueChangeEvent -> {
+            if(languageNames.stream().filter(name -> name.equals(languages.getValue())).count() == 0){
+                languages.setErrorMessage("Select existing language");
+                languages.setInvalid(true);
+                return;
+            }
+            VaadinService.getCurrentRequest().getWrappedSession().setAttribute("language",languages.getValue());
+            this.getUI().ifPresent(ui -> ui.getPage().reload());
+        });
 
         HorizontalLayout top = new HorizontalLayout();
         top.addClassName("main-layout__top");

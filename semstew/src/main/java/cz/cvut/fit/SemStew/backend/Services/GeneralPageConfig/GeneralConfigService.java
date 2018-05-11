@@ -48,6 +48,15 @@ public class GeneralConfigService {
         ctx.delete(tmp).execute();
     }
 
+    // get instance
+    public GeneralConfigRecord GetInstance(){
+        ctx = DSL.using(PostgreSQLConnection.getConnection(),SQLDialect.POSTGRES);
+        GeneralConfig tmp = new GeneralConfig();
+        for(GeneralConfigRecord rec : ctx.selectFrom(tmp))
+            return rec;
+        return null;
+    }
+
     public List<GeneralConfigRecord> getConfigs() {
         return SelectGeneralConfigService();
     }

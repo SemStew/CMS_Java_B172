@@ -246,7 +246,7 @@ INSERT INTO NEWS_NAME(id_news, id_language, header, description) VALUES (1, 1, '
 INSERT INTO NEWS_NAME(id_news, id_language, header, description) VALUES (1, 2, 'Narozenninová akce', 'Nápoj zdarma pro lidi narozené 17.4.');
 
 --main picture
-INSERT INTO GENERAL_CONFIG(url_main_image) VALUES ('https://scontent-frt3-2.xx.fbcdn.net/v/t35.0-12/s2048x2048/29680738_2052341935036421_876125089_o.png?_nc_cat=0&oh=72dbec5b54c6fb1e576570ecfe3c14aa&oe=5AD6807A');
+INSERT INTO GENERAL_CONFIG(url_main_image) VALUES ('https://image.ibb.co/eu23fd/dream_Team_Logo.png');
 
 --introduction
 INSERT INTO INTRO_CONFIG(id_language, header, short_description, news_header) VALUES (1, 'Introduction', 'Welcome!\nHere are some of recent events:', 'News and events');

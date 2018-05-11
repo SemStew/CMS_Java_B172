@@ -51,6 +51,15 @@ public class IntroConfigService {
         ctx.delete(tmp).where(tmp.ID_LANGUAGE.eq(a.getIdLanguage())).execute();
     }
 
+    // get by language ID
+    public IntroConfigRecord GetByLanquageID(int id){
+        ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
+        IntroConfig tmp = new IntroConfig();
+        for(IntroConfigRecord rec : ctx.selectFrom(tmp).where(tmp.ID_LANGUAGE.eq(id)))
+            return rec;
+        return null;
+    }
+
     public List<IntroConfigRecord> getConfigs() {
         return SelectIntroConfigService();
     }

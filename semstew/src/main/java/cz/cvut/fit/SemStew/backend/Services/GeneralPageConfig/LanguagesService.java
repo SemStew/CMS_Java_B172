@@ -20,7 +20,7 @@ public class LanguagesService {
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         List<LanguagesRecord> configs = new ArrayList<LanguagesRecord>();
         Languages a = new Languages();
-        for (LanguagesRecord rec : ctx.selectFrom(a).where(a.ID_LANGUAGE.eq(1))) {
+        for (LanguagesRecord rec : ctx.selectFrom(a)) {
             configs.add(rec);
         }
 
@@ -47,6 +47,15 @@ public class LanguagesService {
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         Languages tmp = new Languages();
         ctx.delete(tmp).where(tmp.ID_LANGUAGE.eq(a.getIdLanguage())).execute();
+    }
+
+    // get id by name
+    public int GetIdByName(String name){
+        ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
+        Languages tmp = new Languages();
+        for(LanguagesRecord rec : ctx.selectFrom(tmp).where(tmp.NAME.eq(name)))
+            return rec.getIdLanguage();
+        return -1;
     }
 
     public List<LanguagesRecord> getConfigs() {

@@ -10,6 +10,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.VaadinService;
 import cz.cvut.fit.SemStew.backend.Services.GeneralPageConfig.ContactConfigService;
+import cz.cvut.fit.SemStew.backend.Services.GeneralPageConfig.LanguagesService;
 import cz.cvut.fit.SemStew.ui.CustomerLayout;
 
 import java.util.List;
@@ -22,6 +23,7 @@ public class ContactsList extends VerticalLayout {
     private final Image image1 = new Image();
     private final Image image2 = new Image();
     private ContactConfigService contactsService = new ContactConfigService();
+    private LanguagesService languagesService = new LanguagesService();
 
     public ContactsList(){
         init();
@@ -44,8 +46,15 @@ public class ContactsList extends VerticalLayout {
         imageContainer.setDefaultHorizontalComponentAlignment(Alignment.STRETCH);
         imageContainer.addClassName("pictures");
 
-        List<ContactConfigRecord> configRecords = contactsService.getConfigs();
-        ContactConfigRecord configSet = configRecords.get(0);
+        String name = "English";
+
+        if(VaadinService.getCurrentRequest().getWrappedSession().getAttribute("language") != null) {
+            name = VaadinService.getCurrentRequest().getWrappedSession().getAttribute("language").toString();
+        }
+
+        int id = languagesService.GetIdByName(name);
+
+        ContactConfigRecord configSet = contactsService.GetByLanguageId(id);
 
         header.setText(configSet.getHeader());
         description.setText(configSet.getDescription());

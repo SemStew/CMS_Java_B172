@@ -20,7 +20,7 @@ public class ContactConfigService {
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         List<ContactConfigRecord> configs = new ArrayList<ContactConfigRecord>();
         ContactConfig a = new ContactConfig();
-        for (ContactConfigRecord rec : ctx.selectFrom(a).where(a.ID_LANGUAGE.eq(1))) {
+        for (ContactConfigRecord rec : ctx.selectFrom(a)) {
             configs.add(rec);
         }
 
@@ -40,6 +40,15 @@ public class ContactConfigService {
     //delete
     public void DeleteContactConfigService(ContactConfigRecord a){
         System.out.println("Method not implemented");
+    }
+
+    // get by language Id
+    public ContactConfigRecord GetByLanguageId(int id){
+        ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
+        ContactConfig tmp = new ContactConfig();
+        for(ContactConfigRecord rec : ctx.selectFrom(tmp).where(tmp.ID_LANGUAGE.eq(id)))
+            return rec;
+        return null;
     }
 
     public List<ContactConfigRecord> getConfigs() {
