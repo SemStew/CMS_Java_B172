@@ -52,13 +52,20 @@ CREATE TABLE UNITS(
   name varchar(16) NOT NULL
 );
 
+CREATE TABLE MENUS(
+  id_menu serial PRIMARY KEY,
+  id_branch integer NOT NULL REFERENCES BRANCH(id_branch),
+  url_image text NOT NULL
+);
+
 CREATE TABLE MENU_ITEM(
   id_menu_item serial PRIMARY KEY,
   price integer NOT NULL,
   image_name text,
   amount decimal NOT NULL,
   id_unit integer REFERENCES UNITS(id_unit) NOT NULL,     
-  id_category integer REFERENCES CATEGORIES(id_category) NOT NULL
+  id_category integer REFERENCES CATEGORIES(id_category) NOT NULL,
+  id_menu integer REFERENCES MENUS(id_menu)
 );
 
 CREATE TABLE MENU_ITEM_NAME(
@@ -153,12 +160,6 @@ CREATE TABLE INTRO_CONFIG(
 CREATE TABLE MENUS_CONFIG(
   id_language integer NOT NULL REFERENCES LANGUAGES(id_language) NOT NULL,
   header varchar(128) NOT NULL
-);
-
-CREATE TABLE MENUS(
-  id_menu serial PRIMARY KEY,
-  id_branch integer NOT NULL REFERENCES BRANCH(id_branch),
-  url_image text NOT NULL
 );
 
 CREATE TABLE MENUS_NAME(
