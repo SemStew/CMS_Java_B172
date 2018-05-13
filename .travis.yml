@@ -1,6 +1,15 @@
 language: java
 jdk: oraclejdk8
 install: true
+services:
+  - postgresql
+before_script:
+  - psql -c 'CREATE DATABASE "SemStew";' -U postgres
+  - psql -U postgres --list
+  - psql -d SemStew -f database/create_SemStew_Database.sql -U postgres
+  - psql -d SemStew -f database/insert_SemStew_Database.sql -U postgres
+  - psql -d SemStew -c "\dt+"
+  - psql -c "ALTER USER postgres WITH PASSWORD 'postolka11';" -U postgres
 script: 
 - cd semstew
 - mvn clean install
