@@ -5,8 +5,11 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.icon.VaadinIcons;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.renderer.NativeButtonRenderer;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
@@ -55,12 +58,20 @@ public class BranchList extends GeneralAdminList {
         gridBranch.addColumn(BranchRecord::getPhone).setComparator(Comparator.comparing(BranchRecord::getPhone)).setHeader("Phone").setSortable(true);
         gridBranch.addColumn(BranchRecord::getOpeningHours).setHeader("Openning hours");
         gridBranch.addColumn(BranchRecord::getDescription).setHeader("Description");
-        gridBranch.addColumn(new NativeButtonRenderer<BranchRecord>("Update",clickedItem ->{
-            setUpDialogEdit(clickedItem);
-            editDialog.open();
+        gridBranch.addColumn(new ComponentRenderer<>(clickedItem ->{
+            Button tmp = new Button(new Icon(VaadinIcons.EDIT));
+            tmp.addClickListener(buttonClickEvent -> {
+                setUpDialogEdit(clickedItem);
+                editDialog.open();
+            });
+            return tmp;
         }));
-        gridBranch.addColumn(new NativeButtonRenderer<BranchRecord>( "Remove",clickedItem ->{
-           deleteEntry(clickedItem);
+        gridBranch.addColumn(new ComponentRenderer<>(clickedItem ->{
+           Button tmp = new Button(new Icon(VaadinIcons.CLOSE));
+           tmp.addClickListener(buttonClickEvent -> {
+               deleteEntry(clickedItem);
+           });
+           return tmp;
         }));
 
         editDialog.setCloseOnOutsideClick(true);

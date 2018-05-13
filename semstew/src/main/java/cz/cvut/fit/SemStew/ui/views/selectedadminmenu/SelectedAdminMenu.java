@@ -10,6 +10,8 @@ import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.icon.VaadinIcons;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
@@ -103,13 +105,21 @@ public class SelectedAdminMenu extends GeneralAdminList
         gridMenu.addColumn(MenuItemRepresantation::getCategoryDescription).setComparator(Comparator.comparing(MenuItemRepresantation::getCategoryDescription)).setHeader("Category").setSortable(true);
         gridMenu.addColumn(MenuItemRepresantation::getPrice).setComparator(Comparator.comparing(MenuItemRepresantation::getPrice)).setHeader("Price").setSortable(true);
         gridMenu.addColumn(MenuItemRepresantation::getAlergens).setHeader("Alergens");
-        gridMenu.addColumn(new NativeButtonRenderer<MenuItemRepresantation>("Update", clickedItem -> {
-            setUpEditDialog(clickedItem);
-            editDialog.open();
+        gridMenu.addColumn(new ComponentRenderer<>(clickedItem -> {
+            Button tmp = new Button(new Icon(VaadinIcons.EDIT));
+            tmp.addClickListener(buttonClickEvent -> {
+                setUpEditDialog(clickedItem);
+                editDialog.open();
+            });
+            return tmp;
         }));
-        gridMenu.addColumn(new NativeButtonRenderer<MenuItemRepresantation>("Delete", clickedItem -> {
-            menuItemController.Delete(clickedItem);
-            RefreshValues();
+        gridMenu.addColumn(new ComponentRenderer<>(clickedItem -> {
+            Button tmp = new Button(new Icon(VaadinIcons.CLOSE));
+            tmp.addClickListener(buttonClickEvent -> {
+                menuItemController.Delete(clickedItem);
+                RefreshValues();
+            });
+            return tmp;
         }));
 
         addButton.setText("Add");

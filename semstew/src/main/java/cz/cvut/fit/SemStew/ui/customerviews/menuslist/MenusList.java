@@ -1,9 +1,12 @@
 package cz.cvut.fit.SemStew.ui.customerviews.menuslist;
 
 import JOOQ.tables.records.MenusConfigRecord;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Image;
+import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.icon.VaadinIcons;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.renderer.NativeButtonRenderer;
@@ -69,9 +72,13 @@ public class MenusList extends VerticalLayout {
             return tmp;
         }));
         gridMenu.addColumn(MenuRepresantation::getDescription).setComparator(Comparator.comparing(MenuRepresantation::getDescription)).setHeader("Menu name").setSortable(true);
-        gridMenu.addColumn(new NativeButtonRenderer<MenuRepresantation>("Select", clickedItem ->{
-            VaadinService.getCurrentRequest().getWrappedSession().setAttribute("menu_id",clickedItem.getIdMenu().toString());
-            this.getUI().ifPresent(ui-> ui.navigate("menus/selected"));
+        gridMenu.addColumn(new ComponentRenderer<>(clickedItem ->{
+            Button tmp = new Button(new Icon(VaadinIcons.AREA_SELECT));
+            tmp.addClickListener(buttonClickEvent -> {
+                VaadinService.getCurrentRequest().getWrappedSession().setAttribute("menu_id",clickedItem.getIdMenu().toString());
+                this.getUI().ifPresent(ui-> ui.navigate("menus/selected"));
+            });
+            return tmp;
         }));
 
         content.add(header,gridMenu);

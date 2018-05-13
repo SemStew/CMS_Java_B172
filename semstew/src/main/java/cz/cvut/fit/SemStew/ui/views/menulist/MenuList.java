@@ -8,6 +8,8 @@ import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.icon.VaadinIcons;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
@@ -71,17 +73,29 @@ public class MenuList extends GeneralAdminList {
             return tmp;
         }));
         menuGrid.addColumn(MenuRepresantation::getDescription).setComparator(Comparator.comparing(MenuRepresantation::getDescription)).setHeader("Menu name").setSortable(true);
-        menuGrid.addColumn(new NativeButtonRenderer<MenuRepresantation>("Select",clickedItem ->{
-            VaadinService.getCurrentRequest().getWrappedSession().setAttribute("menu_id",clickedItem.getIdMenu().toString());
-            this.getUI().ifPresent(ui -> ui.navigate("admin/dishes/selected"));
+        menuGrid.addColumn(new ComponentRenderer<>(clickedItem ->{
+            Button tmp = new Button(new Icon(VaadinIcons.AREA_SELECT));
+            tmp.addClickListener(buttonClickEvent -> {
+                VaadinService.getCurrentRequest().getWrappedSession().setAttribute("menu_id",clickedItem.getIdMenu().toString());
+                this.getUI().ifPresent(ui -> ui.navigate("admin/dishes/selected"));
+            });
+            return tmp;
         }));
-        menuGrid.addColumn(new NativeButtonRenderer<MenuRepresantation>("Update",clickedItem ->{
-            setUpEditDialog(clickedItem);
-            editDialog.open();
+        menuGrid.addColumn(new ComponentRenderer<>(clickedItem ->{
+            Button tmp = new Button(new Icon(VaadinIcons.EDIT));
+            tmp.addClickListener(buttonClickEvent -> {
+                setUpEditDialog(clickedItem);
+                editDialog.open();
+            });
+            return tmp;
         }));
-        menuGrid.addColumn(new NativeButtonRenderer<MenuRepresantation>("Delete",clickedItem ->{
-           menuController.Delete(clickedItem);
-           RefreshValues();
+        menuGrid.addColumn(new ComponentRenderer<>(clickedItem ->{
+           Button tmp = new Button(new Icon(VaadinIcons.CLOSE));
+           tmp.addClickListener(buttonClickEvent -> {
+               menuController.Delete(clickedItem);
+               RefreshValues();
+           });
+           return tmp;
         }));
 
 
