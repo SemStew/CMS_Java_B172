@@ -104,6 +104,7 @@ CREATE TABLE RESERVATION(
   time_from time NOT NULL,
   person varchar(128) NOT NULL,
   n_table integer NOT NULL,
+  email text,
   status text
 );
 
@@ -135,6 +136,7 @@ CREATE TABLE ORDERS(
   o_date date NOT NULL,
   person varchar(128),
   address text NOT NULL,
+  email text NOT NULL,
   status text
 );
 

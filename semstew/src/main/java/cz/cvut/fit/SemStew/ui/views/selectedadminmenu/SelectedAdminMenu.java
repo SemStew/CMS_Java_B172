@@ -1,6 +1,5 @@
 package cz.cvut.fit.SemStew.ui.views.selectedadminmenu;
 
-import JOOQ.tables.MenuItem;
 import JOOQ.tables.records.LanguagesRecord;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.checkbox.Checkbox;
@@ -16,19 +15,16 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
-import com.vaadin.flow.data.renderer.NativeButtonRenderer;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLayout;
 import com.vaadin.flow.router.RouterLink;
 import cz.cvut.fit.SemStew.backend.CorrectnessController;
 import cz.cvut.fit.SemStew.backend.MenuItemController;
-import cz.cvut.fit.SemStew.backend.MenuItemRepresantation;
-import cz.cvut.fit.SemStew.backend.MenuRepresantation;
+import cz.cvut.fit.SemStew.backend.MenuItemRepresentation;
 import cz.cvut.fit.SemStew.backend.Services.GeneralPageConfig.LanguagesService;
 import cz.cvut.fit.SemStew.backend.Services.MenuServices.AllergensNameService;
 import cz.cvut.fit.SemStew.ui.MainLayout;
-import cz.cvut.fit.SemStew.ui.customerviews.menuslist.MenusList;
 import cz.cvut.fit.SemStew.ui.views.GeneralAdminList;
 import cz.cvut.fit.SemStew.ui.views.menulist.MenuList;
 
@@ -42,11 +38,11 @@ import java.util.List;
 public class SelectedAdminMenu extends GeneralAdminList
     implements RouterLayout {
     private final H2 header = new H2();
-    private final Grid<MenuItemRepresantation> gridMenu = new Grid<>();
+    private final Grid<MenuItemRepresentation> gridMenu = new Grid<>();
     private MenuItemController menuItemController = new MenuItemController();
     private LanguagesService languagesService = new LanguagesService();
     private final AllergensNameService allergensNameService = new AllergensNameService();
-    private List<MenuItemRepresantation> menuItems;
+    private List<MenuItemRepresentation> menuItems;
     private RouterLink back;
     private final Dialog editDialog = new Dialog();
     private final Button addButton = new Button();
@@ -92,19 +88,19 @@ public class SelectedAdminMenu extends GeneralAdminList
 
         gridMenu.setHeightByRows(true);
         gridMenu.setItems(menuItems);
-        gridMenu.addColumn(new ComponentRenderer<>(menuItemRepresantation -> {
+        gridMenu.addColumn(new ComponentRenderer<>(menuItemRepresentation -> {
             Image tmp = new Image();
             tmp.setClassName("picture_grid");
-            tmp.setSrc(menuItemRepresantation.getImageAddress());
+            tmp.setSrc(menuItemRepresentation.getImageAddress());
             return tmp;
         }));
-        gridMenu.addColumn(MenuItemRepresantation::getName).setComparator(Comparator.comparing(MenuItemRepresantation::getName)).setHeader("Name").setSortable(true);
-        gridMenu.addColumn(MenuItemRepresantation::getDescription).setHeader("Description");
-        gridMenu.addColumn(MenuItemRepresantation::getAmount).setHeader("Amount");
-        gridMenu.addColumn(MenuItemRepresantation::getUnitDescription).setHeader("Units");
-        gridMenu.addColumn(MenuItemRepresantation::getCategoryDescription).setComparator(Comparator.comparing(MenuItemRepresantation::getCategoryDescription)).setHeader("Category").setSortable(true);
-        gridMenu.addColumn(MenuItemRepresantation::getPrice).setComparator(Comparator.comparing(MenuItemRepresantation::getPrice)).setHeader("Price").setSortable(true);
-        gridMenu.addColumn(MenuItemRepresantation::getAlergens).setHeader("Alergens");
+        gridMenu.addColumn(MenuItemRepresentation::getName).setComparator(Comparator.comparing(MenuItemRepresentation::getName)).setHeader("Name").setSortable(true);
+        gridMenu.addColumn(MenuItemRepresentation::getDescription).setHeader("Description");
+        gridMenu.addColumn(MenuItemRepresentation::getAmount).setHeader("Amount");
+        gridMenu.addColumn(MenuItemRepresentation::getUnitDescription).setHeader("Units");
+        gridMenu.addColumn(MenuItemRepresentation::getCategoryDescription).setComparator(Comparator.comparing(MenuItemRepresentation::getCategoryDescription)).setHeader("Category").setSortable(true);
+        gridMenu.addColumn(MenuItemRepresentation::getPrice).setComparator(Comparator.comparing(MenuItemRepresentation::getPrice)).setHeader("Price").setSortable(true);
+        gridMenu.addColumn(MenuItemRepresentation::getAlergens).setHeader("Alergens");
         gridMenu.addColumn(new ComponentRenderer<>(clickedItem -> {
             Button tmp = new Button(new Icon(VaadinIcons.EDIT));
             tmp.addClickListener(buttonClickEvent -> {
@@ -243,7 +239,7 @@ public class SelectedAdminMenu extends GeneralAdminList
             allergen14.setValue(true);
     }
 
-    private void setUpEditDialog( MenuItemRepresantation update)
+    private void setUpEditDialog( MenuItemRepresentation update)
     {
         editDialog.removeAll();
 
@@ -337,7 +333,7 @@ public class SelectedAdminMenu extends GeneralAdminList
         HorizontalLayout allergens1 = new HorizontalLayout();
         HorizontalLayout allergens2 = new HorizontalLayout();
 
-        List<MenuItemRepresantation> menuItemRepresantations = new ArrayList<>();
+        List<MenuItemRepresentation> menuItemRepresentations = new ArrayList<>();
 
         List<LanguagesRecord> languagesRecords = languagesService.getConfigs();
 
@@ -390,8 +386,8 @@ public class SelectedAdminMenu extends GeneralAdminList
                 return;
             }
             int languageId = languagesService.GetIdByName(valueChangeEvent.getOldValue());
-            if(menuItemRepresantations.stream().filter(menu -> menu.getIdLanguage().equals(languageId)).count() == 0){
-                MenuItemRepresantation tmp = new MenuItemRepresantation();
+            if(menuItemRepresentations.stream().filter(menu -> menu.getIdLanguage().equals(languageId)).count() == 0){
+                MenuItemRepresentation tmp = new MenuItemRepresentation();
                 tmp.setIdLanguage(languageId);
                 tmp.setDescription(name.getValue());
                 tmp.setImageAddress(urlImage.getValue());
@@ -403,7 +399,7 @@ public class SelectedAdminMenu extends GeneralAdminList
                 tmp.setUnitDescription(units.getValue());
                 tmp.setAlergens(SelectedCheckboxes());
                 tmp.setIdMenu(menuItemController.getMenuID());
-                menuItemRepresantations.add(tmp);
+                menuItemRepresentations.add(tmp);
                 int languageIdea = languagesService.GetIdByName(valueChangeEvent.getValue());
                 setUpCheckboxes(languageIdea);
             }
@@ -418,12 +414,12 @@ public class SelectedAdminMenu extends GeneralAdminList
                 infoLabel.setText("Amount and price must by numbers only");
                 return;
             }
-            if(menuItemRepresantations.size() < languageNames.size() - 1){
+            if(menuItemRepresentations.size() < languageNames.size() - 1){
                 infoLabel.setText("Fill all languages Size");
                 return;
             }
             int languageId = languagesService.GetIdByName(language.getValue());
-            MenuItemRepresantation tmp = new MenuItemRepresantation();
+            MenuItemRepresentation tmp = new MenuItemRepresentation();
             tmp.setIdLanguage(languageId);
             tmp.setDescription(name.getValue());
             tmp.setImageAddress(urlImage.getValue());
@@ -435,17 +431,17 @@ public class SelectedAdminMenu extends GeneralAdminList
             tmp.setUnitDescription(units.getValue());
             tmp.setAlergens(SelectedCheckboxes());
             tmp.setIdMenu(menuItemController.getMenuID());
-            if(menuItemRepresantations.stream().filter(menuItem -> menuItem.getIdLanguage().equals(languageId)).count() != 0){
-                if(menuItemRepresantations.size() == languageNames.size()){
-                    menuItemController.InsertMultiLingual(menuItemRepresantations);
+            if(menuItemRepresentations.stream().filter(menuItem -> menuItem.getIdLanguage().equals(languageId)).count() != 0){
+                if(menuItemRepresentations.size() == languageNames.size()){
+                    menuItemController.InsertMultiLingual(menuItemRepresentations);
                     RefreshValues();
                     infoLabel.setText("Added");
                     return;
                 }
             } else {
-                if(menuItemRepresantations.size() + 1 == languageNames.size()){
-                    menuItemRepresantations.add(tmp);
-                    menuItemController.InsertMultiLingual(menuItemRepresantations);
+                if(menuItemRepresentations.size() + 1 == languageNames.size()){
+                    menuItemRepresentations.add(tmp);
+                    menuItemController.InsertMultiLingual(menuItemRepresentations);
                     RefreshValues();
                     infoLabel.setText("Added");
                     return;

@@ -32,7 +32,7 @@ public class OrdersService {
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         Orders tmp = new Orders();
         ctx.update(tmp).set(tmp.ID_BRANCH, a.getIdBranch()).set(tmp.ADDRESS, a.getAddress()).set(tmp.O_DATE, a.getODate()).
-                set(tmp.PERSON, a.getPerson()).set(tmp.STATUS, a.getStatus()).
+                set(tmp.PERSON, a.getPerson()).set(tmp.EMAIL, a.getEmail()).set(tmp.STATUS, a.getStatus()).
                 where(tmp.ID_ORDER.eq(a.getIdOrder())).execute();
     }
 
@@ -40,8 +40,8 @@ public class OrdersService {
     public void InsertOrdersService(OrdersRecord a){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         Orders tmp = new Orders();
-        ctx.insertInto(tmp).columns(tmp.ID_BRANCH, tmp.ADDRESS, tmp.O_DATE, tmp.PERSON, tmp.STATUS).
-                values(a.getIdBranch(), a.getAddress(), a.getODate(), a.getPerson(), a.getStatus()).execute();
+        ctx.insertInto(tmp).columns(tmp.ID_BRANCH, tmp.ADDRESS, tmp.O_DATE, tmp.PERSON, tmp.EMAIL, tmp.STATUS).
+                values(a.getIdBranch(), a.getAddress(), a.getODate(), a.getPerson(), a.getEmail(), a.getStatus()).execute();
     }
 
     //delete

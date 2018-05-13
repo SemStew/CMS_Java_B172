@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MenuItemRepresantation {
+public class MenuItemRepresentation {
 
     // MenuItemNameRecord
     private String name;
@@ -32,7 +32,7 @@ public class MenuItemRepresantation {
     private List<String> alergens = new ArrayList<>();
 
 
-    public MenuItemRepresantation()
+    public MenuItemRepresentation()
     {
 
     }

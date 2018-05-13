@@ -35,7 +35,7 @@ public class GeneralAdminList extends VerticalLayout
     private RouterLink statistics;
     private RouterLink appearance;
     private RouterLink settings;
-    private final Button logout = new Button();
+    private final Button logout = new Button(new Icon(VaadinIcons.EXIT));
 
     private HorizontalLayout bottom;
 
@@ -92,7 +92,6 @@ public class GeneralAdminList extends VerticalLayout
         settings.add(new Icon(VaadinIcons.TOOLS), new Text("Settings"));
         settings.addClassName("nav-item");
 
-        logout.setText("Logout");
         logout.addClassName("nav-item");
         logout.addClickListener(buttonClickEvent -> {
             VaadinService.getCurrentRequest().getWrappedSession().setAttribute("logged_in","logout");
