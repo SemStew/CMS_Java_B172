@@ -92,6 +92,7 @@ INSERT INTO MENUS(id_branch, url_image) VALUES (1, 'https://weneedfun.com/wp-con
 INSERT INTO MENUS(id_branch, url_image) VALUES (1, 'http://www.chezcora.com/public_upload/images/plat/Dejeuners/Brreuvages/thumbnails/Montage-smoothie_1000x1083-scale_max-600x400.png');
 
 --MENU_ITEM
+
 INSERT INTO MENU_ITEM(price, image_name, amount, id_unit, id_category, id_menu) VALUES (60, 'http://pivarenbudik.sk/wp-content/uploads/2013/04/utopenec.jpg', 2, 2, 1, 1);
 INSERT INTO MENU_ITEM(price, image_name, amount, id_unit, id_category, id_menu) VALUES (75, 'https://www.receptyonline.cz/wp-content/uploads/2016/11/185503topinky-pikantni-kureci-smes-indruchova.jpg', 2, 2, 1, 1);
 INSERT INTO MENU_ITEM(price, image_name, amount, id_unit, id_category, id_menu) VALUES (25, 'http://cdn.milujivareni.cz/image/eyJ0eXBlIjoicmVjaXBlIiwiaW1hZ2VJZCI6IjEwNjciLCJ0aHVtYiI6MH0=/kureci-vyvar-s-masem-a-nudlemi-.jpg?ver=11', 0.25, 4, 2, 1);
