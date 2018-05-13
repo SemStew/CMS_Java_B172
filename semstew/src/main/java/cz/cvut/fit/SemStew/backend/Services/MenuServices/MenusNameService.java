@@ -50,6 +50,22 @@ public class MenusNameService {
         ctx.delete(tmp).where(tmp.ID_LANGUAGE.eq(a.getIdLanguage())).and(tmp.ID_MENU.eq(a.getIdMenu())).execute();
     }
 
+    // get by id and language id
+    public MenusNameRecord GetById(Integer id, int language){
+        ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
+        MenusName tmp = new MenusName();
+        for(MenusNameRecord rec : ctx.selectFrom(tmp).where(tmp.ID_MENU.eq(id)).and(tmp.ID_LANGUAGE.eq(language)))
+            return rec;
+        return null;
+    }
+
+    // delete by menu id
+    public void DeleteByMenuId(int menuId){
+        ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
+        MenusName tmp = new MenusName();
+        ctx.delete(tmp).where(tmp.ID_MENU.eq(menuId)).execute();
+    }
+
     public List<MenusNameRecord> getConfigs() {
         return SelectMenusNameService();
     }

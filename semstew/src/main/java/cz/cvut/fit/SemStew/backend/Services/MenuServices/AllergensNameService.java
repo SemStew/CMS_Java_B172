@@ -20,7 +20,7 @@ public class AllergensNameService {
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         List<AllergensNameRecord> configs = new ArrayList<AllergensNameRecord>();
         AllergensName a = new AllergensName();
-        for (AllergensNameRecord rec : ctx.selectFrom(a).where(a.ID_LANGUAGE.eq(1))) {
+        for (AllergensNameRecord rec : ctx.selectFrom(a)) {
             configs.add(rec);
         }
 
@@ -49,6 +49,35 @@ public class AllergensNameService {
         AllergensName tmp = new AllergensName();
         ctx.delete(tmp).where(tmp.ID_ALLERGEN.eq(a.getIdAllergen())).and(tmp.ID_LANGUAGE.eq(a.getIdLanguage())).execute();
     }
+
+    // get by id and language id
+    public AllergensNameRecord GetById(Integer id, int language){
+        ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
+        AllergensName tmp = new AllergensName();
+        for(AllergensNameRecord rec : ctx.selectFrom(tmp).where(tmp.ID_ALLERGEN.eq(id)).and(tmp.ID_LANGUAGE.eq(language)))
+            return rec;
+        return null;
+    }
+
+    // get by description
+    public AllergensNameRecord GetByDescription(String description){
+        ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
+        AllergensName tmp = new AllergensName();
+        for(AllergensNameRecord rec : ctx.selectFrom(tmp).where(tmp.ALLERGEN.eq(description)))
+            return rec;
+        return null;
+    }
+
+    // get all descriptions in language
+    public List<String> GetAllDescriptionsInLanguage(int language) {
+        ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
+        AllergensName tmp = new AllergensName();
+        List<String> ret = new ArrayList<>();
+        for(AllergensNameRecord rec : ctx.selectFrom(tmp).where(tmp.ID_LANGUAGE.eq(language)))
+            ret.add(rec.getAllergen());
+        return ret;
+    }
+
 
     public List<AllergensNameRecord> getConfigs() {
         return SelectAllergensNameService();

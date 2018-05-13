@@ -3,6 +3,8 @@ package cz.cvut.fit.SemStew.backend;
 import JOOQ.tables.records.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MenuItemRepresantation {
 
@@ -18,12 +20,16 @@ public class MenuItemRepresantation {
     private Integer idUnit;
     private String imageAddress;
     private Integer price;
+    private Integer idMenu;
 
     // CategoryName
     private String categoryDescription;
 
     // Units
     private String unitDescription;
+
+    // Alergens
+    private List<String> alergens = new ArrayList<>();
 
 
     public MenuItemRepresantation()
@@ -32,7 +38,7 @@ public class MenuItemRepresantation {
     }
 
     public void Load(MenuItemNameRecord inName, MenuItemRecord inItem, CategoriesNameRecord inCategoryName,
-                     UnitsRecord unitsIn)
+                     UnitsRecord unitsIn, List<AllergensNameRecord> allergensIn)
     {
         name = inName.getName();
         description = inName.getName();
@@ -44,10 +50,14 @@ public class MenuItemRepresantation {
         idUnit = inItem.getIdUnit();
         imageAddress = inItem.getImageName();
         price = inItem.getPrice();
+        idMenu = inItem.getIdMenu();
 
         categoryDescription = inCategoryName.getName();
 
         unitDescription = unitsIn.getName();
+        for(AllergensNameRecord rec : allergensIn){
+            alergens.add(rec.getAllergen());
+        }
     }
 
     public MenuItemRecord GetItemRecord()
@@ -60,6 +70,7 @@ public class MenuItemRepresantation {
         item.setIdUnit(idUnit);
         item.setImageName(imageAddress);
         item.setPrice(price);
+        item.setIdMenu(idMenu);
 
         return item;
     }
@@ -162,5 +173,21 @@ public class MenuItemRepresantation {
 
     public void setUnitDescription(String unitDescription) {
         this.unitDescription = unitDescription;
+    }
+
+    public List<String> getAlergens() {
+        return alergens;
+    }
+
+    public void setAlergens(List<String> alergens) {
+        this.alergens = alergens;
+    }
+
+    public Integer getIdMenu() {
+        return idMenu;
+    }
+
+    public void setIdMenu(Integer idMenu) {
+        this.idMenu = idMenu;
     }
 }

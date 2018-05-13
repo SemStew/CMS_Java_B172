@@ -51,6 +51,34 @@ public class BranchService {
         ctx.delete(tmp).where(tmp.ID_BRANCH.eq(a.getIdBranch())).execute();
     }
 
+    // get instance by address
+    public BranchRecord GetByAddress(String address){
+        ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
+        Branch tmp = new Branch();
+        for(BranchRecord rec : ctx.selectFrom(tmp).where(tmp.ADDRESS.eq(address)))
+            return rec;
+        return null;
+    }
+
+    // get all addresses
+    public List<String> GetAllAdresses(){
+        ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
+        Branch tmp = new Branch();
+        List<String> ret = new ArrayList<>();
+        for(BranchRecord res : ctx.selectFrom(tmp))
+            ret.add(res.getAddress());
+        return ret;
+    }
+
+    // get by id
+    public BranchRecord GetById(int id){
+        ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
+        Branch tmp = new Branch();
+        for(BranchRecord rec : ctx.selectFrom(tmp).where(tmp.ID_BRANCH.eq(id)))
+            return rec;
+        return null;
+    }
+
     public List<BranchRecord> getConfigs() {
         return SelectBranchService();
     }

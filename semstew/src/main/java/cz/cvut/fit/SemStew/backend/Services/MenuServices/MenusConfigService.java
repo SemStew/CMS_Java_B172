@@ -20,7 +20,7 @@ public class MenusConfigService {
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         List<MenusConfigRecord> configs = new ArrayList<MenusConfigRecord>();
         MenusConfig a = new MenusConfig();
-        for (MenusConfigRecord rec : ctx.selectFrom(a).where(a.ID_LANGUAGE.eq(1))) {
+        for (MenusConfigRecord rec : ctx.selectFrom(a)) {
             configs.add(rec);
         }
 
@@ -49,6 +49,16 @@ public class MenusConfigService {
         MenusConfig tmp = new MenusConfig();
         ctx.delete(tmp).where(tmp.ID_LANGUAGE.eq(a.getIdLanguage())).execute();
     }
+
+    // get instance by language
+    public MenusConfigRecord GetInstanceByLanguage(int id){
+        ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
+        MenusConfig tmp = new MenusConfig();
+        for(MenusConfigRecord rec : ctx.selectFrom(tmp).where(tmp.ID_LANGUAGE.eq(id)))
+            return rec;
+        return null;
+    }
+
 
     public List<MenusConfigRecord> getConfigs() {
         return SelectMenusConfigService();

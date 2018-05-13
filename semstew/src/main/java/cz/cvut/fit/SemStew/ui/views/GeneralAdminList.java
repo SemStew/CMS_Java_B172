@@ -95,7 +95,7 @@ public class GeneralAdminList extends VerticalLayout
         logout.setText("Logout");
         logout.addClassName("nav-item");
         logout.addClickListener(buttonClickEvent -> {
-            VaadinService.getCurrentRequest().getWrappedSession().setAttribute("myvalue","logout");
+            VaadinService.getCurrentRequest().getWrappedSession().setAttribute("logged_in","logout");
             logout.getUI().ifPresent(ui-> ui.navigate("login"));
         });
 
@@ -154,10 +154,10 @@ public class GeneralAdminList extends VerticalLayout
     @Override
     public void beforeEnter(BeforeEnterEvent event)
     {
-        if(VaadinService.getCurrentRequest().getWrappedSession().getAttribute("myvalue") == null) {
+        if(VaadinService.getCurrentRequest().getWrappedSession().getAttribute("logged_in") == null) {
             event.rerouteTo(Login.class);
         } else {
-            String res = VaadinService.getCurrentRequest().getWrappedSession().getAttribute("myvalue").toString();
+            String res = VaadinService.getCurrentRequest().getWrappedSession().getAttribute("logged_in").toString();
             if (!res.equals("logged")) {
                 event.rerouteTo(Login.class);
             }

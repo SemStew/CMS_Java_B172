@@ -20,7 +20,7 @@ public class CategoriesNameService {
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         List<CategoriesNameRecord> configs = new ArrayList<CategoriesNameRecord>();
         CategoriesName a = new CategoriesName();
-        for (CategoriesNameRecord rec : ctx.selectFrom(a).where(a.ID_LANGUAGE.eq(1))) {
+        for (CategoriesNameRecord rec : ctx.selectFrom(a)) {
             configs.add(rec);
         }
 
@@ -50,12 +50,12 @@ public class CategoriesNameService {
         ctx.delete(tmp).where(tmp.ID_CATEGORY.eq(a.getIdCategory())).and(tmp.ID_LANGUAGE.eq(a.getIdLanguage())).execute();
     }
 
-    // Record by ID
-    public CategoriesNameRecord CategoriesNameById(Integer id)
+    // Record by ID and language ID
+    public CategoriesNameRecord CategoriesNameById(Integer id,int language)
     {
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         CategoriesName tmp = new CategoriesName();
-        for(CategoriesNameRecord res : ctx.selectFrom(tmp).where(tmp.ID_CATEGORY.eq(id)))
+        for(CategoriesNameRecord res : ctx.selectFrom(tmp).where(tmp.ID_CATEGORY.eq(id)).and(tmp.ID_LANGUAGE.eq(language)))
             return res;
         return null;
     }

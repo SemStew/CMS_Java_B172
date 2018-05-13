@@ -46,6 +46,23 @@ public class MenuItemAllergenService {
         ctx.delete(tmp).where(tmp.ID_ALLERGEN.eq(a.getIdAllergen())).and(tmp.ID_MENU_ITEM.eq(a.getIdMenuItem())).execute();
     }
 
+    // delete by menu item id
+    public void DeleteByMenuItemId(Integer id){
+        ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
+        MenuItemAllergen tmp = new MenuItemAllergen();
+        ctx.delete(tmp).where(tmp.ID_MENU_ITEM.eq(id)).execute();
+    }
+
+    // get by menu item id
+    public List<MenuItemAllergenRecord> GetByMenuItemId(Integer id){
+        ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
+        MenuItemAllergen tmp = new MenuItemAllergen();
+        List<MenuItemAllergenRecord> ret = new ArrayList<>();
+        for(MenuItemAllergenRecord rec : ctx.selectFrom(tmp).where(tmp.ID_MENU_ITEM.eq(id)))
+            ret.add(rec);
+        return ret;
+    }
+
     public List<MenuItemAllergenRecord> getConfigs() {
         return SelectMenuItemAllergenService();
     }

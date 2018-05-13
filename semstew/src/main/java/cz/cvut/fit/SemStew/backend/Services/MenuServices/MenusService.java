@@ -39,8 +39,8 @@ public class MenusService {
     public void InsertMenusService(MenusRecord a){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         Menus tmp = new Menus();
-        ctx.insertInto(tmp).columns(tmp.ID_BRANCH, tmp.ID_MENU, tmp.URL_IMAGE).
-                values(a.getIdBranch(), a.getIdMenu(), a.getUrlImage()).execute();
+        ctx.insertInto(tmp).columns(tmp.ID_BRANCH, tmp.URL_IMAGE).
+                values(a.getIdBranch(), a.getUrlImage()).execute();
     }
 
     //delete
@@ -48,6 +48,15 @@ public class MenusService {
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         Menus tmp = new Menus();
         ctx.delete(tmp).where(tmp.ID_BRANCH.eq(a.getIdBranch())).and(tmp.ID_MENU.eq(a.getIdMenu())).execute();
+    }
+
+    // get by id branch url image
+    public MenusRecord GetByCombination(Integer idBranch, String urlImage){
+        ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
+        Menus tmp = new Menus();
+        for(MenusRecord rec : ctx.selectFrom(tmp).where(tmp.ID_BRANCH.eq(idBranch)).and(tmp.URL_IMAGE.eq(urlImage)))
+            return rec;
+        return null;
     }
 
     public List<MenusRecord> getConfigs() {

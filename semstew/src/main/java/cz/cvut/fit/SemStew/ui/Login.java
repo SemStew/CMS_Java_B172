@@ -24,7 +24,7 @@ import java.util.List;
 @Route(value = "login", layout = MainLayout.class)
 @PageTitle("Login")
 public class Login extends VerticalLayout
-    implements RouterLayout {
+    implements RouterLayout, BeforeEnterObserver {
     private RouterLink register;
     private RouterLink back;
     private final H2 header = new H2();
@@ -97,7 +97,7 @@ public class Login extends VerticalLayout
                 }
             }
             if(found) {
-                VaadinService.getCurrentRequest().getWrappedSession().setAttribute("myvalue", "logged");
+                VaadinService.getCurrentRequest().getWrappedSession().setAttribute("logged_in", "logged");
                 loginButton.getUI().ifPresent(ui -> ui.navigate("admin"));
             } else {
                 infoLabel.setText("User name or password incorrect");
@@ -124,5 +124,16 @@ public class Login extends VerticalLayout
         bottom.add(foot);
 
         add(bottom);
+    }
+
+    @Override
+    public void beforeEnter(BeforeEnterEvent event)
+    {
+        if(VaadinService.getCurrentRequest().getWrappedSession().getAttribute("logged_in") != null) {
+            String res = VaadinService.getCurrentRequest().getWrappedSession().getAttribute("logged_in").toString();
+            if(res.equals("logged")){
+                event.rerouteTo("admin");
+            }
+        }
     }
 }
