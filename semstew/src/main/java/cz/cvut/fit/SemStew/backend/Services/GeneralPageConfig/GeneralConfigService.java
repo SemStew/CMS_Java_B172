@@ -11,21 +11,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GeneralConfigService {
-    private List<GeneralConfigRecord> configs;
     private DSLContext ctx;
 
-    public GeneralConfigService() {
-        SelectGeneralConfigService();
-    }
+    public GeneralConfigService() {}
 
     //select
-    public void SelectGeneralConfigService(){
+    public List<GeneralConfigRecord> SelectGeneralConfigService(){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
-        configs = new ArrayList<GeneralConfigRecord>();
+        List<GeneralConfigRecord> configs = new ArrayList<GeneralConfigRecord>();
         GeneralConfig a = new GeneralConfig();
         for (GeneralConfigRecord rec : ctx.selectFrom(a)) {
             configs.add(rec);
         }
+
+        return configs;
     }
 
     //update
@@ -33,7 +32,6 @@ public class GeneralConfigService {
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         GeneralConfig tmp = new GeneralConfig();
         ctx.update(tmp).set(tmp.URL_MAIN_IMAGE, a.getUrlMainImage()).execute();
-        SelectGeneralConfigService();
     }
 
     //insert
@@ -41,7 +39,6 @@ public class GeneralConfigService {
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         GeneralConfig tmp = new GeneralConfig();
         ctx.insertInto(tmp).columns(tmp.URL_MAIN_IMAGE).values(a.getUrlMainImage()).execute();
-        SelectGeneralConfigService();
     }
 
     //delete
@@ -49,10 +46,18 @@ public class GeneralConfigService {
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         GeneralConfig tmp = new GeneralConfig();
         ctx.delete(tmp).execute();
-        SelectGeneralConfigService();
+    }
+
+    // get instance
+    public GeneralConfigRecord GetInstance(){
+        ctx = DSL.using(PostgreSQLConnection.getConnection(),SQLDialect.POSTGRES);
+        GeneralConfig tmp = new GeneralConfig();
+        for(GeneralConfigRecord rec : ctx.selectFrom(tmp))
+            return rec;
+        return null;
     }
 
     public List<GeneralConfigRecord> getConfigs() {
-        return configs;
+        return SelectGeneralConfigService();
     }
 }

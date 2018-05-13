@@ -11,40 +11,39 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AllergensService {
-    private List<AllergensRecord> configs;
     private DSLContext ctx;
 
-    public AllergensService() {
-        SelectAllergensService();
-    }
+    public AllergensService() {}
 
     //select
-    public void SelectAllergensService(){
+    public List<AllergensRecord> SelectAllergensService(){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
-        configs = new ArrayList<AllergensRecord>();
+        List<AllergensRecord> configs = new ArrayList<AllergensRecord>();
         Allergens a = new Allergens();
         for (AllergensRecord rec : ctx.selectFrom(a)) {
             configs.add(rec);
         }
+
+        return configs;
     }
 
     //update
     public void UpdateAllergensService(AllergensRecord a){
-        SelectAllergensService();
+        System.out.println("Method not implemented");
     }
 
     //insert
     public void InsertAllergensService(AllergensRecord a){
-        SelectAllergensService();
+        System.out.println("Method not implemented");
     }
 
     //delete
     public void DeleteAllergensService(AllergensRecord a){
-        SelectAllergensService();
+        System.out.println("Method not implemented");
     }
 
     public List<AllergensRecord> getConfigs() {
-        return configs;
+        return SelectAllergensService();
     }
 }
 

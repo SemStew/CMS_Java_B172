@@ -1,15 +1,15 @@
 package cz.cvut.fit.SemStew.ui.views;
 
 import com.vaadin.flow.component.Text;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcons;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.router.AfterNavigationEvent;
-import com.vaadin.flow.router.AfterNavigationObserver;
-import com.vaadin.flow.router.RouterLink;
+import com.vaadin.flow.router.*;
+import com.vaadin.flow.server.VaadinService;
 import cz.cvut.fit.SemStew.ui.Login;
 import cz.cvut.fit.SemStew.ui.views.appearancelist.AppearanceList;
 import cz.cvut.fit.SemStew.ui.views.articlelist.ArticleList;
@@ -22,7 +22,8 @@ import cz.cvut.fit.SemStew.ui.views.reservationslist.ReservationsList;
 import cz.cvut.fit.SemStew.ui.views.settingslist.SettingsList;
 import cz.cvut.fit.SemStew.ui.views.statisticslist.StatisticsList;
 
-public class GeneralAdminList extends VerticalLayout implements AfterNavigationObserver {
+public class GeneralAdminList extends VerticalLayout
+        implements AfterNavigationObserver, BeforeEnterObserver {
     private static final String ACTIVE_ITEM_STYLE = "main-layout__nav-item--selected";
     private RouterLink branch;
     private RouterLink preview;
@@ -34,7 +35,7 @@ public class GeneralAdminList extends VerticalLayout implements AfterNavigationO
     private RouterLink statistics;
     private RouterLink appearance;
     private RouterLink settings;
-    private RouterLink logout;
+    private final Button logout = new Button();
 
     private HorizontalLayout bottom;
 
@@ -91,9 +92,13 @@ public class GeneralAdminList extends VerticalLayout implements AfterNavigationO
         settings.add(new Icon(VaadinIcons.TOOLS), new Text("Settings"));
         settings.addClassName("nav-item");
 
-        logout = new RouterLink(null, Login.class);
-        logout.add(new Icon(VaadinIcons.CIRCLE), new Text("Log out"));
+        logout.setText("Logout");
         logout.addClassName("nav-item");
+        logout.addClickListener(buttonClickEvent -> {
+            VaadinService.getCurrentRequest().getWrappedSession().setAttribute("logged_in","logout");
+            logout.getUI().ifPresent(ui-> ui.navigate("login"));
+        });
+
 
         navigation.add(branch, preview, dishes, articles, gallery, orders, reservations, statistics, appearance, settings, logout);
 
@@ -131,7 +136,6 @@ public class GeneralAdminList extends VerticalLayout implements AfterNavigationO
         boolean statisticsActive = segment.equals(statistics.getHref());
         boolean appearanceActive = segment.equals(appearance.getHref());
         boolean settingsActive = segment.equals(settings.getHref());
-        boolean logoutActive = segment.equals(logout.getHref());
 
         branch.setClassName(ACTIVE_ITEM_STYLE, branchActive);
         preview.setClassName(ACTIVE_ITEM_STYLE, previewActive);
@@ -143,8 +147,20 @@ public class GeneralAdminList extends VerticalLayout implements AfterNavigationO
         statistics.setClassName(ACTIVE_ITEM_STYLE, statisticsActive);
         appearance.setClassName(ACTIVE_ITEM_STYLE, appearanceActive);
         settings.setClassName(ACTIVE_ITEM_STYLE, settingsActive);
-        settings.setClassName(ACTIVE_ITEM_STYLE, logoutActive);
 
         add(bottom);
+    }
+
+    @Override
+    public void beforeEnter(BeforeEnterEvent event)
+    {
+        if(VaadinService.getCurrentRequest().getWrappedSession().getAttribute("logged_in") == null) {
+            event.rerouteTo(Login.class);
+        } else {
+            String res = VaadinService.getCurrentRequest().getWrappedSession().getAttribute("logged_in").toString();
+            if (!res.equals("logged")) {
+                event.rerouteTo(Login.class);
+            }
+        }
     }
 }

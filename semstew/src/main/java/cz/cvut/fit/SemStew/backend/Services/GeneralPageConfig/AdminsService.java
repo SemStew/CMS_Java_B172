@@ -11,21 +11,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AdminsService {
-    private List<AdminsRecord> configs;
     private DSLContext ctx;
 
-    public AdminsService() {
-        SelectAdminsService();
-    }
+    public AdminsService() {}
 
     //select
-    public void SelectAdminsService(){
+    public List<AdminsRecord> SelectAdminsService(){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
-        configs = new ArrayList<AdminsRecord>();
+        List<AdminsRecord> configs = new ArrayList<AdminsRecord>();
         Admins a = new Admins();
         for (AdminsRecord rec : ctx.selectFrom(a)) {
             configs.add(rec);
         }
+
+        return configs;
     }
 
     //update
@@ -34,7 +33,6 @@ public class AdminsService {
         Admins tmp = new Admins();
         ctx.update(tmp).set(tmp.NAME, a.getName()).set(tmp.PASSWORD, a.getPassword()).
                         where(tmp.ID_ADMIN.eq(a.getIdAdmin())).execute();
-        SelectAdminsService();
     }
 
     //insert
@@ -43,7 +41,6 @@ public class AdminsService {
         Admins tmp = new Admins();
         ctx.insertInto(tmp).columns(tmp.ID_ADMIN, tmp.NAME, tmp.PASSWORD).
                 values(a.getIdAdmin(), a.getName(), a.getPassword()).execute();
-        SelectAdminsService();
     }
 
     //delete
@@ -51,10 +48,18 @@ public class AdminsService {
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         Admins tmp = new Admins();
         ctx.delete(tmp).where(tmp.ID_ADMIN.eq(a.getIdAdmin())).execute();
-        SelectAdminsService();
+    }
+
+    // get by name
+    public AdminsRecord GetByName(String name){
+        ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
+        Admins a = new Admins();
+        for(AdminsRecord rec : ctx.selectFrom(a).where(a.NAME.eq(name)))
+            return rec;
+        return null;
     }
 
     public List<AdminsRecord> getConfigs() {
-        return configs;
+        return SelectAdminsService();
     }
 }

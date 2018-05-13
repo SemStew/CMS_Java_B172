@@ -11,21 +11,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrdersService {
-    private List<OrdersRecord> configs;
     private DSLContext ctx;
 
-    public OrdersService() {
-        SelectOrdersService();
-    }
+    public OrdersService() {}
 
     //select
-    public void SelectOrdersService(){
+    public List<OrdersRecord> SelectOrdersService(){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
-        configs = new ArrayList<OrdersRecord>();
+        List<OrdersRecord> configs = new ArrayList<OrdersRecord>();
         Orders a = new Orders();
         for (OrdersRecord rec : ctx.selectFrom(a)) {
             configs.add(rec);
         }
+
+        return configs;
     }
 
     //update
@@ -34,7 +33,6 @@ public class OrdersService {
         Orders tmp = new Orders();
         ctx.update(tmp).set(tmp.ID_BRANCH, a.getIdBranch()).
                 where(tmp.ID_ORDER.eq(a.getIdOrder())).execute();
-        SelectOrdersService();
     }
 
     //insert
@@ -43,7 +41,6 @@ public class OrdersService {
         Orders tmp = new Orders();
         ctx.insertInto(tmp).columns(tmp.ID_BRANCH, tmp.ID_ORDER).
                 values(a.getIdBranch(), a.getIdOrder()).execute();
-        SelectOrdersService();
     }
 
     //delete
@@ -51,10 +48,9 @@ public class OrdersService {
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         Orders tmp = new Orders();
         ctx.delete(tmp).where(tmp.ID_BRANCH.eq(a.getIdBranch())).and(tmp.ID_ORDER.eq(a.getIdOrder())).execute();
-        SelectOrdersService();
     }
 
     public List<OrdersRecord> getConfigs() {
-        return configs;
+        return SelectOrdersService();
     }
 }

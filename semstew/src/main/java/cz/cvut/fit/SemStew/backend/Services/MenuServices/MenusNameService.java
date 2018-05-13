@@ -11,21 +11,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MenusNameService {
-    private List<MenusNameRecord> configs;
     private DSLContext ctx;
 
-    public MenusNameService() {
-        SelectMenusNameService();
-    }
+    public MenusNameService() {}
 
     //select
-    public void SelectMenusNameService(){
+    public List<MenusNameRecord> SelectMenusNameService(){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
-        configs = new ArrayList<MenusNameRecord>();
+        List<MenusNameRecord> configs = new ArrayList<MenusNameRecord>();
         MenusName a = new MenusName();
         for (MenusNameRecord rec : ctx.selectFrom(a).where(a.ID_LANGUAGE.eq(1))) {
             configs.add(rec);
         }
+
+        return configs;
     }
 
     //update
@@ -34,7 +33,6 @@ public class MenusNameService {
         MenusName tmp = new MenusName();
         ctx.update(tmp).set(tmp.DESCRIPTION, a.getDescription()).
                 where(tmp.ID_LANGUAGE.eq(a.getIdLanguage())).and(tmp.ID_MENU.eq(a.getIdMenu())).execute();
-        SelectMenusNameService();
     }
 
     //insert
@@ -43,7 +41,6 @@ public class MenusNameService {
         MenusName tmp = new MenusName();
         ctx.insertInto(tmp).columns(tmp.ID_LANGUAGE, tmp.ID_MENU, tmp.DESCRIPTION).
                 values(a.getIdLanguage(), a.getIdMenu(), a.getDescription()).execute();
-        SelectMenusNameService();
     }
 
     //delete
@@ -51,10 +48,25 @@ public class MenusNameService {
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         MenusName tmp = new MenusName();
         ctx.delete(tmp).where(tmp.ID_LANGUAGE.eq(a.getIdLanguage())).and(tmp.ID_MENU.eq(a.getIdMenu())).execute();
-        SelectMenusNameService();
+    }
+
+    // get by id and language id
+    public MenusNameRecord GetById(Integer id, int language){
+        ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
+        MenusName tmp = new MenusName();
+        for(MenusNameRecord rec : ctx.selectFrom(tmp).where(tmp.ID_MENU.eq(id)).and(tmp.ID_LANGUAGE.eq(language)))
+            return rec;
+        return null;
+    }
+
+    // delete by menu id
+    public void DeleteByMenuId(int menuId){
+        ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
+        MenusName tmp = new MenusName();
+        ctx.delete(tmp).where(tmp.ID_MENU.eq(menuId)).execute();
     }
 
     public List<MenusNameRecord> getConfigs() {
-        return configs;
+        return SelectMenusNameService();
     }
 }

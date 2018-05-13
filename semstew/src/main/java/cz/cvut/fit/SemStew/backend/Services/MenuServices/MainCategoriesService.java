@@ -1,6 +1,7 @@
 package cz.cvut.fit.SemStew.backend.Services.MenuServices;
 
 import JOOQ.tables.MainCategories;
+import JOOQ.tables.MainCategoriesName;
 import JOOQ.tables.records.MainCategoriesRecord;
 import cz.cvut.fit.SemStew.backend.PostgreSQLConnection;
 import org.jooq.DSLContext;
@@ -11,21 +12,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainCategoriesService {
-    private List<MainCategoriesRecord> configs;
     private DSLContext ctx;
 
-    public MainCategoriesService() {
-        SelectMainCategoriesService();
-    }
+    public MainCategoriesService() {}
 
     //select
-    public void SelectMainCategoriesService(){
+    public List<MainCategoriesRecord> SelectMainCategoriesService(){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
-        configs = new ArrayList<MainCategoriesRecord>();
+        List<MainCategoriesRecord> configs = new ArrayList<MainCategoriesRecord>();
         MainCategories a = new MainCategories();
         for (MainCategoriesRecord rec : ctx.selectFrom(a)) {
             configs.add(rec);
         }
+
+        return configs;
     }
 
     //update
@@ -34,7 +34,6 @@ public class MainCategoriesService {
         MainCategories tmp = new MainCategories();
         ctx.update(tmp).set(tmp.ID_MAIN_CATEGORY, a.getIdMainCategory()).
                 where(tmp.ID_MAIN_CATEGORY.eq(a.getIdMainCategory())).execute();
-        SelectMainCategoriesService();
     }
 
     //insert
@@ -43,7 +42,6 @@ public class MainCategoriesService {
         MainCategories tmp = new MainCategories();
         ctx.insertInto(tmp).columns(tmp.ID_MAIN_CATEGORY).
                 values(a.getIdMainCategory()).execute();
-        SelectMainCategoriesService();
     }
 
     //delete
@@ -51,10 +49,9 @@ public class MainCategoriesService {
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         MainCategories tmp = new MainCategories();
         ctx.delete(tmp).where(tmp.ID_MAIN_CATEGORY.eq(a.getIdMainCategory())).execute();
-        SelectMainCategoriesService();
     }
 
     public List<MainCategoriesRecord> getConfigs() {
-        return configs;
+        return SelectMainCategoriesService();
     }
 }

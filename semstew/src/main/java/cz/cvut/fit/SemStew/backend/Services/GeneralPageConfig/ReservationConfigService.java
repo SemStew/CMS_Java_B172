@@ -11,21 +11,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReservationConfigService {
-    private List<ReservationConfigRecord> configs;
     private DSLContext ctx;
 
-    public ReservationConfigService() {
-        SelectReservationConfigService();
-    }
+    public ReservationConfigService() {}
 
     //select
-    public void SelectReservationConfigService(){
+    public List<ReservationConfigRecord> SelectReservationConfigService(){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
-        configs = new ArrayList<ReservationConfigRecord>();
+        List<ReservationConfigRecord> configs = new ArrayList<ReservationConfigRecord>();
         ReservationConfig a = new ReservationConfig();
         for (ReservationConfigRecord rec : ctx.selectFrom(a).where(a.ID_LANGUAGE.eq(1))) {
             configs.add(rec);
         }
+
+        return configs;
     }
 
     //update
@@ -34,7 +33,6 @@ public class ReservationConfigService {
         ReservationConfig tmp = new ReservationConfig();
         ctx.update(tmp).set(tmp.HEADER, a.getHeader()).set(tmp.TABLE_NUMBER, a.getTableNumber()).
                 set(tmp.TIME_FROM_DESC, a.getTimeFromDesc()).where(tmp.ID_LANGUAGE.eq(a.getIdLanguage())).execute();
-        SelectReservationConfigService();
     }
 
     //insert
@@ -43,15 +41,14 @@ public class ReservationConfigService {
         ReservationConfig tmp = new ReservationConfig();
         ctx.insertInto(tmp).columns(tmp.HEADER, tmp.ID_LANGUAGE, tmp.TABLE_NUMBER, tmp.TIME_FROM_DESC).
                 values(a.getHeader(), a.getIdLanguage(), a.getTableNumber(), a.getTimeFromDesc()).execute();
-        SelectReservationConfigService();
     }
 
     //delete
     public void DeleteReservationConfigService(ReservationConfigRecord a){
-        SelectReservationConfigService();
+        System.out.println("Method not implemented yet");
     }
 
     public List<ReservationConfigRecord> getConfigs() {
-        return configs;
+        return SelectReservationConfigService();
     }
 }

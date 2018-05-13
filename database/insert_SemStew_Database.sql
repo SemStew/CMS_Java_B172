@@ -6,7 +6,7 @@ INSERT INTO LANGUAGES(name) VALUES ('Czech');
 INSERT INTO ADMINS(name, password) VALUES ('Dante', 'heslo123');
 
 --restaurant
-INSERT INTO RESTAURANT(id_admin, name, ico, image) VALUES (1, 'Dream Restaurant', 12345678, 'https://scontent-frt3-2.xx.fbcdn.net/v/t35.0-12/s2048x2048/29680738_2052341935036421_876125089_o.png?_nc_cat=0&oh=72dbec5b54c6fb1e576570ecfe3c14aa&oe=5AD6807A');
+INSERT INTO RESTAURANT(id_admin, name, ico, image) VALUES (1, 'Dream Restaurant', 12345678, 'https://image.ibb.co/eu23fd/dream_Team_Logo.png');
 
 --branches
 INSERT INTO BRANCH(id_restaurant, address, phone, description, opening_hours) VALUES (1, 'Thákurova 1516', '465123945', 'Cool pobočka', 'Zavřeno nonstop');
@@ -48,7 +48,7 @@ INSERT INTO CATEGORIES_NAME(id_category, id_language, name) VALUES (3, 1, 'Salad
 INSERT INTO CATEGORIES_NAME(id_category, id_language, name) VALUES (4, 1, 'Traditional cousine');
 INSERT INTO CATEGORIES_NAME(id_category, id_language, name) VALUES (5, 1, 'Pasta');
 INSERT INTO CATEGORIES_NAME(id_category, id_language, name) VALUES (6, 1, 'Specialities');
-INSERT INTO CATEGORIES_NAME(id_category, id_language, name) VALUES (7, 1, 'Vegetarian MENU_ITEM');
+INSERT INTO CATEGORIES_NAME(id_category, id_language, name) VALUES (7, 1, 'Vegetarian');
 INSERT INTO CATEGORIES_NAME(id_category, id_language, name) VALUES (8, 1, 'For kids');
 INSERT INTO CATEGORIES_NAME(id_category, id_language, name) VALUES (9, 1, 'Desserts');
 INSERT INTO CATEGORIES_NAME(id_category, id_language, name) VALUES (10, 1, 'Side dishes');
@@ -87,28 +87,33 @@ INSERT INTO UNITS(name) VALUES ('ks');
 INSERT INTO UNITS(name) VALUES ('l');
 INSERT INTO UNITS(name) VALUES ('cl');
 
+--menus
+INSERT INTO MENUS(id_branch, url_image) VALUES (1, 'https://weneedfun.com/wp-content/uploads/2015/10/Delicious-Food-Photos-28.jpg');
+INSERT INTO MENUS(id_branch, url_image) VALUES (1, 'http://www.chezcora.com/public_upload/images/plat/Dejeuners/Brreuvages/thumbnails/Montage-smoothie_1000x1083-scale_max-600x400.png');
+
 --MENU_ITEM
-INSERT INTO MENU_ITEM(price, image_name, amount, id_unit, id_category, id_menu) VALUES (60, 'http://pivarenbudik.sk/wp-content/uploads/2013/04/utopenec.jpg', 2, 2, 1, NULL);
-INSERT INTO MENU_ITEM(price, image_name, amount, id_unit, id_category, id_menu) VALUES (75, 'https://www.receptyonline.cz/wp-content/uploads/2016/11/185503topinky-pikantni-kureci-smes-indruchova.jpg', 2, 2, 1, NULL);
-INSERT INTO MENU_ITEM(price, image_name, amount, id_unit, id_category, id_menu) VALUES (25, 'http://cdn.milujivareni.cz/image/eyJ0eXBlIjoicmVjaXBlIiwiaW1hZ2VJZCI6IjEwNjciLCJ0aHVtYiI6MH0=/kureci-vyvar-s-masem-a-nudlemi-.jpg?ver=11', 0.25, 4, 2, NULL);
-INSERT INTO MENU_ITEM(price, image_name, amount, id_unit, id_category, id_menu) VALUES (25, 'https://ichef.bbci.co.uk/MENU_ITEM/ic/MENU_ITEM_16x9_832/recipes/beef_goulash_soup_gulyas_16159_16x9.jpg', 0.25, 4, 2, NULL);
-INSERT INTO MENU_ITEM(price, image_name, amount, id_unit, id_category, id_menu) VALUES (120, 'http://bitesofbri.com/wp-content/uploads/2014/04/Chicken-Bruschetta-Caesar-Salad-2-Bites-of-Bri.jpg', 125, 1, 3, NULL);
-INSERT INTO MENU_ITEM(price, image_name, amount, id_unit, id_category, id_menu) VALUES (115, 'http://balkansut.com.tr/wp-content/uploads/2016/09/salata.jpg', 125, 1, 3, NULL);
-INSERT INTO MENU_ITEM(price, image_name, amount, id_unit, id_category, id_menu) VALUES (130, 'https://thumbs.dreamstime.com/z/homemade-hot-czech-goulash-knodel-close-up-horizontal-top-plate-view-above-75573944.jpg', 200, 1, 4, NULL);
-INSERT INTO MENU_ITEM(price, image_name, amount, id_unit, id_category, id_menu) VALUES (150, 'https://realMENU_ITEM.tesco.com/media/images/Sorted-roast-beef-LGH-6d1b1286-a7d3-4096-bff7-20d840716df3-0-1400x919.jpg', 200, 1, 4, NULL);
-INSERT INTO MENU_ITEM(price, image_name, amount, id_unit, id_category, id_menu) VALUES (120, 'https://www.warrennash.co.uk/recipes/carbonara/spaghetticarbonara_xl.jpg', 200, 1, 5, NULL);
-INSERT INTO MENU_ITEM(price, image_name, amount, id_unit, id_category, id_menu) VALUES (135, 'http://media.igurmet.cz/yummy/dc/e9/dce94f79b5912872d1f769debba02180.jpg', 250, 1, 5, NULL);
-INSERT INTO MENU_ITEM(price, image_name, amount, id_unit, id_category, id_menu) VALUES (115, 'http://www.praguemorning.cz/img/2017/10/schermata-2017-10-20-alle-152713_960x540.jpg', 200, 1, 7, NULL);
-INSERT INTO MENU_ITEM(price, image_name, amount, id_unit, id_category, id_menu) VALUES (100, 'https://fthmb.tqn.com/w5CXk2yMylJwBHxvrv13n1Y7Tqw=/960x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/scrambled-eggs-58a701ac5f9b58a3c91cbebd.jpg', 200, 1, 7, NULL);
-INSERT INTO MENU_ITEM(price, image_name, amount, id_unit, id_category, id_menu) VALUES (90, 'https://assets.epicurious.com/photos/5761d0268accf290434553aa/6:4/w_620%2Ch_413/panna-cotta.jpg', 100, 1, 9, NULL);
-INSERT INTO MENU_ITEM(price, image_name, amount, id_unit, id_category, id_menu) VALUES (110, 'http://www.rawforyou.cz/wp-content/uploads/2014/09/61a0305_upr_1.jpg', 100, 1, 9, NULL);
-INSERT INTO MENU_ITEM(price, image_name, amount, id_unit, id_category, id_menu) VALUES (30, 'https://airfryer.cooking/wp-content/uploads/2017/12/Shoestring_fries_large.jpg', 50, 1, 10, NULL);
-INSERT INTO MENU_ITEM(price, image_name, amount, id_unit, id_category, id_menu) VALUES (30, 'https://previews.123rf.com/images/weyo/weyo1611/weyo161100125/65592367-potato-roasted-potatoes-american-potatoes-with-salt-pepper-and-cumin-roasted-potato-wedges-delicious.jpg', 50, 1, 10, NULL);
-INSERT INTO MENU_ITEM(price, image_name, amount, id_unit, id_category, id_menu) VALUES (45, 'http://www.howtomakeorangejuice.com/files/photos/Orange_Juice_Recipes_Copyright_2012.jpg', 0.33, 4, 12, NULL);
-INSERT INTO MENU_ITEM(price, image_name, amount, id_unit, id_category, id_menu) VALUES (45, 'https://www.organicfacts.net/wp-content/uploads/applejuice.jpg', 0.33, 4, 12, NULL);
-INSERT INTO MENU_ITEM(price, image_name, amount, id_unit, id_category, id_menu) VALUES (30, 'http://www.healthywomen.org/sites/default/files/green-tea.jpg', 0.5, 4, 13, NULL);
-INSERT INTO MENU_ITEM(price, image_name, amount, id_unit, id_category, id_menu) VALUES (75, 'https://img.mediacentrum.sk/gallery/nwo/maxwidth/650/775529.jpg', 2, 5, 14, NULL);
-INSERT INTO MENU_ITEM(price, image_name, amount, id_unit, id_category, id_menu) VALUES (85, 'https://cdn.shopify.com/s/files/1/0343/7389/products/20170303_JBH_0033_2048x.jpg?v=1519243463', 2, 5, 14, NULL);
+
+INSERT INTO MENU_ITEM(price, image_name, amount, id_unit, id_category, id_menu) VALUES (60, 'http://pivarenbudik.sk/wp-content/uploads/2013/04/utopenec.jpg', 2, 2, 1, 1);
+INSERT INTO MENU_ITEM(price, image_name, amount, id_unit, id_category, id_menu) VALUES (75, 'https://www.receptyonline.cz/wp-content/uploads/2016/11/185503topinky-pikantni-kureci-smes-indruchova.jpg', 2, 2, 1, 1);
+INSERT INTO MENU_ITEM(price, image_name, amount, id_unit, id_category, id_menu) VALUES (25, 'http://cdn.milujivareni.cz/image/eyJ0eXBlIjoicmVjaXBlIiwiaW1hZ2VJZCI6IjEwNjciLCJ0aHVtYiI6MH0=/kureci-vyvar-s-masem-a-nudlemi-.jpg?ver=11', 0.25, 4, 2, 1);
+INSERT INTO MENU_ITEM(price, image_name, amount, id_unit, id_category, id_menu) VALUES (25, 'https://ichef.bbci.co.uk/MENU_ITEM/ic/MENU_ITEM_16x9_832/recipes/beef_goulash_soup_gulyas_16159_16x9.jpg', 0.25, 4, 2, 1);
+INSERT INTO MENU_ITEM(price, image_name, amount, id_unit, id_category, id_menu) VALUES (120, 'http://bitesofbri.com/wp-content/uploads/2014/04/Chicken-Bruschetta-Caesar-Salad-2-Bites-of-Bri.jpg', 125, 1, 3, 1);
+INSERT INTO MENU_ITEM(price, image_name, amount, id_unit, id_category, id_menu) VALUES (115, 'http://balkansut.com.tr/wp-content/uploads/2016/09/salata.jpg', 125, 1, 3, 1);
+INSERT INTO MENU_ITEM(price, image_name, amount, id_unit, id_category, id_menu) VALUES (130, 'https://thumbs.dreamstime.com/z/homemade-hot-czech-goulash-knodel-close-up-horizontal-top-plate-view-above-75573944.jpg', 200, 1, 4, 1);
+INSERT INTO MENU_ITEM(price, image_name, amount, id_unit, id_category, id_menu) VALUES (150, 'https://realMENU_ITEM.tesco.com/media/images/Sorted-roast-beef-LGH-6d1b1286-a7d3-4096-bff7-20d840716df3-0-1400x919.jpg', 200, 1, 4, 1);
+INSERT INTO MENU_ITEM(price, image_name, amount, id_unit, id_category, id_menu) VALUES (120, 'https://www.warrennash.co.uk/recipes/carbonara/spaghetticarbonara_xl.jpg', 200, 1, 5, 1);
+INSERT INTO MENU_ITEM(price, image_name, amount, id_unit, id_category, id_menu) VALUES (135, 'http://media.igurmet.cz/yummy/dc/e9/dce94f79b5912872d1f769debba02180.jpg', 250, 1, 5, 1);
+INSERT INTO MENU_ITEM(price, image_name, amount, id_unit, id_category, id_menu) VALUES (115, 'http://www.praguemorning.cz/img/2017/10/schermata-2017-10-20-alle-152713_960x540.jpg', 200, 1, 7, 2);
+INSERT INTO MENU_ITEM(price, image_name, amount, id_unit, id_category, id_menu) VALUES (100, 'https://fthmb.tqn.com/w5CXk2yMylJwBHxvrv13n1Y7Tqw=/960x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/scrambled-eggs-58a701ac5f9b58a3c91cbebd.jpg', 200, 1, 7, 2);
+INSERT INTO MENU_ITEM(price, image_name, amount, id_unit, id_category, id_menu) VALUES (90, 'https://assets.epicurious.com/photos/5761d0268accf290434553aa/6:4/w_620%2Ch_413/panna-cotta.jpg', 100, 1, 9, 2);
+INSERT INTO MENU_ITEM(price, image_name, amount, id_unit, id_category, id_menu) VALUES (110, 'http://www.rawforyou.cz/wp-content/uploads/2014/09/61a0305_upr_1.jpg', 100, 1, 9, 2);
+INSERT INTO MENU_ITEM(price, image_name, amount, id_unit, id_category, id_menu) VALUES (30, 'https://airfryer.cooking/wp-content/uploads/2017/12/Shoestring_fries_large.jpg', 50, 1, 10, 2);
+INSERT INTO MENU_ITEM(price, image_name, amount, id_unit, id_category, id_menu) VALUES (30, 'https://previews.123rf.com/images/weyo/weyo1611/weyo161100125/65592367-potato-roasted-potatoes-american-potatoes-with-salt-pepper-and-cumin-roasted-potato-wedges-delicious.jpg', 50, 1, 10, 2);
+INSERT INTO MENU_ITEM(price, image_name, amount, id_unit, id_category, id_menu) VALUES (45, 'http://www.howtomakeorangejuice.com/files/photos/Orange_Juice_Recipes_Copyright_2012.jpg', 0.33, 4, 12, 2);
+INSERT INTO MENU_ITEM(price, image_name, amount, id_unit, id_category, id_menu) VALUES (45, 'https://www.organicfacts.net/wp-content/uploads/applejuice.jpg', 0.33, 4, 12, 2);
+INSERT INTO MENU_ITEM(price, image_name, amount, id_unit, id_category, id_menu) VALUES (30, 'http://www.healthywomen.org/sites/default/files/green-tea.jpg', 0.5, 4, 13, 2);
+INSERT INTO MENU_ITEM(price, image_name, amount, id_unit, id_category, id_menu) VALUES (75, 'https://img.mediacentrum.sk/gallery/nwo/maxwidth/650/775529.jpg', 2, 5, 14, 2);
+INSERT INTO MENU_ITEM(price, image_name, amount, id_unit, id_category, id_menu) VALUES (85, 'https://cdn.shopify.com/s/files/1/0343/7389/products/20170303_JBH_0033_2048x.jpg?v=1519243463', 2, 5, 14, 2);
 
 --MENU_ITEM in english
 INSERT INTO MENU_ITEM_NAME(id_menu_item, id_language, name, description) VALUES (1, 1, 'Pickled sausage', 'Sausage pickled in vinegar with pepper and chilli.');
@@ -246,7 +251,7 @@ INSERT INTO NEWS_NAME(id_news, id_language, header, description) VALUES (1, 1, '
 INSERT INTO NEWS_NAME(id_news, id_language, header, description) VALUES (1, 2, 'Narozenninová akce', 'Nápoj zdarma pro lidi narozené 17.4.');
 
 --main picture
-INSERT INTO GENERAL_CONFIG(url_main_image) VALUES ('https://scontent-frt3-2.xx.fbcdn.net/v/t35.0-12/s2048x2048/29680738_2052341935036421_876125089_o.png?_nc_cat=0&oh=72dbec5b54c6fb1e576570ecfe3c14aa&oe=5AD6807A');
+INSERT INTO GENERAL_CONFIG(url_main_image) VALUES ('https://image.ibb.co/eu23fd/dream_Team_Logo.png');
 
 --introduction
 INSERT INTO INTRO_CONFIG(id_language, header, short_description, news_header) VALUES (1, 'Introduction', 'Welcome!\nHere are some of recent events:', 'News and events');
@@ -255,10 +260,6 @@ INSERT INTO INTRO_CONFIG(id_language, header, short_description, news_header) VA
 --menu config
 INSERT INTO MENUS_CONFIG(id_language, header) VALUES (1, 'Menu');
 INSERT INTO MENUS_CONFIG(id_language, header) VALUES (2, 'Jídelníček');
-
---menus
-INSERT INTO MENUS(id_branch, url_image) VALUES (1, 'https://weneedfun.com/wp-content/uploads/2015/10/Delicious-Food-Photos-28.jpg');
-INSERT INTO MENUS(id_branch, url_image) VALUES (1, 'http://www.chezcora.com/public_upload/images/plat/Dejeuners/Brreuvages/thumbnails/Montage-smoothie_1000x1083-scale_max-600x400.png');
 
 --menu items
 INSERT INTO MENUS_NAME(id_menu, id_language, description) VALUES (1, 1, 'Food');

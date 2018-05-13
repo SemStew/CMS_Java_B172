@@ -11,21 +11,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MenusConfigService {
-    private List<MenusConfigRecord> configs;
     private DSLContext ctx;
 
-    public MenusConfigService() {
-        SelectMenusConfigService();
-    }
+    public MenusConfigService() {}
 
     //select
-    public void SelectMenusConfigService(){
+    public List<MenusConfigRecord> SelectMenusConfigService(){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
-        configs = new ArrayList<MenusConfigRecord>();
+        List<MenusConfigRecord> configs = new ArrayList<MenusConfigRecord>();
         MenusConfig a = new MenusConfig();
-        for (MenusConfigRecord rec : ctx.selectFrom(a).where(a.ID_LANGUAGE.eq(1))) {
+        for (MenusConfigRecord rec : ctx.selectFrom(a)) {
             configs.add(rec);
         }
+
+        return configs;
     }
 
     //update
@@ -34,7 +33,6 @@ public class MenusConfigService {
         MenusConfig tmp = new MenusConfig();
         ctx.update(tmp).set(tmp.HEADER, a.getHeader()).
                 where(tmp.ID_LANGUAGE.eq(a.getIdLanguage())).execute();
-        SelectMenusConfigService();
     }
 
     //insert
@@ -43,7 +41,6 @@ public class MenusConfigService {
         MenusConfig tmp = new MenusConfig();
         ctx.insertInto(tmp).columns(tmp.ID_LANGUAGE, tmp.HEADER).
                 values(a.getIdLanguage(), a.getHeader()).execute();
-        SelectMenusConfigService();
     }
 
     //delete
@@ -51,10 +48,19 @@ public class MenusConfigService {
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         MenusConfig tmp = new MenusConfig();
         ctx.delete(tmp).where(tmp.ID_LANGUAGE.eq(a.getIdLanguage())).execute();
-        SelectMenusConfigService();
     }
 
+    // get instance by language
+    public MenusConfigRecord GetInstanceByLanguage(int id){
+        ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
+        MenusConfig tmp = new MenusConfig();
+        for(MenusConfigRecord rec : ctx.selectFrom(tmp).where(tmp.ID_LANGUAGE.eq(id)))
+            return rec;
+        return null;
+    }
+
+
     public List<MenusConfigRecord> getConfigs() {
-        return configs;
+        return SelectMenusConfigService();
     }
 }

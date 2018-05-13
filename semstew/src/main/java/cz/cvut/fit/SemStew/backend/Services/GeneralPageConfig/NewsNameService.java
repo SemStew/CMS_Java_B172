@@ -11,21 +11,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NewsNameService {
-    private List<NewsNameRecord> configs;
     private DSLContext ctx;
 
-    public NewsNameService() {
-        SelectNewsNameService();
-    }
+    public NewsNameService() {}
 
     //select
-    public void SelectNewsNameService(){
+    public List<NewsNameRecord> SelectNewsNameService(){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
-        configs = new ArrayList<NewsNameRecord>();
+        List<NewsNameRecord> configs = new ArrayList<NewsNameRecord>();
         NewsName a = new NewsName();
         for (NewsNameRecord rec : ctx.selectFrom(a).where(a.ID_LANGUAGE.eq(1))) {
             configs.add(rec);
         }
+
+        return configs;
     }
 
     //update
@@ -34,7 +33,6 @@ public class NewsNameService {
         NewsName tmp = new NewsName();
         ctx.update(tmp).set(tmp.HEADER, a.getHeader()).set(tmp.DESCRIPTION, a.getDescription()).
                 where(tmp.ID_LANGUAGE.eq(a.getIdLanguage())).and(tmp.ID_NEWS.eq(a.getIdNews())).execute();
-        SelectNewsNameService();
     }
 
     //insert
@@ -43,7 +41,6 @@ public class NewsNameService {
         NewsName tmp = new NewsName();
         ctx.insertInto(tmp).columns(tmp.ID_LANGUAGE, tmp.ID_NEWS, tmp.HEADER, tmp.DESCRIPTION).
                 values(a.getIdLanguage(), a.getIdNews(), a.getHeader(), a.getDescription()).execute();
-        SelectNewsNameService();
     }
 
     //delete
@@ -51,10 +48,9 @@ public class NewsNameService {
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         NewsName tmp = new NewsName();
         ctx.delete(tmp).where(tmp.ID_LANGUAGE.eq(a.getIdLanguage())).and(tmp.ID_NEWS.eq(a.getIdNews())).execute();
-        SelectNewsNameService();
     }
 
     public List<NewsNameRecord> getConfigs() {
-        return configs;
+        return SelectNewsNameService();
     }
 }

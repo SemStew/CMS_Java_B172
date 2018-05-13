@@ -11,21 +11,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NewsService {
-    private List<NewsRecord> configs;
     private DSLContext ctx;
 
-    public NewsService() {
-        SelectNewsService();
-    }
+    public NewsService() {}
 
     //select
-    public void SelectNewsService(){
+    public List<NewsRecord> SelectNewsService(){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
-        configs = new ArrayList<NewsRecord>();
+        List<NewsRecord> configs = new ArrayList<NewsRecord>();
         News a = new News();
         for (NewsRecord rec : ctx.selectFrom(a)) {
             configs.add(rec);
         }
+
+        return configs;
     }
 
     //update
@@ -34,7 +33,6 @@ public class NewsService {
         News tmp = new News();
         ctx.update(tmp).set(tmp.ID_RESTAURANT, a.getIdRestaurant()).set(tmp.N_DATE, a.getNDate()).
                 where(tmp.ID_NEWS.eq(a.getIdNews())).execute();
-        SelectNewsService();
     }
 
     //insert
@@ -43,7 +41,6 @@ public class NewsService {
         News tmp = new News();
         ctx.insertInto(tmp).columns(tmp.ID_RESTAURANT, tmp.N_DATE).
                 values(a.getIdRestaurant(), a.getNDate()).execute();
-        SelectNewsService();
     }
 
     //delete
@@ -51,10 +48,9 @@ public class NewsService {
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         News tmp = new News();
         ctx.delete(tmp).where(tmp.ID_NEWS.eq(a.getIdNews())).execute();
-        SelectNewsService();
     }
 
     public List<NewsRecord> getConfigs() {
-        return configs;
+        return SelectNewsService();
     }
 }
