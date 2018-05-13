@@ -32,15 +32,16 @@ public class RestaurantService {
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         Restaurant tmp = new Restaurant();
         ctx.update(tmp).set(tmp.NAME, a.getName()).set(tmp.ICO, a.getIco()).set(tmp.IMAGE, a.getImage()).
-                set(tmp.ID_ADMIN, a.getIdAdmin()).where(tmp.ID_RESTAURANT.eq(a.getIdRestaurant())).execute();
+                set(tmp.ID_ADMIN, a.getIdAdmin()).set(tmp.EMAIL, a.getEmail()).set(tmp.EMAIL_PASSWORD, a.getEmailPassword()).
+                where(tmp.ID_RESTAURANT.eq(a.getIdRestaurant())).execute();
     }
 
     //insert
     public void InsertRestaurantService(RestaurantRecord a){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         Restaurant tmp = new Restaurant();
-        ctx.insertInto(tmp).columns(tmp.NAME, tmp.ICO, tmp.ID_ADMIN, tmp.IMAGE).
-                values(a.getName(), a.getIco(), a.getIdAdmin(), a.getImage()).execute();
+        ctx.insertInto(tmp).columns(tmp.NAME, tmp.ICO, tmp.ID_ADMIN, tmp.IMAGE, tmp.EMAIL, tmp.EMAIL_PASSWORD).
+                values(a.getName(), a.getIco(), a.getIdAdmin(), a.getImage(), a.getEmail(), a.getEmailPassword()).execute();
     }
 
     //delete

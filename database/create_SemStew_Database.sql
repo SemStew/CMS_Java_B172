@@ -14,7 +14,9 @@ CREATE TABLE RESTAURANT(
   id_admin integer NOT NULL REFERENCES ADMINS(id_admin),
   name varchar(128) NOT NULL,
   ico decimal,
-  image text
+  image text,
+  email text,
+  email_password text
 );
 
 CREATE TABLE BRANCH(
@@ -24,6 +26,12 @@ CREATE TABLE BRANCH(
   phone varchar(16),
   description text,
   opening_hours text  
+);
+
+CREATE TABLE IMAGES(
+  id_image serial PRIMARY KEY,
+  id_restaurant integer NOT NULL REFERENCES RESTAURANT(id_restaurant),
+  image text
 );
 
 CREATE TABLE MAIN_CATEGORIES(
@@ -95,7 +103,8 @@ CREATE TABLE RESERVATION(
   r_date date NOT NULL,
   time_from time NOT NULL,
   person varchar(128) NOT NULL,
-  n_table integer NOT NULL
+  n_table integer NOT NULL,
+  status text
 );
 
 CREATE TABLE RESERVATION_CONFIG(
@@ -125,7 +134,8 @@ CREATE TABLE ORDERS(
   id_branch integer NOT NULL REFERENCES BRANCH(id_branch),
   o_date date NOT NULL,
   person varchar(128),
-  address text NOT NULL
+  address text NOT NULL,
+  status text
 );
 
 CREATE TABLE ORDER_ITEM(

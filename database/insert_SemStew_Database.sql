@@ -6,10 +6,16 @@ INSERT INTO LANGUAGES(name) VALUES ('Czech');
 INSERT INTO ADMINS(name, password) VALUES ('Dante', 'heslo123');
 
 --restaurant
-INSERT INTO RESTAURANT(id_admin, name, ico, image) VALUES (1, 'Dream Restaurant', 12345678, 'https://image.ibb.co/eu23fd/dream_Team_Logo.png');
+INSERT INTO RESTAURANT(id_admin, name, ico, image, email, email_password) VALUES (1, 'Dream Restaurant', 12345678, 'https://image.ibb.co/eu23fd/dream_Team_Logo.png', 'dreamteamtestrest@gmail.com', 'Dreamteam1');
 
 --branches
 INSERT INTO BRANCH(id_restaurant, address, phone, description, opening_hours) VALUES (1, 'Thákurova 1516', '465123945', 'Cool pobočka', 'Zavřeno nonstop');
+
+--images
+INSERT INTO IMAGES(id_restaurant, image) VALUES (1, 'https://www.theriverside.co.uk/images/Inside-Restaurant.jpg');
+INSERT INTO IMAGES(id_restaurant, image) VALUES (1, 'https://www.discoverwalks.com/blog/wp-content/uploads/2016/04/paris-restaurant-big.jpg');
+INSERT INTO IMAGES(id_restaurant, image) VALUES (1, 'https://c.pxhere.com/photos/6f/79/abendbrot_restaurant_salad_eat_italians_berlin_kurf_rstendamm-1066618.jpg!d');
+
 
 --main categories
 INSERT INTO MAIN_CATEGORIES DEFAULT VALUES;
@@ -219,8 +225,8 @@ INSERT INTO MENU_ITEM_ALLERGEN(id_menu_item, id_allergen) VALUES (13, 7);
 INSERT INTO MENU_ITEM_ALLERGEN(id_menu_item, id_allergen) VALUES (14, 7);
 
 --RESERVATIONs
-INSERT INTO RESERVATION(id_branch, r_date, time_from, person, n_table) VALUES (1, '2018-4-17', '16:00', 'Dante Frajer', 1);
-INSERT INTO RESERVATION(id_branch, r_date, time_from, person, n_table) VALUES (1, '2018-4-19', '14:30', 'Dante Nefrajer', 3);
+INSERT INTO RESERVATION(id_branch, r_date, time_from, person, n_table, status) VALUES (1, '2018-4-17', '16:00', 'Dante Frajer', 1, 'Accepted');
+INSERT INTO RESERVATION(id_branch, r_date, time_from, person, n_table, status) VALUES (1, '2018-4-19', '14:30', 'Dante Nefrajer', 3, 'Accepted');
 
 --RESERVATION site
 INSERT INTO RESERVATION_CONFIG(id_language, header, table_number, time_from_desc) VALUES (1, 'RESERVATIONs', 'Table number', 'Time');
@@ -237,7 +243,7 @@ INSERT INTO EMPLOYEE(role, id_branch, name, surname, phone, mail) VALUES (1, 1, 
 INSERT INTO EMPLOYEE(role, id_branch, name, surname, phone, mail) VALUES (3, 1, 'Angellica', 'Smith', NULL, NULL);
 
 --orders
-INSERT INTO ORDERS(id_branch, o_date, person, address) VALUES (1, '2018-4-17', 'Some random guy', 'Petřín 1284');
+INSERT INTO ORDERS(id_branch, o_date, person, address, status) VALUES (1, '2018-4-17', 'Some random guy', 'Petřín 1284', 'Accepted');
 
 --order items
 INSERT INTO ORDER_ITEM(id_menu_item, id_order) VALUES (9, 1);

@@ -36,8 +36,8 @@ public class ReservationService {
     public void InsertReservationService(ReservationRecord a){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         Reservation tmp = new Reservation();
-        ctx.insertInto(tmp).columns(tmp.ID_BRANCH, tmp.N_TABLE, tmp.PERSON, tmp.R_DATE, tmp.TIME_FROM).
-                values(a.getIdBranch(), a.getNTable(), a.getPerson(), a.getRDate(), a.getTimeFrom()).execute();
+        ctx.insertInto(tmp).columns(tmp.ID_BRANCH, tmp.N_TABLE, tmp.PERSON, tmp.R_DATE, tmp.TIME_FROM, tmp.STATUS).
+                values(a.getIdBranch(), a.getNTable(), a.getPerson(), a.getRDate(), a.getTimeFrom(), a.getStatus()).execute();
     }
 
     //delete

@@ -31,7 +31,8 @@ public class OrdersService {
     public void UpdateOrdersService(OrdersRecord a){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         Orders tmp = new Orders();
-        ctx.update(tmp).set(tmp.ID_BRANCH, a.getIdBranch()).
+        ctx.update(tmp).set(tmp.ID_BRANCH, a.getIdBranch()).set(tmp.ADDRESS, a.getAddress()).set(tmp.O_DATE, a.getODate()).
+                set(tmp.PERSON, a.getPerson()).set(tmp.STATUS, a.getStatus()).
                 where(tmp.ID_ORDER.eq(a.getIdOrder())).execute();
     }
 
@@ -39,15 +40,15 @@ public class OrdersService {
     public void InsertOrdersService(OrdersRecord a){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         Orders tmp = new Orders();
-        ctx.insertInto(tmp).columns(tmp.ID_BRANCH, tmp.ID_ORDER).
-                values(a.getIdBranch(), a.getIdOrder()).execute();
+        ctx.insertInto(tmp).columns(tmp.ID_BRANCH, tmp.ADDRESS, tmp.O_DATE, tmp.PERSON, tmp.STATUS).
+                values(a.getIdBranch(), a.getAddress(), a.getODate(), a.getPerson(), a.getStatus()).execute();
     }
 
     //delete
     public void DeleteOrdersService(OrdersRecord a){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         Orders tmp = new Orders();
-        ctx.delete(tmp).where(tmp.ID_BRANCH.eq(a.getIdBranch())).and(tmp.ID_ORDER.eq(a.getIdOrder())).execute();
+        ctx.delete(tmp).where(tmp.ID_ORDER.eq(a.getIdOrder())).execute();
     }
 
     public List<OrdersRecord> getConfigs() {

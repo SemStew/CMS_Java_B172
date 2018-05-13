@@ -16,7 +16,6 @@ import com.vaadin.flow.router.*;
 import com.vaadin.flow.server.VaadinService;
 import cz.cvut.fit.SemStew.backend.Services.GeneralPageConfig.AdminsService;
 import cz.cvut.fit.SemStew.ui.customerviews.introlist.IntroList;
-import cz.cvut.fit.SemStew.ui.views.branchlist.BranchList;
 
 import java.util.List;
 
