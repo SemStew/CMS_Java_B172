@@ -8,7 +8,7 @@ before_script:
   - psql -U postgres --list
   - psql -d SemStew -f database/create_SemStew_Database.sql -U postgres
   - psql -d SemStew -f database/insert_SemStew_Database.sql -U postgres
-  - psql -c 'ALTER USER postgres WITH PASSWORD \'postolka11\';' -U postgres
+  - psql -c "ALTER USER postgres WITH PASSWORD 'postolka11';" -U postgres
 script: 
 - cd semstew
 - mvn clean install
