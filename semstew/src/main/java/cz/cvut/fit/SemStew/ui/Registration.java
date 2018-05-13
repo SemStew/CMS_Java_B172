@@ -37,6 +37,8 @@ public class Registration extends VerticalLayout
     private final TextField surname = new TextField();
     private final TextField ico = new TextField();
     private final TextField email = new TextField();
+    private final PasswordField emailPassword = new PasswordField();
+    private final PasswordField emailPasswordRepeat = new PasswordField();
     private final TextField restaurantName = new TextField();
     private final Button registrationButton = new Button();
     private final Label infoLabel = new Label();
@@ -66,6 +68,9 @@ public class Registration extends VerticalLayout
         HorizontalLayout passwords = new HorizontalLayout();
         passwords.setAlignItems(Alignment.STRETCH);
 
+        HorizontalLayout emailPasswords = new HorizontalLayout();
+        emailPasswords.setAlignItems(Alignment.STRETCH);
+
         HorizontalLayout names = new HorizontalLayout();
         names.setAlignItems(Alignment.STRETCH);
 
@@ -78,6 +83,8 @@ public class Registration extends VerticalLayout
         ico.setLabel("ICO:");
         email.setLabel("Email:");
         email.setPrefixComponent(new Icon(VaadinIcons.AT));
+        emailPassword.setLabel("Gmail password:");
+        emailPasswordRepeat.setLabel("Confirm gmail password");
         restaurantName.setLabel("Restaurant name:");
         registrationButton.setText("Register");
         registrationButton.addClassName("btn_style");
@@ -97,8 +104,16 @@ public class Registration extends VerticalLayout
                 infoLabel.setText("Passwords are different");
                 return;
             }
+            if(!emailPassword.getValue().equals(emailPasswordRepeat.getValue())){
+                infoLabel.setText("Email passwords are different");
+                return;
+            }
             if(!CorrectnessController.OnlyNumbers(ico.getValue())){
                 infoLabel.setText("ICO is numbers only");
+                return;
+            }
+            if(!CorrectnessController.ValidEmail(email.getValue())){
+                infoLabel.setText("Enter valid email address");
                 return;
             }
             if(UINotFilled()){
@@ -108,13 +123,13 @@ public class Registration extends VerticalLayout
             AdminsRecord tmp = new AdminsRecord();
             tmp.setName(userName.getValue());
             tmp.setPassword(password.getValue());
-            tmp.setIdAdmin(2);
             admin.InsertAdminsService(tmp);
             RestaurantRecord tmp2 = new RestaurantRecord();
             tmp2.setIco(new BigDecimal(ico.getValue()));
             tmp2.setName(restaurantName.getValue());
             tmp2.setImage("none");
-            tmp2.setIdRestaurant(2);
+            tmp2.setEmail(email.getValue());
+            tmp2.setEmailPassword(emailPassword.getValue());
             List<AdminsRecord> admins = admin.getConfigs();
             for(AdminsRecord it : admins) {
                 if (it.getName().equals(tmp.getName()) && it.getPassword().equals(tmp.getPassword())) {
@@ -127,16 +142,19 @@ public class Registration extends VerticalLayout
 
         passwords.add(password, passwordRepeat);
 
+        emailPasswords.add(emailPassword, emailPasswordRepeat);
+
         names.add(forname, surname);
 
-        content.add(header, userName, passwords, names, ico, email, restaurantName, buttons,infoLabel);
+        content.add(header, userName, passwords, names, ico, email, emailPasswords,restaurantName, buttons,infoLabel);
         add(content);
     }
 
     private boolean UINotFilled()
     {
         return (userName.isEmpty() || password.isEmpty() || passwordRepeat.isEmpty() || forname.isEmpty()
-                || surname.isEmpty() || ico.isEmpty() || email.isEmpty() || restaurantName.isEmpty());
+                || surname.isEmpty() || ico.isEmpty() || email.isEmpty() || restaurantName.isEmpty()
+                || emailPassword.isEmpty() || emailPasswordRepeat.isEmpty());
     }
 
     private void addFoot () {

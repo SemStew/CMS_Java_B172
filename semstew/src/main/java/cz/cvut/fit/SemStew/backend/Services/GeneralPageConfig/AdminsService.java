@@ -39,8 +39,8 @@ public class AdminsService {
     public void InsertAdminsService(AdminsRecord a){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         Admins tmp = new Admins();
-        ctx.insertInto(tmp).columns(tmp.ID_ADMIN, tmp.NAME, tmp.PASSWORD).
-                values(a.getIdAdmin(), a.getName(), a.getPassword()).execute();
+        ctx.insertInto(tmp).columns( tmp.NAME, tmp.PASSWORD).
+                values(a.getName(), a.getPassword()).execute();
     }
 
     //delete
