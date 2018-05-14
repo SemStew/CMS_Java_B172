@@ -111,10 +111,10 @@ public class ArticleList extends GeneralAdminList {
         Label headLabel = new Label("Update");
 
         TextField header = new TextField();
-        header.setTitle("News header");
+        header.setLabel("News header");
         header.setValue(update.getHeader());
         TextField description = new TextField();
-        description.setTitle("Message");
+        description.setLabel("Message");
         description.setValue(update.getDescription());
 
         Label infoLabel = new Label();
@@ -165,9 +165,9 @@ public class ArticleList extends GeneralAdminList {
         language.setValue(languageNames.get(0));
 
         TextField header = new TextField();
-        header.setTitle("News header");
+        header.setLabel("News header");
         TextField description = new TextField();
-        description.setTitle("Message");
+        description.setLabel("Message");
 
         Label infoLabel = new Label();
 

@@ -14,4 +14,11 @@ public class CorrectnessController {
         java.util.regex.Matcher m = p.matcher(email);
         return m.matches();
     }
+
+    public static boolean ValidTime(String time){
+        String tPattern = "([01]?[0-9]|2[0-3]):[0-5][0-9]";
+        java.util.regex.Pattern p = java.util.regex.Pattern.compile(tPattern);
+        java.util.regex.Matcher m = p.matcher(time);
+        return m.matches();
+    }
 }
