@@ -5,8 +5,10 @@ import JOOQ.tables.records.ReservationRecord;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.datepicker.DatePicker;
+import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
@@ -34,7 +36,9 @@ public class ReservationList extends VerticalLayout {
     private final TextField email = new TextField();
     private final ComboBox<String> branches = new ComboBox<>();
     private final Button confirm = new Button();
+    private final Button checkStatus = new Button();
     private final Label infoLabel = new Label();
+    private final Dialog checkDialog = new Dialog();
     private final ReservationConfigService reservationConfigService = new ReservationConfigService();
     private final LanguagesService languagesService = new LanguagesService();
     private final ReservationService reservationService = new ReservationService();
@@ -56,6 +60,7 @@ public class ReservationList extends VerticalLayout {
     private void addContent()
     {
         VerticalLayout content = new VerticalLayout();
+        HorizontalLayout buttons = new HorizontalLayout();
         content.addClassName("form");
         content.setDefaultHorizontalComponentAlignment(Alignment.STRETCH);
 
@@ -85,6 +90,12 @@ public class ReservationList extends VerticalLayout {
 
         confirm.setText("Confirm");
         confirm.addClassName("btn_style");
+
+        checkStatus.setText("Check status");
+        checkStatus.addClassName("btn_style");
+
+        checkDialog.setCloseOnOutsideClick(false);
+        checkDialog.setCloseOnEsc(true);
 
         branches.addValueChangeListener(valueChangeEvent -> {
             if(branchAddresses.stream().filter(branchAddress -> branchAddress.equals(branches.getValue())).count() == 0){
@@ -124,9 +135,58 @@ public class ReservationList extends VerticalLayout {
             infoLabel.setText("Added");
         });
 
+        checkStatus.addClickListener(buttonClickEvent -> {
+           SetUpDialog();
+           checkDialog.open();
+        });
 
-        content.add(header, date, time, person, table, email, branches, confirm, infoLabel);
+        buttons.add(confirm, checkStatus);
+
+
+        content.add(header, date, time, person, table, email, branches, buttons, infoLabel);
 
         add(content);
+    }
+
+    private void SetUpDialog(){
+        checkDialog.removeAll();
+
+        VerticalLayout content = new VerticalLayout();
+        HorizontalLayout buttons = new HorizontalLayout();
+
+        Label headLabel = new Label("Check reservation");
+        TextField id = new TextField("Insert ID");
+        TextField status = new TextField("Status");
+        status.setReadOnly(true);
+        Button check = new Button("Check");
+        Button close = new Button("Close");
+        Label infoLabel = new Label();
+
+        check.addClickListener(buttonClickEvent -> {
+            if(id.isEmpty()){
+                infoLabel.setText("Fill id field");
+                return;
+            }
+            if(!CorrectnessController.OnlyNumbers(id.getValue())){
+                infoLabel.setText("Id must be only numbers");
+                return;
+            }
+
+            ReservationRecord reservationRecord = reservationService.GetById(Integer.parseInt(id.getValue()));
+            if(reservationRecord == null){
+                infoLabel.setText("Incorrect reservation number");
+                return;
+            }
+            status.setValue(reservationRecord.getStatus());
+            infoLabel.setText("Found");
+        });
+
+        close.addClickListener(buttonClickEvent -> {
+            checkDialog.close();
+        });
+
+        buttons.add(check,close);
+        content.add(headLabel,id,status,buttons,infoLabel);
+        checkDialog.add(content);
     }
 }

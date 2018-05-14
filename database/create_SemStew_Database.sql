@@ -99,6 +99,7 @@ CREATE TABLE MENU_ITEM_ALLERGEN(
 );
 
 CREATE TABLE RESERVATION(
+  id_reservation serial PRIMARY KEY,
   id_branch integer NOT NULL REFERENCES BRANCH(id_branch),
   r_date date NOT NULL,
   time_from time NOT NULL,

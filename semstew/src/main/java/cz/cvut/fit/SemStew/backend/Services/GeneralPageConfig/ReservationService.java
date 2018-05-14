@@ -32,8 +32,7 @@ public class ReservationService {
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         Reservation tmp = new Reservation();
         ctx.update(tmp).set(tmp.STATUS, a.getStatus()).set(tmp.PERSON, a.getPerson()).set(tmp.EMAIL, a.getEmail()).
-                where(tmp.N_TABLE.eq(a.getNTable())).and(tmp.R_DATE.eq(a.getRDate()).
-                and(tmp.TIME_FROM.eq(a.getTimeFrom()))).execute();
+                where(tmp.ID_RESERVATION.eq(a.getIdReservation())).execute();
     }
 
     //insert
@@ -44,12 +43,18 @@ public class ReservationService {
                 values(a.getIdBranch(), a.getNTable(), a.getPerson(), a.getRDate(), a.getTimeFrom(), a.getEmail(), a.getStatus()).execute();
     }
 
-    //delete
+    // delete
     public void DeleteReservationService(ReservationRecord a){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         Reservation tmp = new Reservation();
-        ctx.delete(tmp).where(tmp.N_TABLE.eq(a.getNTable())).and(tmp.PERSON.eq(a.getPerson())).and(tmp.TIME_FROM.eq(a.getTimeFrom())).
-                and(tmp.R_DATE.eq(a.getRDate())).execute();
+        ctx.delete(tmp).where(tmp.ID_RESERVATION.eq(a.getIdReservation())).execute();
+    }
+
+    // get by id
+    public ReservationRecord GetById(int id){
+        ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
+        Reservation tmp = new Reservation();
+        return ctx.fetchOne(tmp, tmp.ID_RESERVATION.eq(id));
     }
 
     public List<ReservationRecord> getConfigs() {
