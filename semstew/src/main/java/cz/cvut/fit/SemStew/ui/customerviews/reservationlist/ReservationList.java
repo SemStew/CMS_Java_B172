@@ -35,12 +35,14 @@ public class ReservationList extends VerticalLayout {
     private final ComboBox<String> branches = new ComboBox<>();
     private final Button confirm = new Button();
     private final Button checkStatus = new Button();
+    private final Button updateButton = new Button();
     private final Label infoLabel = new Label();
     private final Dialog checkDialog = new Dialog();
     private final ReservationConfigService reservationConfigService = new ReservationConfigService();
     private final LanguagesService languagesService = new LanguagesService();
     private final ReservationController reservationController = new ReservationController();
     private final BranchService branchService = new BranchService();
+    private ReservationRepresentation update;
 
     public ReservationList()
     {
@@ -91,6 +93,9 @@ public class ReservationList extends VerticalLayout {
         checkStatus.setText("Check status");
         checkStatus.addClassName("btn_style");
 
+        updateButton.setText("Update");
+        updateButton.addClassName("btn_style");
+
         checkDialog.setCloseOnOutsideClick(false);
         checkDialog.setCloseOnEsc(true);
 
@@ -119,18 +124,23 @@ public class ReservationList extends VerticalLayout {
                 return;
             }
             ReservationRepresentation insert = new ReservationRepresentation();
-            insert.LoadDate(branchService.GetByAddress(branches.getValue()).getIdBranch(), Integer.parseInt(table.getValue()), email.getValue(),
-                    person.getValue(), "Open", time.getValue(), date.getValue());
+            insert.LoadDate(branchService.GetByAddress(branches.getValue()).getIdBranch(), Integer.parseInt(table.getValue()), person.getValue(),
+                    email.getValue(), "Open", time.getValue(), date.getValue());
             reservationController.Insert(insert);
             infoLabel.setText("Added");
         });
 
         checkStatus.addClickListener(buttonClickEvent -> {
-           SetUpDialog();
+           SetUpCheckDialog();
            checkDialog.open();
         });
 
-        buttons.add(confirm, checkStatus);
+        updateButton.addClickListener(buttonClickEvent -> {
+            SetUpEditDialog();
+            checkDialog.open();
+        });
+
+        buttons.add(confirm, checkStatus, updateButton);
 
 
         content.add(header, date, time, person, table, email, branches, buttons, infoLabel);
@@ -138,7 +148,98 @@ public class ReservationList extends VerticalLayout {
         add(content);
     }
 
-    private void SetUpDialog(){
+    private void SetUpEditDialog(){
+        checkDialog.removeAll();
+
+        VerticalLayout content = new VerticalLayout();
+        HorizontalLayout buttons = new HorizontalLayout();
+
+        Label headLabel = new Label("Update reservation");
+        TextField id = new TextField("Insert ID");
+        Label updateLabel = new Label("Update");
+        DatePicker datePick = new DatePicker();
+        datePick.setLabel("Date");
+        TextField timePick = new TextField("Time");
+        TextField personSet = new TextField("Name and Surname");
+        TextField email = new TextField("Email");
+        TextField table = new TextField("Table number");
+        ComboBox<String> brancheSelect = new ComboBox<>("Branches");
+        Label infoLabeling = new Label();
+
+        List<String> branchAddresses = branchService.GetAllAdresses();
+
+        brancheSelect.setItems(branchAddresses);
+        brancheSelect.setValue(branchAddresses.get(0));
+
+        brancheSelect.addValueChangeListener(valueChangeEvent -> {
+            if(branchAddresses.stream().filter(branchAddress -> branchAddress.equals(branches.getValue())).count() == 0){
+                brancheSelect.setErrorMessage("Select existing branch");
+                brancheSelect.setInvalid(true);
+            }
+        });
+
+
+        Button update = new Button("Update");
+        Button get = new Button("Get");
+        Button close = new Button("Close");
+
+        get.addClickListener(buttonClickEvent -> {
+            if(id.isEmpty()){
+                infoLabeling.setText("Fill id");
+                return;
+            }
+            if(!CorrectnessController.OnlyNumbers(id.getValue())){
+                infoLabeling.setText("Id has to contain only numbers");
+                return;
+            }
+            this.update = reservationController.GetById(Integer.parseInt(id.getValue()));
+            if(this.update == null){
+                infoLabeling.setText("Incorect reservation id");
+                return;
+            }
+            datePick.setValue(this.update.getTimeDate().toLocalDate());
+            timePick.setValue(Integer.toString(this.update.getTimeDate().toLocalTime().getHour()) + ":" +
+                    Integer.toString(this.update.getTimeDate().toLocalTime().getMinute()));
+            personSet.setValue(this.update.getPerson());
+            email.setValue(this.update.getEmail());
+            brancheSelect.setValue(branchService.GetById(this.update.getBranchId()).getAddress());
+            table.setValue(this.update.getTableNum().toString());
+        });
+
+        update.addClickListener(buttonClickEvent -> {
+            if(datePick.isEmpty() || timePick.isEmpty() || personSet.isEmpty() || email.isEmpty()
+                    || brancheSelect.isEmpty() || table.isEmpty()){
+                infoLabeling.setText("Fill all update fields");
+                return;
+            }
+            if(!CorrectnessController.OnlyNumbers(table.getValue())){
+                infoLabeling.setText("Table must contain only numbers");
+                return;
+            }
+            if(!CorrectnessController.ValidTime(timePick.getValue())){
+                infoLabeling.setText("Time must have correct format HH:MM");
+                return;
+            }
+            if(!CorrectnessController.ValidEmail(email.getValue())){
+                infoLabeling.setText("Enter valid email address");
+                return;
+            }
+            this.update.LoadDate(branchService.GetByAddress(brancheSelect.getValue()).getIdBranch(),Integer.parseInt(table.getValue()),
+                    personSet.getValue(),email.getValue(),"Updated",timePick.getValue(),datePick.getValue());
+            reservationController.Update(this.update);
+            infoLabel.setText("Updated");
+        });
+
+        close.addClickListener(buttonClickEvent -> {
+            checkDialog.close();
+        });
+
+        buttons.add(update, close);
+        content.add(headLabel,id,get,updateLabel, datePick, timePick, personSet, email, brancheSelect,buttons,infoLabeling);
+        checkDialog.add(content);
+    }
+
+    private void SetUpCheckDialog(){
         checkDialog.removeAll();
 
         VerticalLayout content = new VerticalLayout();
@@ -150,25 +251,25 @@ public class ReservationList extends VerticalLayout {
         status.setReadOnly(true);
         Button check = new Button("Check");
         Button close = new Button("Close");
-        Label infoLabel = new Label();
+        Label infoLabeling = new Label();
 
         check.addClickListener(buttonClickEvent -> {
             if(id.isEmpty()){
-                infoLabel.setText("Fill id field");
+                infoLabeling.setText("Fill id field");
                 return;
             }
             if(!CorrectnessController.OnlyNumbers(id.getValue())){
-                infoLabel.setText("Id must be only numbers");
+                infoLabeling.setText("Id must be only numbers");
                 return;
             }
 
             ReservationRepresentation reservationRecord = reservationController.GetById(Integer.parseInt(id.getValue()));
             if(reservationRecord == null){
-                infoLabel.setText("Incorrect reservation number");
+                infoLabeling.setText("Incorrect reservation number");
                 return;
             }
             status.setValue(reservationRecord.getStatus());
-            infoLabel.setText("Found");
+            infoLabeling.setText("Found");
         });
 
         close.addClickListener(buttonClickEvent -> {
@@ -176,7 +277,7 @@ public class ReservationList extends VerticalLayout {
         });
 
         buttons.add(check,close);
-        content.add(headLabel,id,status,buttons,infoLabel);
+        content.add(headLabel,id,status,buttons,infoLabeling);
         checkDialog.add(content);
     }
 }

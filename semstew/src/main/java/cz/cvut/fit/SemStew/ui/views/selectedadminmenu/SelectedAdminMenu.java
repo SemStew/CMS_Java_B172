@@ -402,6 +402,7 @@ public class SelectedAdminMenu extends GeneralAdminList
                 menuItemRepresentations.add(tmp);
                 int languageIdea = languagesService.GetIdByName(valueChangeEvent.getValue());
                 setUpCheckboxes(languageIdea);
+                SetCheckboxes(menuItemController.getAlergensForItem(menuItemRepresentations.get(0).getAlergens(),languageIdea));
             }
         });
 

@@ -198,6 +198,16 @@ public class MenuItemController {
         }
     }
 
+    public List<String> getAlergensForItem(List<String> input, int language){
+        List<Integer> idList = new ArrayList<>();
+        for(String rec : input)
+            idList.add(allergensNameService.GetByDescription(rec).getIdAllergen());
+        List<String> alergensByName = new ArrayList<>();
+        for(Integer rec : idList)
+            alergensByName.add(allergensNameService.GetById(rec,language).getAllergen());
+        return alergensByName;
+    }
+
     public List<MenuItemRepresentation> getItems() {
         return LoadData();
     }

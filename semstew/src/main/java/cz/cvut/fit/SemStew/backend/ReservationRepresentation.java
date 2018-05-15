@@ -119,4 +119,12 @@ public class ReservationRepresentation {
     public void setTimeDate(LocalDateTime timeDate) {
         this.timeDate = timeDate;
     }
+
+    public void setTimeDate(LocalDate date, String time)
+    {
+        String[] parts = time.split(":");
+        Long milis = Long.parseLong(parts[0]) * 3600000 + Long.parseLong(parts[1]) * 60000;
+        LocalTime timePart = new Time(milis).toLocalTime();
+        timeDate = LocalDateTime.of(date,timePart);
+    }
 }
