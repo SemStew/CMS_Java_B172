@@ -1,7 +1,6 @@
 package cz.cvut.fit.SemStew.ui.customerviews.reservationlist;
 
 import JOOQ.tables.records.ReservationConfigRecord;
-import JOOQ.tables.records.ReservationRecord;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.datepicker.DatePicker;
@@ -15,14 +14,13 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.VaadinService;
 import cz.cvut.fit.SemStew.backend.CorrectnessController;
+import cz.cvut.fit.SemStew.backend.ReservationController;
+import cz.cvut.fit.SemStew.backend.ReservationRepresentation;
 import cz.cvut.fit.SemStew.backend.Services.GeneralPageConfig.BranchService;
 import cz.cvut.fit.SemStew.backend.Services.GeneralPageConfig.LanguagesService;
 import cz.cvut.fit.SemStew.backend.Services.GeneralPageConfig.ReservationConfigService;
-import cz.cvut.fit.SemStew.backend.Services.GeneralPageConfig.ReservationService;
 import cz.cvut.fit.SemStew.ui.CustomerLayout;
 
-import java.sql.Date;
-import java.sql.Time;
 import java.util.List;
 
 @Route(value = "reservations", layout = CustomerLayout.class)
@@ -41,14 +39,13 @@ public class ReservationList extends VerticalLayout {
     private final Dialog checkDialog = new Dialog();
     private final ReservationConfigService reservationConfigService = new ReservationConfigService();
     private final LanguagesService languagesService = new LanguagesService();
-    private final ReservationService reservationService = new ReservationService();
+    private final ReservationController reservationController = new ReservationController();
     private final BranchService branchService = new BranchService();
 
     public ReservationList()
     {
         init();
         addContent();
-
     }
 
     private void init()
@@ -121,17 +118,10 @@ public class ReservationList extends VerticalLayout {
                 infoLabel.setText("Table must be numbers only");
                 return;
             }
-            ReservationRecord tmp = new ReservationRecord();
-            tmp.setIdBranch(branchService.GetByAddress(branches.getValue()).getIdBranch());
-            tmp.setEmail(email.getValue());
-            tmp.setNTable(Integer.parseInt(table.getValue()));
-            tmp.setStatus("Open");
-            tmp.setPerson(person.getValue());
-            tmp.setRDate(Date.valueOf(date.getValue()));
-            String[] parts = time.getValue().split(":");
-            Time fromTime = new Time(Integer.parseInt(parts[0]),Integer.parseInt(parts[1]), 0);
-            tmp.setTimeFrom(fromTime);
-            reservationService.InsertReservationService(tmp);
+            ReservationRepresentation insert = new ReservationRepresentation();
+            insert.LoadDate(branchService.GetByAddress(branches.getValue()).getIdBranch(), Integer.parseInt(table.getValue()), email.getValue(),
+                    person.getValue(), "Open", time.getValue(), date.getValue());
+            reservationController.Insert(insert);
             infoLabel.setText("Added");
         });
 
@@ -172,7 +162,7 @@ public class ReservationList extends VerticalLayout {
                 return;
             }
 
-            ReservationRecord reservationRecord = reservationService.GetById(Integer.parseInt(id.getValue()));
+            ReservationRepresentation reservationRecord = reservationController.GetById(Integer.parseInt(id.getValue()));
             if(reservationRecord == null){
                 infoLabel.setText("Incorrect reservation number");
                 return;

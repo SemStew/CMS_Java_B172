@@ -70,13 +70,13 @@ public class CategoriesNameService {
         return null;
     }
 
-    // Only descriptions
-    public List<String> CategoriesDescriptions()
+    // Only descriptions by language
+    public List<String> CategoriesDescriptions(int language)
     {
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         CategoriesName tmp = new CategoriesName();
         List<String> ret = new ArrayList<>();
-        for(CategoriesNameRecord res : ctx.selectFrom(tmp).where(tmp.ID_LANGUAGE.eq(1)))
+        for(CategoriesNameRecord res : ctx.selectFrom(tmp).where(tmp.ID_LANGUAGE.eq(language)))
         {
             ret.add(res.getName());
         }

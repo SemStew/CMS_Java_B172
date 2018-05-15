@@ -17,7 +17,8 @@ public class MenuItemController {
     private final MenuItemAllergenService menuItemAllergenService = new MenuItemAllergenService();
     private final AllergensNameService allergensNameService = new AllergensNameService();
     private final LanguagesService languagesService = new LanguagesService();
-    private  int menuID = 0;
+    private int menuID = 0;
+    private int languageId;
 
     public MenuItemController() {}
 
@@ -41,15 +42,15 @@ public class MenuItemController {
 
         menuID = Integer.parseInt(menuIdString);
 
-        int id = languagesService.GetIdByName(name);
+        languageId = languagesService.GetIdByName(name);
 
         List<MenuItemRecord> menuItemRecords = menuItemService.GetByMenuId(menuID);
 
         for(MenuItemRecord menuItemRec : menuItemRecords)
         {
-            menuItemNameRecord = menuItemNameService.ItemNameById(menuItemRec.getIdMenuItem(),id);
+            menuItemNameRecord = menuItemNameService.ItemNameById(menuItemRec.getIdMenuItem(),languageId);
 
-            categoriesNameRecord = categoriesNameService.CategoriesNameById(menuItemRec.getIdCategory(),id);
+            categoriesNameRecord = categoriesNameService.CategoriesNameById(menuItemRec.getIdCategory(),languageId);
 
             unitsRecord = unitsService.UnitById(menuItemRec.getIdUnit());
 
@@ -58,7 +59,7 @@ public class MenuItemController {
             List<AllergensNameRecord> allergensNameRecords = new ArrayList<>();
             if(menuItemAllergenRecords.size()!=0) {
                 for (MenuItemAllergenRecord rec : menuItemAllergenRecords) {
-                    allergensNameRecords.add(allergensNameService.GetById(rec.getIdAllergen(), id));
+                    allergensNameRecords.add(allergensNameService.GetById(rec.getIdAllergen(), languageId));
                 }
             }
 
@@ -203,7 +204,7 @@ public class MenuItemController {
 
     public List<String> getCategories()
     {
-        return categoriesNameService.CategoriesDescriptions();
+        return categoriesNameService.CategoriesDescriptions(languageId);
     }
 
     public List<String> getUnits()

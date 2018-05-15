@@ -8,6 +8,7 @@ public class CorrectnessController {
         return false;
     }
 
+    // String has valid email syntax
     public static boolean ValidEmail(String email){
         String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
         java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
@@ -15,6 +16,7 @@ public class CorrectnessController {
         return m.matches();
     }
 
+    // String has valid time syntax
     public static boolean ValidTime(String time){
         String tPattern = "([01]?[0-9]|2[0-3]):[0-5][0-9]";
         java.util.regex.Pattern p = java.util.regex.Pattern.compile(tPattern);

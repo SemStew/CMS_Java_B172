@@ -229,8 +229,8 @@ INSERT INTO RESERVATION(id_branch, r_date, time_from, person, n_table, email, st
 INSERT INTO RESERVATION(id_branch, r_date, time_from, person, n_table, email, status) VALUES (1, '2018-4-19', '14:30', 'Dante Nefrajer', 3, 'test1@test.com', 'Accepted');
 
 --RESERVATION site
-INSERT INTO RESERVATION_CONFIG(id_language, header, table_number, time_from_desc) VALUES (1, 'RESERVATIONs', 'Table number', 'Time');
-INSERT INTO RESERVATION_CONFIG(id_language, header, table_number, time_from_desc) VALUES (1, 'Rezervace', 'Číslo stolu', 'Čas rezervace');
+INSERT INTO RESERVATION_CONFIG(id_language, header, table_number, time_from_desc) VALUES (1, 'Reservations', 'Table number', 'Time');
+INSERT INTO RESERVATION_CONFIG(id_language, header, table_number, time_from_desc) VALUES (2, 'Rezervace', 'Číslo stolu', 'Čas rezervace');
 
 --performace roles
 INSERT INTO ROLE(name) VALUES('Majitel');
