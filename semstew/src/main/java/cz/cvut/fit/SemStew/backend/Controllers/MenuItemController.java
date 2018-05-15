@@ -1,4 +1,4 @@
-package cz.cvut.fit.SemStew.backend;
+package cz.cvut.fit.SemStew.backend.Controllers;
 
 import JOOQ.tables.records.*;
 import com.vaadin.flow.server.VaadinService;

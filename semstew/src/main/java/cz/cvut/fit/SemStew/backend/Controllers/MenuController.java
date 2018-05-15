@@ -1,4 +1,4 @@
-package cz.cvut.fit.SemStew.backend;
+package cz.cvut.fit.SemStew.backend.Controllers;
 
 import JOOQ.tables.records.MenusNameRecord;
 import JOOQ.tables.records.MenusRecord;

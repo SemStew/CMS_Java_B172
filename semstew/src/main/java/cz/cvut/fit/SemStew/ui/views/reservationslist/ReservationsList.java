@@ -1,9 +1,7 @@
 package cz.cvut.fit.SemStew.ui.views.reservationslist;
 
-import JOOQ.tables.records.ReservationRecord;
 import JOOQ.tables.records.RestaurantRecord;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.Icon;
@@ -13,9 +11,8 @@ import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.renderer.LocalDateTimeRenderer;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import cz.cvut.fit.SemStew.backend.ReservationController;
-import cz.cvut.fit.SemStew.backend.ReservationRepresentation;
-import cz.cvut.fit.SemStew.backend.Services.GeneralPageConfig.ReservationService;
+import cz.cvut.fit.SemStew.backend.Controllers.ReservationController;
+import cz.cvut.fit.SemStew.backend.Controllers.ReservationRepresentation;
 import cz.cvut.fit.SemStew.backend.Services.GeneralPageConfig.RestaurantService;
 import cz.cvut.fit.SemStew.ui.MainLayout;
 import com.vaadin.flow.component.html.H2;
@@ -23,7 +20,6 @@ import cz.cvut.fit.SemStew.ui.views.GeneralAdminList;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.HtmlEmail;
 
-import java.sql.Time;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.Comparator;

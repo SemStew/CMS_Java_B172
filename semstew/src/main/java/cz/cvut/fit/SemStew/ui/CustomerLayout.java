@@ -26,6 +26,7 @@ import cz.cvut.fit.SemStew.ui.customerviews.aboutlist.AboutList;
 import cz.cvut.fit.SemStew.ui.customerviews.contactslist.ContactsList;
 import cz.cvut.fit.SemStew.ui.customerviews.introlist.IntroList;
 import cz.cvut.fit.SemStew.ui.customerviews.menuslist.MenusList;
+import cz.cvut.fit.SemStew.ui.customerviews.orderlist.OrderList;
 import cz.cvut.fit.SemStew.ui.customerviews.reservationlist.ReservationList;
 
 import java.util.ArrayList;
@@ -42,6 +43,7 @@ public class CustomerLayout extends Div
     private RouterLink contacts;
     private RouterLink about;
     private RouterLink reservations;
+    private RouterLink orders;
     private final HorizontalLayout bottom = new HorizontalLayout();
     private final GeneralConfigService generalService = new GeneralConfigService();
     private final LanguagesService languagesService = new LanguagesService();
@@ -125,7 +127,11 @@ public class CustomerLayout extends Div
         reservations.add(new Icon(VaadinIcons.NOTEBOOK), new Text("Reservations"));
         reservations.addClassName("nav-item");
 
-        navigation.add(intro, menus, contacts, about, reservations);
+        orders = new RouterLink(null,OrderList.class);
+        orders.add(new Icon(VaadinIcons.BOOK), new Text("Orders"));
+        orders.addClassName("nav-item");
+
+        navigation.add(intro, menus, contacts, about, reservations, orders);
 
         nav.add(names, navigation);
 
@@ -162,12 +168,14 @@ public class CustomerLayout extends Div
         boolean contactsActive = segment.equals(contacts.getHref());
         boolean aboutActive = segment.equals(about.getHref());
         boolean reservationsActive = segment.equals(reservations.getHref());
+        boolean ordersActive = segment.equals(orders.getHref());
 
         intro.setClassName(ACTIVE_ITEM_STYLE, introActive);
         menus.setClassName(ACTIVE_ITEM_STYLE, menusActive);
         contacts.setClassName(ACTIVE_ITEM_STYLE, contactsActive);
         contacts.setClassName(ACTIVE_ITEM_STYLE, aboutActive);
         reservations.setClassName(ACTIVE_ITEM_STYLE, reservationsActive);
+        orders.setClassName(ACTIVE_ITEM_STYLE, ordersActive);
 
         add(bottom);
     }

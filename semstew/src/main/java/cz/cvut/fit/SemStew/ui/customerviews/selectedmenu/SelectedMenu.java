@@ -10,8 +10,8 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLayout;
 import com.vaadin.flow.router.RouterLink;
-import cz.cvut.fit.SemStew.backend.MenuItemController;
-import cz.cvut.fit.SemStew.backend.MenuItemRepresentation;
+import cz.cvut.fit.SemStew.backend.Controllers.MenuItemController;
+import cz.cvut.fit.SemStew.backend.Controllers.MenuItemRepresentation;
 import cz.cvut.fit.SemStew.ui.CustomerLayout;
 import cz.cvut.fit.SemStew.ui.customerviews.menuslist.MenusList;
 
