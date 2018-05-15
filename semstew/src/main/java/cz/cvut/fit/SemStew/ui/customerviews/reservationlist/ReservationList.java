@@ -90,7 +90,7 @@ public class ReservationList extends VerticalLayout {
         confirm.setText("Confirm");
         confirm.addClassName("btn_style");
 
-        checkStatus.setText("Check status");
+        checkStatus.setText("Check status or delete");
         checkStatus.addClassName("btn_style");
 
         updateButton.setText("Update");
@@ -250,6 +250,7 @@ public class ReservationList extends VerticalLayout {
         TextField status = new TextField("Status");
         status.setReadOnly(true);
         Button check = new Button("Check");
+        Button delete = new Button("Delete");
         Button close = new Button("Close");
         Label infoLabeling = new Label();
 
@@ -272,11 +273,31 @@ public class ReservationList extends VerticalLayout {
             infoLabeling.setText("Found");
         });
 
+        delete.addClickListener(buttonClickEvent -> {
+            if(id.isEmpty()){
+                infoLabeling.setText("Fill id field");
+                return;
+            }
+            if(!CorrectnessController.OnlyNumbers(id.getValue())){
+                infoLabeling.setText("Id must be only numbers");
+                return;
+            }
+
+            ReservationRepresentation reservationRecord = reservationController.GetById(Integer.parseInt(id.getValue()));
+            if(reservationRecord == null){
+                infoLabeling.setText("Incorrect reservation number");
+                return;
+            }
+            reservationRecord.setStatus("Delete");
+            reservationController.Update(reservationRecord);
+            infoLabel.setText("Deleted");
+        });
+
         close.addClickListener(buttonClickEvent -> {
             checkDialog.close();
         });
 
-        buttons.add(check,close);
+        buttons.add(check,delete,close);
         content.add(headLabel,id,status,buttons,infoLabeling);
         checkDialog.add(content);
     }

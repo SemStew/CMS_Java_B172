@@ -40,7 +40,10 @@ public class ReservationController {
 
     public ReservationRepresentation GetById(int id){
         ReservationRepresentation tmp = new ReservationRepresentation();
-        tmp.LoadData(reservationService.GetById(id));
+        ReservationRecord record = reservationService.GetById(id);
+        if(record == null)
+            return null;
+        tmp.LoadData(record);
         return tmp;
     }
 
