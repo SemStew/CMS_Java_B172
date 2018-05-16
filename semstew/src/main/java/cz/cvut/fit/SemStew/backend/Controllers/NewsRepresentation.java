@@ -1,4 +1,4 @@
-package cz.cvut.fit.SemStew.backend;
+package cz.cvut.fit.SemStew.backend.Controllers;
 
 import JOOQ.tables.records.NewsNameRecord;
 import JOOQ.tables.records.NewsRecord;

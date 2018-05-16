@@ -1,4 +1,4 @@
-package cz.cvut.fit.SemStew.backend;
+package cz.cvut.fit.SemStew.backend.Controllers;
 
 public class CorrectnessController {
     // String contains only numbers check

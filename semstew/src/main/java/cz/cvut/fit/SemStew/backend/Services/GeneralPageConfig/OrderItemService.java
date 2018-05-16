@@ -47,6 +47,32 @@ public class OrderItemService {
         ctx.delete(tmp).where(tmp.ID_MENU_ITEM.eq(a.getIdMenuItem())).and(tmp.ID_ORDER.eq(a.getIdOrder())).execute();
     }
 
+    // delete by order id
+    public void DeleteByOrderId(int orderId){
+        ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
+        OrderItem tmp = new OrderItem();
+        ctx.delete(tmp).where(tmp.ID_ORDER.eq(orderId)).execute();
+    }
+
+    // get by order id
+    public List<OrderItemRecord> GetByOrderId(int orderId){
+        ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
+        OrderItem tmp = new OrderItem();
+        List<OrderItemRecord> ret = new ArrayList<>();
+        for(OrderItemRecord rec : ctx.selectFrom(tmp).where(tmp.ID_ORDER.eq(orderId)))
+            ret.add(rec);
+        return ret;
+    }
+
+    public OrderItemRecord GetSpecific(int orderId, int itemId){
+        ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
+        OrderItem tmp = new OrderItem();
+        for(OrderItemRecord rec : ctx.selectFrom(tmp).where(tmp.ID_ORDER.eq(orderId)).and(tmp.ID_MENU_ITEM.eq(itemId)))
+            return rec;
+        return null;
+    }
+
+
     public List<OrderItemRecord> getConfigs() {
         return SelectOrderItemService();
     }

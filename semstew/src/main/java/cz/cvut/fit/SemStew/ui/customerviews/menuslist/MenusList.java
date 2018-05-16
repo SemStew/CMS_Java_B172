@@ -12,8 +12,8 @@ import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.VaadinService;
-import cz.cvut.fit.SemStew.backend.MenuController;
-import cz.cvut.fit.SemStew.backend.MenuRepresentation;
+import cz.cvut.fit.SemStew.backend.Controllers.MenuController;
+import cz.cvut.fit.SemStew.backend.Controllers.MenuRepresentation;
 import cz.cvut.fit.SemStew.backend.Services.GeneralPageConfig.LanguagesService;
 import cz.cvut.fit.SemStew.backend.Services.MenuServices.MenusConfigService;
 import cz.cvut.fit.SemStew.ui.CustomerLayout;
@@ -62,7 +62,6 @@ public class MenusList extends VerticalLayout {
 
         menus = menusController.getItems();
 
-        gridMenu.setHeightByRows(true);
         gridMenu.setItems(menus);
         gridMenu.addColumn(new ComponentRenderer<>(menuRepresentation -> {
             Image tmp = new Image();

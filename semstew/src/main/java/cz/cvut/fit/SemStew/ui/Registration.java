@@ -17,7 +17,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLayout;
 import com.vaadin.flow.router.RouterLink;
-import cz.cvut.fit.SemStew.backend.CorrectnessController;
+import cz.cvut.fit.SemStew.backend.Controllers.CorrectnessController;
 import cz.cvut.fit.SemStew.backend.Services.GeneralPageConfig.AdminsService;
 import cz.cvut.fit.SemStew.backend.Services.GeneralPageConfig.RestaurantService;
 
