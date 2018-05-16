@@ -248,7 +248,7 @@ public class OrderList extends VerticalLayout {
             date.setValue(ordersRepresentation.getDate());
             branchSelect.setValue(branchService.GetById(ordersRepresentation.getIdBranch()).getAddress());
             id.setReadOnly(true);
-            update.setEnabled(true);g
+            update.setEnabled(true);
         });
 
         branchSelect.addValueChangeListener(valueChangeEvent -> {
