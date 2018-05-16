@@ -51,6 +51,15 @@ public class OrdersService {
         ctx.delete(tmp).where(tmp.ID_ORDER.eq(a.getIdOrder())).execute();
     }
 
+    // get by order id
+    public OrdersRecord GetByOrderId(int orderId){
+        ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
+        Orders tmp = new Orders();
+        for(OrdersRecord rec : ctx.selectFrom(tmp).where(tmp.ID_ORDER.eq(orderId)))
+            return rec;
+        return null;
+    }
+
     public List<OrdersRecord> getConfigs() {
         return SelectOrdersService();
     }

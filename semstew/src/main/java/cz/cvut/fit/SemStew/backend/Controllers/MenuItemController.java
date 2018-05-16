@@ -72,6 +72,42 @@ public class MenuItemController {
         return items;
     }
 
+    public MenuItemRepresentation LoadById(int id){
+        MenuItemNameRecord menuItemNameRecord;
+        CategoriesNameRecord categoriesNameRecord;
+        UnitsRecord unitsRecord;
+
+        String name = "English";
+
+        if(VaadinService.getCurrentRequest().getWrappedSession().getAttribute("language") != null) {
+            name = VaadinService.getCurrentRequest().getWrappedSession().getAttribute("language").toString();
+        }
+
+        languageId = languagesService.GetIdByName(name);
+
+        MenuItemRecord menuItemRecord = menuItemService.GetByMenuItemId(id);
+
+        menuItemNameRecord = menuItemNameService.ItemNameById(menuItemRecord.getIdMenuItem(),languageId);
+
+        categoriesNameRecord = categoriesNameService.CategoriesNameById(menuItemRecord.getIdCategory(),languageId);
+
+        unitsRecord = unitsService.UnitById(menuItemRecord.getIdUnit());
+
+        List<MenuItemAllergenRecord> menuItemAllergenRecords = menuItemAllergenService.GetByMenuItemId(menuItemRecord.getIdMenuItem());
+
+        List<AllergensNameRecord> allergensNameRecords = new ArrayList<>();
+        if(menuItemAllergenRecords.size()!=0) {
+            for (MenuItemAllergenRecord rec : menuItemAllergenRecords) {
+                allergensNameRecords.add(allergensNameService.GetById(rec.getIdAllergen(), languageId));
+            }
+        }
+
+        MenuItemRepresentation representation = new MenuItemRepresentation();
+        representation.Load(menuItemNameRecord,menuItemRecord,categoriesNameRecord,unitsRecord,allergensNameRecords);
+
+        return representation;
+    }
+
     public void Insert(MenuItemRepresentation in)
     {
         MenuItemRecord item = in.GetItemRecord();

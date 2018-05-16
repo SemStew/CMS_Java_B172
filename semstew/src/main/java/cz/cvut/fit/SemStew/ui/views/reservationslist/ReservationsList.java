@@ -1,6 +1,5 @@
 package cz.cvut.fit.SemStew.ui.views.reservationslist;
 
-import JOOQ.tables.records.RestaurantRecord;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Label;
@@ -11,14 +10,12 @@ import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.renderer.LocalDateTimeRenderer;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import cz.cvut.fit.SemStew.backend.Controllers.EmailController;
 import cz.cvut.fit.SemStew.backend.Controllers.ReservationController;
 import cz.cvut.fit.SemStew.backend.Controllers.ReservationRepresentation;
-import cz.cvut.fit.SemStew.backend.Services.GeneralPageConfig.RestaurantService;
 import cz.cvut.fit.SemStew.ui.MainLayout;
 import com.vaadin.flow.component.html.H2;
 import cz.cvut.fit.SemStew.ui.views.GeneralAdminList;
-import org.apache.commons.mail.EmailException;
-import org.apache.commons.mail.HtmlEmail;
 
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
@@ -33,9 +30,8 @@ public class ReservationsList extends GeneralAdminList {
     private final Grid<ReservationRepresentation> recordGrid = new Grid<>();
     private final Label infoLabel = new Label();
     private final ReservationController reservationController = new ReservationController();
-    private final RestaurantService restaurantService = new RestaurantService();
+    private final EmailController emailController = new EmailController();
     private List<ReservationRepresentation> reservationRecords;
-    private RestaurantRecord restaurantRecord;
 
     public ReservationsList() {
         init();
@@ -51,8 +47,6 @@ public class ReservationsList extends GeneralAdminList {
         VerticalLayout content = new VerticalLayout();
         content.setClassName("content");
         content.setAlignItems(Alignment.STRETCH);
-
-        restaurantRecord = restaurantService.GetInstance();
 
         header.setText("Reservations");
 
@@ -104,16 +98,6 @@ public class ReservationsList extends GeneralAdminList {
         recordGrid.setItems(reservationRecords);
     }
 
-    private HtmlEmail ConnectEmail(){
-        HtmlEmail email = new HtmlEmail();
-        email.setHostName("smtp.gmail.com");
-        email.setSmtpPort(465);
-        email.setSSLOnConnect(true);
-        email.setAuthentication(restaurantRecord.getEmail(), restaurantRecord.getEmailPassword());
-
-        return email;
-    }
-
     private void Accept(ReservationRepresentation toAccept){
         if(toAccept.getStatus().equals("Accepted")){
             infoLabel.setText("Already accepted");
@@ -122,65 +106,27 @@ public class ReservationsList extends GeneralAdminList {
         toAccept.setStatus("Accepted");
         reservationController.Update(toAccept);
 
-        HtmlEmail email = ConnectEmail();
-
-        try {
-            email.setFrom(restaurantRecord.getEmail());
-            email.addTo(toAccept.getEmail());
-            email.setSubject("Acceptance");
-            email.setHtmlMsg("Reservation number " + toAccept.getReservationId().toString() + " has been accepted");
-
-            email.send();
-        } catch (EmailException exception){
-            infoLabel.setText("Mail failed to be send. Do to " + exception.getMessage());
-        }
-
-        infoLabel.setText("Acceptance completed");
+        infoLabel.setText(emailController.AcceptMessage(toAccept.getEmail(),toAccept.getReservationId(), "Reservation"));
 
         Refresh();
     }
 
     private void Decline(ReservationRepresentation toDecline){
         if(toDecline.getStatus().equals("Declined")){
-
+            infoLabel.setText("Already declined");
+            return;
         }
         toDecline.setStatus("Declined");
         reservationController.Update(toDecline);
 
-        HtmlEmail email = ConnectEmail();
-
-        try {
-            email.setFrom(restaurantRecord.getEmail());
-            email.addTo(toDecline.getEmail());
-            email.setSubject("Declined");
-            email.setHtmlMsg("Reservation number " + toDecline.getReservationId().toString() + " has been declined");
-
-            email.send();
-        } catch (EmailException exception){
-            infoLabel.setText("Mail failed to be send. Do to " + exception.getMessage());
-        }
-
-        infoLabel.setText("Decline completed");
+        infoLabel.setText(emailController.DeclineMessage(toDecline.getEmail(), toDecline.getReservationId(), "Reservation"));
         Refresh();
     }
 
     private void Delete(ReservationRepresentation toDelete){
         reservationController.Delete(toDelete);
 
-        HtmlEmail email = ConnectEmail();
-
-        try {
-            email.setFrom(restaurantRecord.getEmail());
-            email.addTo(toDelete.getEmail());
-            email.setSubject("Deleted");
-            email.setHtmlMsg("Reservation number " + toDelete.getReservationId().toString() + " has been deleted");
-
-            email.send();
-        } catch (EmailException exception){
-            infoLabel.setText("Mail failed to be send. Do to " + exception.getMessage());
-        }
-
-        infoLabel.setText("Delete completed");
+        infoLabel.setText(emailController.DeleteMessage(toDelete.getEmail(), toDelete.getReservationId(), "Reservation"));
 
         Refresh();
     }

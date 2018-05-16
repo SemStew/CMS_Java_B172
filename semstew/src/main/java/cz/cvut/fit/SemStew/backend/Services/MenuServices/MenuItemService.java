@@ -63,6 +63,15 @@ public class MenuItemService {
         return ret;
     }
 
+    // get by menu item id
+    public MenuItemRecord GetByMenuItemId(int id){
+        ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
+        MenuItem tmp = new MenuItem();
+        for(MenuItemRecord rec : ctx.selectFrom(tmp).where(tmp.ID_MENU_ITEM.eq(id)))
+            return rec;
+        return null;
+    }
+
     // insert and return id
     public int InsertAndReturn(MenuItemRecord insert){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
