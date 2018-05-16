@@ -40,6 +40,8 @@ public class OrdersController {
 
     public OrdersRepresentation LoadById(int orderId){
         OrdersRecord ordersRecord = ordersService.GetByOrderId(orderId);
+        if(ordersRecord == null)
+            return null;
         List<OrderItemRecord> orderItemRecords = orderItemService.GetByOrderId(orderId);
 
         List<MenuItemRepresentation> menuItemRepresentations = new ArrayList<>();
@@ -59,9 +61,21 @@ public class OrdersController {
         return LoadById(Integer.parseInt(VaadinService.getCurrentRequest().getWrappedSession().getAttribute("order_detail").toString()));
     }
 
-    public void InsertOrder(OrdersRepresentation insert){
+    public List<OrderItemRecord> GetItemInOrder(int orderId){
+        return orderItemService.GetByOrderId(orderId);
+    }
+
+    public boolean IsSelected(int orderId, int itemId){
+        if(orderItemService.GetSpecific(orderId,itemId) == null){
+            return false;
+        }
+
+        return true;
+    }
+
+    public int InsertOrder(OrdersRepresentation insert){
         OrdersRecord ordersRecord = insert.getOrderRecord();
-        ordersService.InsertOrdersService(ordersRecord);
+        return ordersService.InsertAndGetId(ordersRecord);
     }
 
     public void InsertItemIntoOrder(int orderId, MenuItemRepresentation inItem){
@@ -86,6 +100,11 @@ public class OrdersController {
 
         orderItemService.DeleteByOrderId(ordersRecord.getIdOrder());
         ordersService.DeleteOrdersService(ordersRecord);
+    }
+
+    public void Delete(int orderId){
+        orderItemService.DeleteByOrderId(orderId);
+        ordersService.DeleteById(orderId);
     }
 
     public void RemoveItem(int orderId, MenuItemRepresentation removeItem){

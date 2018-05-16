@@ -64,6 +64,15 @@ public class OrderItemService {
         return ret;
     }
 
+    public OrderItemRecord GetSpecific(int orderId, int itemId){
+        ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
+        OrderItem tmp = new OrderItem();
+        for(OrderItemRecord rec : ctx.selectFrom(tmp).where(tmp.ID_ORDER.eq(orderId)).and(tmp.ID_MENU_ITEM.eq(itemId)))
+            return rec;
+        return null;
+    }
+
+
     public List<OrderItemRecord> getConfigs() {
         return SelectOrderItemService();
     }

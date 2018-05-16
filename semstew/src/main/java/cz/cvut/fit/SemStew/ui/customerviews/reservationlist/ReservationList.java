@@ -163,18 +163,18 @@ public class ReservationList extends VerticalLayout {
         TextField personSet = new TextField("Name and Surname");
         TextField email = new TextField("Email");
         TextField table = new TextField("Table number");
-        ComboBox<String> brancheSelect = new ComboBox<>("Branches");
+        ComboBox<String> branchSelect = new ComboBox<>("Branches");
         Label infoLabeling = new Label();
 
         List<String> branchAddresses = branchService.GetAllAdresses();
 
-        brancheSelect.setItems(branchAddresses);
-        brancheSelect.setValue(branchAddresses.get(0));
+        branchSelect.setItems(branchAddresses);
+        branchSelect.setValue(branchAddresses.get(0));
 
-        brancheSelect.addValueChangeListener(valueChangeEvent -> {
-            if(branchAddresses.stream().filter(branchAddress -> branchAddress.equals(branches.getValue())).count() == 0){
-                brancheSelect.setErrorMessage("Select existing branch");
-                brancheSelect.setInvalid(true);
+        branchSelect.addValueChangeListener(valueChangeEvent -> {
+            if(branchAddresses.stream().filter(branchAddress -> branchAddress.equals(branchSelect.getValue())).count() == 0){
+                branchSelect.setErrorMessage("Select existing branch");
+                branchSelect.setInvalid(true);
             }
         });
 
@@ -202,13 +202,13 @@ public class ReservationList extends VerticalLayout {
                     Integer.toString(this.update.getTimeDate().toLocalTime().getMinute()));
             personSet.setValue(this.update.getPerson());
             email.setValue(this.update.getEmail());
-            brancheSelect.setValue(branchService.GetById(this.update.getBranchId()).getAddress());
+            branchSelect.setValue(branchService.GetById(this.update.getBranchId()).getAddress());
             table.setValue(this.update.getTableNum().toString());
         });
 
         update.addClickListener(buttonClickEvent -> {
             if(datePick.isEmpty() || timePick.isEmpty() || personSet.isEmpty() || email.isEmpty()
-                    || brancheSelect.isEmpty() || table.isEmpty()){
+                    || branchSelect.isEmpty() || table.isEmpty()){
                 infoLabeling.setText("Fill all update fields");
                 return;
             }
@@ -224,7 +224,7 @@ public class ReservationList extends VerticalLayout {
                 infoLabeling.setText("Enter valid email address");
                 return;
             }
-            this.update.LoadDate(branchService.GetByAddress(brancheSelect.getValue()).getIdBranch(),Integer.parseInt(table.getValue()),
+            this.update.LoadDate(branchService.GetByAddress(branchSelect.getValue()).getIdBranch(),Integer.parseInt(table.getValue()),
                     personSet.getValue(),email.getValue(),"Updated",timePick.getValue(),datePick.getValue());
             reservationController.Update(this.update);
             infoLabel.setText("Updated");
@@ -235,7 +235,7 @@ public class ReservationList extends VerticalLayout {
         });
 
         buttons.add(update, close);
-        content.add(headLabel,id,get,updateLabel, datePick, timePick, personSet, email, brancheSelect,buttons,infoLabeling);
+        content.add(headLabel,id,get,updateLabel, datePick, timePick, personSet, email, branchSelect,buttons,infoLabeling);
         checkDialog.add(content);
     }
 

@@ -44,11 +44,33 @@ public class OrdersService {
                 values(a.getIdBranch(), a.getAddress(), a.getODate(), a.getPerson(), a.getEmail(), a.getStatus()).execute();
     }
 
+    // insert and get id
+    public int InsertAndGetId(OrdersRecord in){
+        ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
+        Orders tmp = new Orders();
+        OrdersRecord inserted = ctx.newRecord(tmp);
+        inserted.setIdBranch(in.getIdBranch());
+        inserted.setPerson(in.getPerson());
+        inserted.setODate(in.getODate());
+        inserted.setAddress(in.getAddress());
+        inserted.setEmail(in.getEmail());
+        inserted.setStatus(in.getStatus());
+        inserted.store();
+        return inserted.getIdOrder();
+    }
+
     //delete
     public void DeleteOrdersService(OrdersRecord a){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         Orders tmp = new Orders();
         ctx.delete(tmp).where(tmp.ID_ORDER.eq(a.getIdOrder())).execute();
+    }
+
+    // delete by order id
+    public void DeleteById(int orderId){
+        ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
+        Orders tmp = new Orders();
+        ctx.delete(tmp).where(tmp.ID_ORDER.eq(orderId)).execute();
     }
 
     // get by order id

@@ -62,7 +62,6 @@ public class MenusList extends VerticalLayout {
 
         menus = menusController.getItems();
 
-        gridMenu.setHeightByRows(true);
         gridMenu.setItems(menus);
         gridMenu.addColumn(new ComponentRenderer<>(menuRepresentation -> {
             Image tmp = new Image();

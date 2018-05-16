@@ -20,7 +20,8 @@ import java.util.Comparator;
 
 @Route(value = "admin/orders/detail", layout = MainLayout.class)
 @PageTitle("Orders List Detail | Admin")
-public class OrderedItems extends GeneralAdminList {
+public class OrderedItems extends GeneralAdminList
+    implements RouterLayout {
     private final H2 header = new H2();
     private final Grid<MenuItemRepresentation> showGrid = new Grid<>();
     private final OrdersController ordersController = new OrdersController();
