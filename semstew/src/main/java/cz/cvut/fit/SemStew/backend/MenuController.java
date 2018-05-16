@@ -1,6 +1,5 @@
 package cz.cvut.fit.SemStew.backend;
 
-import JOOQ.tables.Menus;
 import JOOQ.tables.records.MenusNameRecord;
 import JOOQ.tables.records.MenusRecord;
 import com.vaadin.flow.server.VaadinService;
@@ -19,9 +18,9 @@ public class MenuController {
 
     public MenuController(){}
 
-    private List<MenuRepresantation> LoadData()
+    private List<MenuRepresentation> LoadData()
     {
-        List<MenuRepresantation> items = new ArrayList<>();
+        List<MenuRepresentation> items = new ArrayList<>();
 
         MenusNameRecord menusNameRecord;
 
@@ -40,7 +39,7 @@ public class MenuController {
             menusNameRecord = menusNameService.GetById(rec.getIdMenu(),id);
 
             if(menusNameRecord != null){
-                items.add(new MenuRepresantation());
+                items.add(new MenuRepresentation());
                 items.get(items.size()-1).Load(rec,menusNameRecord);
             }
         }
@@ -48,31 +47,29 @@ public class MenuController {
         return items;
     }
 
-    public void Insert(MenuRepresantation insert)
+    public void Insert(MenuRepresentation insert)
     {
         MenusRecord menusRecord = insert.GetMenus();
         MenusNameRecord menusNameRecord = insert.GetMenusName();
 
-        menusService.InsertMenusService(menusRecord);
-        menusRecord = menusService.GetByCombination(menusRecord.getIdBranch(),menusRecord.getUrlImage());
-        menusNameRecord.setIdMenu(menusRecord.getIdMenu());
+        int menuId = menusService.InsertAndReturn(menusRecord);
+        menusNameRecord.setIdMenu(menuId);
         menusNameService.InsertMenusNameService(menusNameRecord);
     }
 
-    public void InsertMultiLingual(List<MenuRepresantation> insert)
+    public void InsertMultiLingual(List<MenuRepresentation> insert)
     {
         MenusRecord menusRecord = insert.get(0).GetMenus();
-        menusService.InsertMenusService(menusRecord);
-        menusRecord = menusService.GetByCombination(menusRecord.getIdBranch(),menusRecord.getUrlImage());
+        int menuId = menusService.InsertAndReturn(menusRecord);
 
-        for(MenuRepresantation rep : insert){
+        for(MenuRepresentation rep : insert){
             MenusNameRecord tmp = rep.GetMenusName();
-            tmp.setIdMenu(menusRecord.getIdMenu());
+            tmp.setIdMenu(menuId);
             menusNameService.InsertMenusNameService(tmp);
         }
     }
 
-    public void Update(MenuRepresantation update)
+    public void Update(MenuRepresentation update)
     {
         MenusRecord menusRecord = update.GetMenus();
         MenusNameRecord menusNameRecord = update.GetMenusName();
@@ -81,7 +78,7 @@ public class MenuController {
         menusNameService.UpdateMenusNameService(menusNameRecord);
     }
 
-    public void Delete(MenuRepresantation delete)
+    public void Delete(MenuRepresentation delete)
     {
         MenusRecord menusRecord = delete.GetMenus();
 
@@ -91,7 +88,7 @@ public class MenuController {
 
     }
 
-    public List<MenuRepresantation> getItems() {
+    public List<MenuRepresentation> getItems() {
         return LoadData();
     }
 }

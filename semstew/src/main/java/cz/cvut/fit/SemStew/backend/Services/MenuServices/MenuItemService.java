@@ -63,15 +63,19 @@ public class MenuItemService {
         return ret;
     }
 
-    // get by menu amount price unit id menu id and image url
-    public MenuItemRecord GetByCombination(BigDecimal amount, Integer price, Integer idUnit, Integer idMenu, String imageUrl){
+    // insert and return id
+    public int InsertAndReturn(MenuItemRecord insert){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         MenuItem tmp = new MenuItem();
-
-        for(MenuItemRecord rec : ctx.selectFrom(tmp).where(tmp.AMOUNT.eq(amount)).and(tmp.PRICE.eq(price)).and(tmp.ID_UNIT.eq(idUnit)).
-                and(tmp.ID_MENU.eq(idMenu)).and(tmp.IMAGE_NAME.eq(imageUrl)))
-            return rec;
-        return null;
+        MenuItemRecord menuItemRecord = ctx.newRecord(tmp);
+        menuItemRecord.setIdMenu(insert.getIdMenu());
+        menuItemRecord.setIdUnit(insert.getIdUnit());
+        menuItemRecord.setIdCategory(insert.getIdCategory());
+        menuItemRecord.setPrice(insert.getPrice());
+        menuItemRecord.setAmount(insert.getAmount());
+        menuItemRecord.setImageName(insert.getImageName());
+        menuItemRecord.store();
+        return menuItemRecord.getIdMenuItem();
     }
 
     public List<MenuItemRecord> getConfigs() {

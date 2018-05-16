@@ -20,7 +20,7 @@ public class ReservationConfigService {
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         List<ReservationConfigRecord> configs = new ArrayList<ReservationConfigRecord>();
         ReservationConfig a = new ReservationConfig();
-        for (ReservationConfigRecord rec : ctx.selectFrom(a).where(a.ID_LANGUAGE.eq(1))) {
+        for (ReservationConfigRecord rec : ctx.selectFrom(a)) {
             configs.add(rec);
         }
 
@@ -46,6 +46,15 @@ public class ReservationConfigService {
     //delete
     public void DeleteReservationConfigService(ReservationConfigRecord a){
         System.out.println("Method not implemented yet");
+    }
+
+    //get by language id
+    public ReservationConfigRecord GetByLanguageId(int language){
+        ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
+        ReservationConfig tmp = new ReservationConfig();
+        for(ReservationConfigRecord rec : ctx.selectFrom(tmp).where(tmp.ID_LANGUAGE.eq(language)))
+            return rec;
+        return null;
     }
 
     public List<ReservationConfigRecord> getConfigs() {

@@ -50,13 +50,15 @@ public class MenusService {
         ctx.delete(tmp).where(tmp.ID_BRANCH.eq(a.getIdBranch())).and(tmp.ID_MENU.eq(a.getIdMenu())).execute();
     }
 
-    // get by id branch url image
-    public MenusRecord GetByCombination(Integer idBranch, String urlImage){
+    // insert and return id
+    public int InsertAndReturn(MenusRecord insert){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         Menus tmp = new Menus();
-        for(MenusRecord rec : ctx.selectFrom(tmp).where(tmp.ID_BRANCH.eq(idBranch)).and(tmp.URL_IMAGE.eq(urlImage)))
-            return rec;
-        return null;
+        MenusRecord menusRecord = ctx.newRecord(tmp);
+        menusRecord.setUrlImage(insert.getUrlImage());
+        menusRecord.setIdBranch(insert.getIdBranch());
+        menusRecord.store();
+        return menusRecord.getIdMenu();
     }
 
     public List<MenusRecord> getConfigs() {

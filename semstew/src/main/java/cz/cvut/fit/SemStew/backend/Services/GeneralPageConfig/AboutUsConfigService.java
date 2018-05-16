@@ -22,7 +22,7 @@ public class AboutUsConfigService {
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         List<AboutUsConfigRecord> configs = new ArrayList<AboutUsConfigRecord>();
         AboutUsConfig a = new AboutUsConfig();
-        for (AboutUsConfigRecord rec : ctx.selectFrom(a).where(a.ID_LANGUAGE.eq(1))) {
+        for (AboutUsConfigRecord rec : ctx.selectFrom(a)) {
             configs.add(rec);
         }
 

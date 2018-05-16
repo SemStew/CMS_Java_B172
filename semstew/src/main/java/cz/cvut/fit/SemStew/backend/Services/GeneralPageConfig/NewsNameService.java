@@ -50,6 +50,22 @@ public class NewsNameService {
         ctx.delete(tmp).where(tmp.ID_LANGUAGE.eq(a.getIdLanguage())).and(tmp.ID_NEWS.eq(a.getIdNews())).execute();
     }
 
+    // get by id and language
+    public NewsNameRecord GetByIdAndLanguage(int id, int language){
+        ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
+        NewsName tmp = new NewsName();
+        for(NewsNameRecord rec : ctx.selectFrom(tmp).where(tmp.ID_NEWS.eq(id)).and(tmp.ID_LANGUAGE.eq(language)))
+            return rec;
+        return null;
+    }
+
+    // delete by news id
+    public void DeleteByNewsId(int id){
+        ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
+        NewsName tmp = new NewsName();
+        ctx.delete(tmp).where(tmp.ID_NEWS.eq(id)).execute();
+    }
+
     public List<NewsNameRecord> getConfigs() {
         return SelectNewsNameService();
     }

@@ -50,6 +50,17 @@ public class NewsService {
         ctx.delete(tmp).where(tmp.ID_NEWS.eq(a.getIdNews())).execute();
     }
 
+    // insert and return id
+    public int InsertAndReturn(NewsRecord a){
+        ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
+        News tmp = new News();
+        NewsRecord newsRecord = ctx.newRecord(tmp);
+        newsRecord.setIdRestaurant(a.getIdRestaurant());
+        newsRecord.setNDate(a.getNDate());
+        newsRecord.store();
+        return newsRecord.getIdNews();
+    }
+
     public List<NewsRecord> getConfigs() {
         return SelectNewsService();
     }

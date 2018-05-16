@@ -225,12 +225,12 @@ INSERT INTO MENU_ITEM_ALLERGEN(id_menu_item, id_allergen) VALUES (13, 7);
 INSERT INTO MENU_ITEM_ALLERGEN(id_menu_item, id_allergen) VALUES (14, 7);
 
 --RESERVATIONs
-INSERT INTO RESERVATION(id_branch, r_date, time_from, person, n_table, status) VALUES (1, '2018-4-17', '16:00', 'Dante Frajer', 1, 'Accepted');
-INSERT INTO RESERVATION(id_branch, r_date, time_from, person, n_table, status) VALUES (1, '2018-4-19', '14:30', 'Dante Nefrajer', 3, 'Accepted');
+INSERT INTO RESERVATION(id_branch, r_date, time_from, person, n_table, email, status) VALUES (1, '2018-4-17', '16:00', 'Dante Frajer', 1, 'test@test.com', 'Accepted');
+INSERT INTO RESERVATION(id_branch, r_date, time_from, person, n_table, email, status) VALUES (1, '2018-4-19', '14:30', 'Dante Nefrajer', 3, 'test1@test.com', 'Accepted');
 
 --RESERVATION site
-INSERT INTO RESERVATION_CONFIG(id_language, header, table_number, time_from_desc) VALUES (1, 'RESERVATIONs', 'Table number', 'Time');
-INSERT INTO RESERVATION_CONFIG(id_language, header, table_number, time_from_desc) VALUES (1, 'Rezervace', 'Číslo stolu', 'Čas rezervace');
+INSERT INTO RESERVATION_CONFIG(id_language, header, table_number, time_from_desc) VALUES (1, 'Reservations', 'Table number', 'Time');
+INSERT INTO RESERVATION_CONFIG(id_language, header, table_number, time_from_desc) VALUES (2, 'Rezervace', 'Číslo stolu', 'Čas rezervace');
 
 --performace roles
 INSERT INTO ROLE(name) VALUES('Majitel');
@@ -243,7 +243,7 @@ INSERT INTO EMPLOYEE(role, id_branch, name, surname, phone, mail) VALUES (1, 1, 
 INSERT INTO EMPLOYEE(role, id_branch, name, surname, phone, mail) VALUES (3, 1, 'Angellica', 'Smith', NULL, NULL);
 
 --orders
-INSERT INTO ORDERS(id_branch, o_date, person, address, status) VALUES (1, '2018-4-17', 'Some random guy', 'Petřín 1284', 'Accepted');
+INSERT INTO ORDERS(id_branch, o_date, person, address, email, status) VALUES (1, '2018-4-17', 'Some random guy', 'Petřín 1284','test@test.com', 'Accepted');
 
 --order items
 INSERT INTO ORDER_ITEM(id_menu_item, id_order) VALUES (9, 1);

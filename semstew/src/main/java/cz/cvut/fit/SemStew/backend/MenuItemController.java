@@ -1,6 +1,5 @@
 package cz.cvut.fit.SemStew.backend;
 
-import JOOQ.tables.MenuItemAllergen;
 import JOOQ.tables.records.*;
 import com.vaadin.flow.server.VaadinService;
 import cz.cvut.fit.SemStew.backend.Services.GeneralPageConfig.AboutUsConfigService;
@@ -18,13 +17,14 @@ public class MenuItemController {
     private final MenuItemAllergenService menuItemAllergenService = new MenuItemAllergenService();
     private final AllergensNameService allergensNameService = new AllergensNameService();
     private final LanguagesService languagesService = new LanguagesService();
-    private  int menuID = 0;
+    private int menuID = 0;
+    private int languageId;
 
     public MenuItemController() {}
 
-    private List<MenuItemRepresantation> LoadData()
+    private List<MenuItemRepresentation> LoadData()
     {
-        List<MenuItemRepresantation> items = new ArrayList<>();
+        List<MenuItemRepresentation> items = new ArrayList<>();
         MenuItemNameRecord menuItemNameRecord;
         CategoriesNameRecord categoriesNameRecord;
         UnitsRecord unitsRecord;
@@ -42,15 +42,15 @@ public class MenuItemController {
 
         menuID = Integer.parseInt(menuIdString);
 
-        int id = languagesService.GetIdByName(name);
+        languageId = languagesService.GetIdByName(name);
 
         List<MenuItemRecord> menuItemRecords = menuItemService.GetByMenuId(menuID);
 
         for(MenuItemRecord menuItemRec : menuItemRecords)
         {
-            menuItemNameRecord = menuItemNameService.ItemNameById(menuItemRec.getIdMenuItem(),id);
+            menuItemNameRecord = menuItemNameService.ItemNameById(menuItemRec.getIdMenuItem(),languageId);
 
-            categoriesNameRecord = categoriesNameService.CategoriesNameById(menuItemRec.getIdCategory(),id);
+            categoriesNameRecord = categoriesNameService.CategoriesNameById(menuItemRec.getIdCategory(),languageId);
 
             unitsRecord = unitsService.UnitById(menuItemRec.getIdUnit());
 
@@ -59,12 +59,12 @@ public class MenuItemController {
             List<AllergensNameRecord> allergensNameRecords = new ArrayList<>();
             if(menuItemAllergenRecords.size()!=0) {
                 for (MenuItemAllergenRecord rec : menuItemAllergenRecords) {
-                    allergensNameRecords.add(allergensNameService.GetById(rec.getIdAllergen(), id));
+                    allergensNameRecords.add(allergensNameService.GetById(rec.getIdAllergen(), languageId));
                 }
             }
 
             if(menuItemNameRecord != null && categoriesNameRecord != null && unitsRecord != null) {
-                items.add(new MenuItemRepresantation());
+                items.add(new MenuItemRepresentation());
                 items.get(items.size()-1).Load(menuItemNameRecord, menuItemRec, categoriesNameRecord, unitsRecord,allergensNameRecords);
             }
         }
@@ -72,7 +72,7 @@ public class MenuItemController {
         return items;
     }
 
-    public void Insert(MenuItemRepresantation in)
+    public void Insert(MenuItemRepresentation in)
     {
         MenuItemRecord item = in.GetItemRecord();
         MenuItemNameRecord itemName = in.GetItemNameRecord();
@@ -90,20 +90,19 @@ public class MenuItemController {
             allergensNameRecords.add(allergensNameService.GetByDescription(rec));
         }
 
-        menuItemService.InsertMenuItemService(item);
-        MenuItemRecord inserted = menuItemService.GetByCombination(item.getAmount(),item.getPrice(), item.getIdUnit(),item.getIdMenu(),item.getImageName());
-        itemName.setIdMenuItem(inserted.getIdMenuItem());
+        int menuItemId = menuItemService.InsertAndReturn(item);
+        itemName.setIdMenuItem(menuItemId);
         menuItemNameService.InsertMenuItemNameService(itemName);
 
         for(AllergensNameRecord rec : allergensNameRecords){
             MenuItemAllergenRecord tmp = new MenuItemAllergenRecord();
             tmp.setIdAllergen(rec.getIdAllergen());
-            tmp.setIdMenuItem(inserted.getIdMenuItem());
+            tmp.setIdMenuItem(menuItemId);
             menuItemAllergenService.InsertMenuItemAllergenService(tmp);
         }
     }
 
-    public void InsertMultiLingual(List<MenuItemRepresantation> insert){
+    public void InsertMultiLingual(List<MenuItemRepresentation> insert){
         MenuItemRecord item = insert.get(0).GetItemRecord();
 
         CategoriesNameRecord category = categoriesNameService.CategoriesByName(insert.get(0).getCategoryDescription());
@@ -119,25 +118,24 @@ public class MenuItemController {
             allergensNameRecords.add(allergensNameService.GetByDescription(rec));
         }
 
-        menuItemService.InsertMenuItemService(item);
-        MenuItemRecord inserted = menuItemService.GetByCombination(item.getAmount(),item.getPrice(), item.getIdUnit(), item.getIdMenu(), item.getImageName());
+        int menuItemId = menuItemService.InsertAndReturn(item);
 
         for(AllergensNameRecord rec : allergensNameRecords){
             MenuItemAllergenRecord tmp = new MenuItemAllergenRecord();
             tmp.setIdAllergen(rec.getIdAllergen());
-            tmp.setIdMenuItem(inserted.getIdMenuItem());
+            tmp.setIdMenuItem(menuItemId);
             menuItemAllergenService.InsertMenuItemAllergenService(tmp);
         }
 
-        for(MenuItemRepresantation rep : insert){
+        for(MenuItemRepresentation rep : insert){
             MenuItemNameRecord tmp = rep.GetItemNameRecord();
 
-            tmp.setIdMenuItem(inserted.getIdMenuItem());
+            tmp.setIdMenuItem(menuItemId);
             menuItemNameService.InsertMenuItemNameService(tmp);
         }
     }
 
-    public void Update(MenuItemRepresantation in)
+    public void Update(MenuItemRepresentation in)
     {
         MenuItemRecord item = in.GetItemRecord();
         MenuItemNameRecord itemName = in.GetItemNameRecord();
@@ -169,7 +167,7 @@ public class MenuItemController {
         menuItemNameService.UpdateMenuItemNameService(itemName);
     }
 
-    public void Delete(MenuItemRepresantation in)
+    public void Delete(MenuItemRepresentation in)
     {
         MenuItemRecord item = in.GetItemRecord();
 
@@ -200,13 +198,23 @@ public class MenuItemController {
         }
     }
 
-    public List<MenuItemRepresantation> getItems() {
+    public List<String> getAlergensForItem(List<String> input, int language){
+        List<Integer> idList = new ArrayList<>();
+        for(String rec : input)
+            idList.add(allergensNameService.GetByDescription(rec).getIdAllergen());
+        List<String> alergensByName = new ArrayList<>();
+        for(Integer rec : idList)
+            alergensByName.add(allergensNameService.GetById(rec,language).getAllergen());
+        return alergensByName;
+    }
+
+    public List<MenuItemRepresentation> getItems() {
         return LoadData();
     }
 
     public List<String> getCategories()
     {
-        return categoriesNameService.CategoriesDescriptions();
+        return categoriesNameService.CategoriesDescriptions(languageId);
     }
 
     public List<String> getUnits()

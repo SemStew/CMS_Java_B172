@@ -3,7 +3,7 @@ package cz.cvut.fit.SemStew.backend;
 import JOOQ.tables.records.MenusNameRecord;
 import JOOQ.tables.records.MenusRecord;
 
-public class MenuRepresantation {
+public class MenuRepresentation {
 
     // menus
     Integer idMenu;
@@ -15,7 +15,7 @@ public class MenuRepresantation {
     String description;
 
 
-    public MenuRepresantation(){}
+    public MenuRepresentation(){}
 
     public void Load(MenusRecord menusIn, MenusNameRecord menusNameIn)
     {

@@ -9,12 +9,11 @@ import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcons;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
-import com.vaadin.flow.data.renderer.NativeButtonRenderer;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.VaadinService;
 import cz.cvut.fit.SemStew.backend.MenuController;
-import cz.cvut.fit.SemStew.backend.MenuRepresantation;
+import cz.cvut.fit.SemStew.backend.MenuRepresentation;
 import cz.cvut.fit.SemStew.backend.Services.GeneralPageConfig.LanguagesService;
 import cz.cvut.fit.SemStew.backend.Services.MenuServices.MenusConfigService;
 import cz.cvut.fit.SemStew.ui.CustomerLayout;
@@ -26,11 +25,11 @@ import java.util.List;
 @PageTitle("Menu | Home")
 public class MenusList extends VerticalLayout {
     private final H2 header = new H2();
-    private final Grid<MenuRepresantation> gridMenu = new Grid<>();
+    private final Grid<MenuRepresentation> gridMenu = new Grid<>();
     private final MenuController menusController = new MenuController();
     private final MenusConfigService menusConfigService = new MenusConfigService();
     private final LanguagesService languagesService = new LanguagesService();
-    private List<MenuRepresantation> menus;
+    private List<MenuRepresentation> menus;
 
     public MenusList()
     {
@@ -65,13 +64,13 @@ public class MenusList extends VerticalLayout {
 
         gridMenu.setHeightByRows(true);
         gridMenu.setItems(menus);
-        gridMenu.addColumn(new ComponentRenderer<>(menuRepresantation -> {
+        gridMenu.addColumn(new ComponentRenderer<>(menuRepresentation -> {
             Image tmp = new Image();
             tmp.setClassName("picture_grid");
-            tmp.setSrc(menuRepresantation.getImageAddress());
+            tmp.setSrc(menuRepresentation.getImageAddress());
             return tmp;
         }));
-        gridMenu.addColumn(MenuRepresantation::getDescription).setComparator(Comparator.comparing(MenuRepresantation::getDescription)).setHeader("Menu name").setSortable(true);
+        gridMenu.addColumn(MenuRepresentation::getDescription).setComparator(Comparator.comparing(MenuRepresentation::getDescription)).setHeader("Menu name").setSortable(true);
         gridMenu.addColumn(new ComponentRenderer<>(clickedItem ->{
             Button tmp = new Button(new Icon(VaadinIcons.AREA_SELECT));
             tmp.addClickListener(buttonClickEvent -> {
