@@ -10,12 +10,29 @@ import org.jooq.impl.DSL;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author DreamTeam SemStew
+ * @version 1.0
+ * @since 0.5
+ */
 public class EmployeeService {
+    /**
+     * database context
+     */
     private DSLContext ctx;
 
+    /**
+     * EmployeesService constructor
+     */
     public EmployeeService() {}
 
-    //select
+    /**
+     * Gets all Employee records
+     *
+     * Use {@link #SelectEmployeeService()} to get all Employee records from database
+     *
+     * @return list of all Employee records
+     */
     public List<EmployeeRecord> SelectEmployeeService(){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         List<EmployeeRecord> configs = new ArrayList<EmployeeRecord>();
@@ -27,7 +44,13 @@ public class EmployeeService {
         return configs;
     }
 
-    //update
+    /**
+     * Update Employee record
+     *
+     * Use {@link #UpdateEmployeeService(EmployeeRecord a)} to update given Employee record
+     *
+     * @param a Employee record to update
+     */
     public void UpdateEmployeeService(EmployeeRecord a){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         Employee tmp = new Employee();
@@ -36,7 +59,13 @@ public class EmployeeService {
                 where(tmp.ID_EMPLOYEE.eq(a.getIdEmployee())).execute();
     }
 
-    //insert
+    /**
+     * Insert Employee record
+     *
+     * Use {@link #InsertEmployeeService(EmployeeRecord a)} to insert given Employee record
+     *
+     * @param a Employee record to insert
+     */
     public void InsertEmployeeService(EmployeeRecord a){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         Employee tmp = new Employee();
@@ -44,13 +73,26 @@ public class EmployeeService {
                 values(a.getIdBranch(), a.getMail(), a.getName(), a.getRole(), a.getPhone(), a.getSurname()).execute();
     }
 
-    //delete
+    /**
+     * Delete Employee record
+     *
+     * Use {@link #DeleteEmployeeService(EmployeeRecord a)} to delete given Employee record
+     *
+     * @param a Employee record to delete
+     */
     public void DeleteEmployeeService(EmployeeRecord a){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         Employee tmp = new Employee();
         ctx.delete(tmp).where(tmp.ID_EMPLOYEE.eq(a.getIdEmployee())).execute();
     }
 
+    /**
+     * Get all Employee records
+     *
+     * Use {@link #getConfigs()} to get all Employee records
+     *
+     * @return list of all Employee record
+     */
     public List<EmployeeRecord> getConfigs() {
         return SelectEmployeeService();
     }

@@ -10,12 +10,29 @@ import org.jooq.impl.DSL;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author DreamTeam SemStew
+ * @version 1.0
+ * @since 0.5
+ */
 public class BranchService {
+    /**
+     * Database context
+     */
     private DSLContext ctx;
 
+    /**
+     * BranchService constructor
+     */
     public BranchService() {}
 
-    //select
+    /**
+     * Gets all Branch records
+     *
+     * Use {@link #SelectBranchService()} to get all Branch records from database
+     *
+     * @return list of all Branch records
+     */
     public List<BranchRecord> SelectBranchService(){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         List<BranchRecord> configs = new ArrayList<BranchRecord>();
@@ -27,7 +44,13 @@ public class BranchService {
         return configs;
     }
 
-    //update
+    /**
+     * Updates given Branch record
+     *
+     * Use {@link #UpdateBranchService(BranchRecord a)} to update given Branch record
+     *
+     * @param a Branch record to be updated
+     */
     public void UpdateBranchService(BranchRecord a){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         Branch tmp = new Branch();
@@ -36,7 +59,13 @@ public class BranchService {
                 where(tmp.ID_RESTAURANT.eq(a.getIdRestaurant())).and(tmp.ID_BRANCH.eq(a.getIdBranch())).execute();
     }
 
-    //insert
+    /**
+     * Inserts Branch record
+     *
+     * Use {@link #InsertBranchService(BranchRecord a)} to insert given Branch record into database
+     *
+     * @param a Branch record to be inserted
+     */
     public void InsertBranchService(BranchRecord a){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         Branch tmp = new Branch();
@@ -44,14 +73,27 @@ public class BranchService {
                 values(a.getIdRestaurant(), a.getAddress(), a.getDescription(), a.getPhone(), a.getOpeningHours()).execute();
     }
 
-    //delete
+    /**
+     * Deletes Branch record
+     *
+     * Use {@link #DeleteBranchService(BranchRecord a)} to delete given Branch record
+     *
+     * @param a Branch record to be deleted
+     */
     public void DeleteBranchService(BranchRecord a){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         Branch tmp = new Branch();
         ctx.delete(tmp).where(tmp.ID_BRANCH.eq(a.getIdBranch())).execute();
     }
 
-    // get instance by address
+    /**
+     * Gets Branch record by address
+     *
+     * Use {@link #GetByAddress(String address)} to get Branch record by given address
+     *
+     * @param address address of searched Branch record
+     * @return Branch record of given address if it exists, else null
+     */
     public BranchRecord GetByAddress(String address){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         Branch tmp = new Branch();
@@ -60,7 +102,13 @@ public class BranchService {
         return null;
     }
 
-    // get all addresses
+    /**
+     * Gets all Branch records addresses
+     *
+     * Use {@link #GetAllAdresses()} to get all Branch records addresses
+     *
+     * @return list of all Branch records addresses
+     */
     public List<String> GetAllAdresses(){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         Branch tmp = new Branch();
@@ -70,7 +118,14 @@ public class BranchService {
         return ret;
     }
 
-    // get by id
+    /**
+     * Gets BranchRecord by id
+     *
+     * Use {@link #GetById(int id)} to get Branch record of given id
+     *
+     * @param id id of searched Branch record
+     * @return Branch record of given id if it exists, else null
+     */
     public BranchRecord GetById(int id){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         Branch tmp = new Branch();
@@ -79,6 +134,13 @@ public class BranchService {
         return null;
     }
 
+    /**
+     * Gets all Branch records
+     *
+     * Use {@link #getConfigs()} to get all Branch record from database
+     *
+     * @return list of all Branch records
+     */
     public List<BranchRecord> getConfigs() {
         return SelectBranchService();
     }
