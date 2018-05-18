@@ -10,12 +10,29 @@ import org.jooq.impl.DSL;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author DreamTeam SemStew
+ * @version 1.0
+ * @since 0.5
+ */
 public class RestaurantService {
+    /**
+     * database context
+     */
     private DSLContext ctx;
 
+    /**
+     * RestaurantService constructor
+     */
     public RestaurantService() {}
 
-    //select
+    /**
+     * Get all Restaurant records
+     *
+     * Use {@link #SelectRestaurantService()} to get all Restaurant records from database
+     *
+     * @return list of all Restaurant records
+     */
     public List<RestaurantRecord> SelectRestaurantService(){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         List<RestaurantRecord> configs = new ArrayList<RestaurantRecord>();
@@ -27,7 +44,13 @@ public class RestaurantService {
         return configs;
     }
 
-    //update
+    /**
+     * Update Restaurant record
+     *
+     * Use {@link #UpdateRestaurantService(RestaurantRecord a)} to update given Restaurant record
+     *
+     * @param a Restaurant record to be updated
+     */
     public void UpdateRestaurantService(RestaurantRecord a){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         Restaurant tmp = new Restaurant();
@@ -36,7 +59,13 @@ public class RestaurantService {
                 where(tmp.ID_RESTAURANT.eq(a.getIdRestaurant())).execute();
     }
 
-    //insert
+    /**
+     * Insert Restaurant record
+     *
+     * Use {@link #InsertRestaurantService(RestaurantRecord a)} to insert given Restaurant record
+     *
+     * @param a Restaurant record to be inserted
+     */
     public void InsertRestaurantService(RestaurantRecord a){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         Restaurant tmp = new Restaurant();
@@ -44,14 +73,26 @@ public class RestaurantService {
                 values(a.getName(), a.getIco(), a.getIdAdmin(), a.getImage(), a.getEmail(), a.getEmailPassword()).execute();
     }
 
-    //delete
+    /**
+     * Delete Restaurant record
+     *
+     * Use {@link #DeleteRestaurantService(RestaurantRecord a)} to delete given Restaurant record
+     *
+     * @param a Restaurant record to be deleted
+     */
     public void DeleteRestaurantService(RestaurantRecord a){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         Restaurant tmp = new Restaurant();
         ctx.delete(tmp).where(tmp.ID_RESTAURANT.eq(a.getIdRestaurant())).execute();
     }
 
-    // getSingleInstance
+    /**
+     * Get single instance of Restaurant record
+     *
+     * Use {@link #GetInstance()} to get single instance of Restaurant record from database
+     *
+     * @return single instance Restaurant record if some exists, if empty than null
+     */
     public  RestaurantRecord GetInstance()
     {
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
@@ -61,6 +102,13 @@ public class RestaurantService {
         return null;
     }
 
+    /**
+     * Get all Restaurant records
+     *
+     * Use {@link #getConfigs()} to get all Restaurant records from database
+     *
+     * @return list of all Restaurant records
+     */
     public List<RestaurantRecord> getConfigs() {
         return SelectRestaurantService();
     }

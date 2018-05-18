@@ -11,12 +11,29 @@ import org.jooq.impl.DSL;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author DreamTeam SemStew
+ * @version 1.0
+ * @since 0.5
+ */
 public class MainCategoriesService {
+    /**
+     * database context
+     */
     private DSLContext ctx;
 
+    /**
+     * MainCategoriesService constructor
+     */
     public MainCategoriesService() {}
 
-    //select
+    /**
+     * Get all MainCategories records
+     *
+     * Use {@link #SelectMainCategoriesService()} to get all MainCategories records from database
+     *
+     * @return list of all MainCategories records
+     */
     public List<MainCategoriesRecord> SelectMainCategoriesService(){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         List<MainCategoriesRecord> configs = new ArrayList<MainCategoriesRecord>();
@@ -28,7 +45,13 @@ public class MainCategoriesService {
         return configs;
     }
 
-    //update
+    /**
+     * Update MainCategories record
+     *
+     * Use {@link #UpdateMainCategoriesService(MainCategoriesRecord a)} to update given MainCategories record
+     *
+     * @param a MainCategories record to be updated
+     */
     public void UpdateMainCategoriesService(MainCategoriesRecord a){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         MainCategories tmp = new MainCategories();
@@ -36,7 +59,13 @@ public class MainCategoriesService {
                 where(tmp.ID_MAIN_CATEGORY.eq(a.getIdMainCategory())).execute();
     }
 
-    //insert
+    /**
+     * Insert MainCategories record
+     *
+     * Use {@link #InsertMainCategoriesService(MainCategoriesRecord a)} to insert given MainCategories record
+     *
+     * @param a MainCategories record to be inserted
+     */
     public void InsertMainCategoriesService(MainCategoriesRecord a){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         MainCategories tmp = new MainCategories();
@@ -44,13 +73,26 @@ public class MainCategoriesService {
                 values(a.getIdMainCategory()).execute();
     }
 
-    //delete
+    /**
+     * Delete MainCategories record
+     *
+     * Use {@link #DeleteMainCategoriesService(MainCategoriesRecord a)} to delete given MainCategories record
+     *
+     * @param a MainCategories record to be deleted
+     */
     public void DeleteMainCategoriesService(MainCategoriesRecord a){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         MainCategories tmp = new MainCategories();
         ctx.delete(tmp).where(tmp.ID_MAIN_CATEGORY.eq(a.getIdMainCategory())).execute();
     }
 
+    /**
+     * Get all MainCategories records
+     *
+     * Use {@link #getConfigs()} to get all MainCategories records from database
+     *
+     * @return list of all MainCategories records
+     */
     public List<MainCategoriesRecord> getConfigs() {
         return SelectMainCategoriesService();
     }

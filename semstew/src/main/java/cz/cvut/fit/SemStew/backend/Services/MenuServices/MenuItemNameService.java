@@ -10,12 +10,29 @@ import org.jooq.impl.DSL;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author DreamTeam SemStew
+ * @version 1.0
+ * @since 0.5
+ */
 public class MenuItemNameService {
+    /**
+     * database context
+     */
     private DSLContext ctx;
 
+    /**
+     * MenuItemNameService constructor
+     */
     public MenuItemNameService() {}
 
-    //select
+    /**
+     * Get all MenuItemName records
+     *
+     * Use {@link #SelectMenuItemNameService()} to get all MenuItemName records from database
+     *
+     * @return list of all MenuItemName records
+     */
     public List<MenuItemNameRecord> SelectMenuItemNameService(){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         List<MenuItemNameRecord> configs = new ArrayList<MenuItemNameRecord>();
@@ -27,7 +44,13 @@ public class MenuItemNameService {
         return configs;
     }
 
-    //update
+    /**
+     * Update MenuItemName record
+     *
+     * Use {@link #UpdateMenuItemNameService(MenuItemNameRecord a)} to update given MenuItemName record
+     *
+     * @param a MenuItemName record to be updated
+     */
     public void UpdateMenuItemNameService(MenuItemNameRecord a){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         MenuItemName tmp = new MenuItemName();
@@ -35,7 +58,13 @@ public class MenuItemNameService {
                 where(tmp.ID_LANGUAGE.eq(a.getIdLanguage())).and(tmp.ID_MENU_ITEM.eq(a.getIdMenuItem())).execute();
     }
 
-    //insert
+    /**
+     * Insert new MenuItemName record
+     *
+     * Use {@link #InsertMenuItemNameService(MenuItemNameRecord a)} to insert given MenuItemName record
+     *
+     * @param a MenuItemName record to be inserted
+     */
     public void InsertMenuItemNameService(MenuItemNameRecord a){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         MenuItemName tmp = new MenuItemName();
@@ -43,14 +72,28 @@ public class MenuItemNameService {
                             values(a.getIdMenuItem(), a.getIdLanguage(), a.getName(), a.getDescription()).execute();
     }
 
-    //delete
+    /**
+     * Delete MenuItemName record
+     *
+     * Use {@link #DeleteMenuItemNameService(MenuItemNameRecord a)} to delete given MenuItemName record
+     *
+     * @param a MenuItemName record to be deleted
+     */
     public void DeleteMenuItemNameService(MenuItemNameRecord a){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         MenuItemName tmp = new MenuItemName();
         ctx.delete(tmp).where(tmp.ID_LANGUAGE.eq(a.getIdLanguage())).and(tmp.ID_MENU_ITEM.eq(a.getIdMenuItem())).execute();
     }
 
-    // Item by id and Language
+    /**
+     * Get MenuItemName record by ID and language
+     *
+     * Use {@link #ItemNameById(Integer id, int language)} to get MenuItemName record by given ID and language
+     *
+     * @param id ID of searched item
+     * @param language requested language id
+     * @return MenuItemName record with given parameters if exists, else null
+     */
     public MenuItemNameRecord ItemNameById(Integer id, int language)
     {
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
@@ -60,13 +103,26 @@ public class MenuItemNameService {
         return null;
     }
 
-    // delete by menu item id
+    /**
+     * Delete MenuItemName record by MenuItem ID
+     *
+     * Use {@link #DeleteByMenuItemId(int menuItemId)} to delete MenuItemName record of given MenuItem ID
+     *
+     * @param menuItemId MenuItem ID of MenuItemName record to delete
+     */
     public void DeleteByMenuItemId(int menuItemId){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         MenuItemName tmp = new MenuItemName();
         ctx.delete(tmp).where(tmp.ID_MENU_ITEM.eq(menuItemId)).execute();
     }
 
+    /**
+     * Get all MenuItemName records
+     *
+     * Use {@link #getConfigs()} to get all MenuItemName records from database
+     *
+     * @return list of all MenuItemName records
+     */
     public List<MenuItemNameRecord> getConfigs() {
         return SelectMenuItemNameService();
     }

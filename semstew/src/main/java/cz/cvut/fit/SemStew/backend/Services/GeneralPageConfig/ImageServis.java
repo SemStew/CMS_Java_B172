@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * @author DreamTeam SemStew
  * @version 1.0
- * @since 0.5
+ * @since 1.0
  */
 public class ImageServis {
     /**
