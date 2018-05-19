@@ -115,7 +115,7 @@ public class MenuItemController {
     }
 
     /**
-     * Get all MenuItemRepresentationsin selected language and id
+     * Gets all MenuItemRepresentationsin selected language and id
      *
      * Use {@link #LoadById(int id)} to get all MenuItemRepresentation in selected language and given id from database
      *
@@ -357,7 +357,7 @@ public class MenuItemController {
     }
 
     /**
-     * Get all categories descriptions in selected language
+     * Gets all categories descriptions in selected language
      *
      * Use {@link #getCategories()} to get all Categories descriptions in selected language from database
      *
@@ -369,7 +369,7 @@ public class MenuItemController {
     }
 
     /**
-     * Get all Units descriptions
+     * Gets all Units descriptions
      *
      * Use {@link #getUnits()} to get all Units descriptions from database
      *
@@ -381,7 +381,7 @@ public class MenuItemController {
     }
 
     /**
-     * Get Menu ID
+     * Gets Menu ID
      *
      * @return Menu ID
      */

@@ -79,7 +79,7 @@ public class MenuItemRepresentation {
     }
 
     /**
-     * Load data to the representation
+     * Loads data to the representation
      *
      * Use {@link #Load(MenuItemNameRecord, MenuItemRecord, CategoriesNameRecord, UnitsRecord, List)} to load data into representation
      *
@@ -113,7 +113,7 @@ public class MenuItemRepresentation {
     }
 
     /**
-     * Get ItemRecord
+     * Gets ItemRecord
      *
      * Use {@link #GetItemRecord()} to extract MenuItemRecord from MenuItemRepresentation
      *
@@ -135,7 +135,7 @@ public class MenuItemRepresentation {
     }
 
     /**
-     * Get ItemNameRecord
+     * Gets ItemNameRecord
      *
      * Use {@link #GetItemNameRecord()} to extract MenuItemNameRecord from MenuItemRepresentation
      *

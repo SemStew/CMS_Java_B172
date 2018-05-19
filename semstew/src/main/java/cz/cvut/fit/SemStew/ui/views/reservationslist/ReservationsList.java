@@ -168,7 +168,7 @@ public class ReservationsList extends GeneralAdminList {
     /**
      * Decline ReservationRepresentation
      *
-     * Use {@link #Decline(ReservationRepresentation)} to decline given ReservationRepresentation and send declination message
+     * Use {@link #Decline(ReservationRepresentation)} to decline given ReservationRepresentation and send decline message
      *
      * @param toDecline ReservationRepresentation to be declined
      */

@@ -122,7 +122,7 @@ public class OrderItemService {
      *
      * @param orderId Order identification number of searched OrderItem record
      * @param itemId Item identification number of searched OrderItem record
-     * @return OrderItem record of matching parametrs if it exist, else null
+     * @return OrderItem record of matching parameters if it exist, else null
      */
     public OrderItemRecord GetSpecific(int orderId, int itemId){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);

@@ -71,7 +71,7 @@ public class EmailController {
     /**
      * Send decline message
      *
-     * Use {@link #DeclineMessage(String emailTo, int id, String keyword)} to send declination message to given email with given keyword
+     * Use {@link #DeclineMessage(String emailTo, int id, String keyword)} to send decline message to given email with given keyword
      *
      * @param emailTo recipient email address
      * @param id item id

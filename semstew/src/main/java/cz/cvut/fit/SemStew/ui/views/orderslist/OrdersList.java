@@ -176,7 +176,7 @@ public class OrdersList extends GeneralAdminList {
     /**
      * Decline Order
      *
-     * Use {@link #Decline(OrdersRepresentation)} to decline given OrdersRepresentation and send declination message
+     * Use {@link #Decline(OrdersRepresentation)} to decline given OrdersRepresentation and send decline message
      *
      * @param toDecline OrdersRepresentation to be declined
      */

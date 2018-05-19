@@ -27,9 +27,9 @@ public class AdminsService {
     public AdminsService() {}
 
     /**
-     * Get all Admins record
+     * Get all Admins records
      *
-     * Use {@link #SelectAdminsService()} to get all Admins record from database
+     * Use {@link #SelectAdminsService()} to get all Admins records from database
      *
      * @return list of all Admins records
      */

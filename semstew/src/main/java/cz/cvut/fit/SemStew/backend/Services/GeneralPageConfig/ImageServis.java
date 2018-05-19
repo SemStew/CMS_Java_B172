@@ -85,7 +85,7 @@ public class ImageServis {
     /**
      * Get all Image records of given restaurant id
      *
-     * Use {@link #SelectByRestaurantId(int id)} to get all Image record of given restaurant id from database
+     * Use {@link #SelectByRestaurantId(int id)} to get all Image records of given restaurant id from database
      *
      * @param id id of restaurant
      * @return list of all Image records of given restaurant id
