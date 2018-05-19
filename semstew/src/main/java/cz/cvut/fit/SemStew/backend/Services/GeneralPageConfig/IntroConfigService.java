@@ -10,12 +10,30 @@ import org.jooq.impl.DSL;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author DreamTeam SemStew
+ * @version 1.0
+ * @since 0.5
+ */
 public class IntroConfigService {
+    /**
+     * database context
+     */
     private DSLContext ctx;
 
+    /**
+     * IntroConfigServis constructor
+     */
     public IntroConfigService() {}
 
-    //select
+
+    /**
+     * Get all IntroConfig records
+     *
+     * Use {@link #SelectIntroConfigService()} to get all IntroConfig  records from database
+     *
+     * @return list of all IntroConfig records
+     */
     public List<IntroConfigRecord> SelectIntroConfigService(){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         List<IntroConfigRecord> configs = new ArrayList<IntroConfigRecord>();
@@ -27,7 +45,13 @@ public class IntroConfigService {
         return configs;
     }
 
-    //update
+    /**
+     * Updates IntroConfig record
+     *
+     * Use {@link #UpdateIntroConfigService(IntroConfigRecord a)} to update given IntroConfig
+     *
+     * @param a IntroConfig to be updated
+     */
     public void UpdateIntroConfigService(IntroConfigRecord a){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         IntroConfig tmp = new IntroConfig();
@@ -36,7 +60,13 @@ public class IntroConfigService {
                 where(tmp.ID_LANGUAGE.eq(a.getIdLanguage())).execute();
     }
 
-    //insert
+    /**
+     * Inserts new IntroConfig record
+     *
+     * Use {@link #InsertIntroConfigService(IntroConfigRecord a)} to insert given IntroConfig record
+     *
+     * @param a IntroConfig record to be inserted
+     */
     public void InsertIntroConfigService(IntroConfigRecord a){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         IntroConfig tmp = new IntroConfig();
@@ -44,14 +74,27 @@ public class IntroConfigService {
                 values(a.getIdLanguage(), a.getHeader(), a.getNewsHeader(), a.getShortDescription()).execute();
     }
 
-    //delete
+    /**
+     * Deletes IntroConfig record
+     *
+     * Use {@link #DeleteIntroConfigService(IntroConfigRecord a)} to delete given IntroConfig record
+     *
+     * @param a IntroConfig record to be deleted
+     */
     public void DeleteIntroConfigService(IntroConfigRecord a){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         IntroConfig tmp = new IntroConfig();
         ctx.delete(tmp).where(tmp.ID_LANGUAGE.eq(a.getIdLanguage())).execute();
     }
 
-    // get by language ID
+    /**
+     * Get IntroConfig record in given language
+     *
+     * Use {@link #GetByLanquageID(int id)} to get IntroConfig of given language
+     *
+     * @param id identification number of requested language
+     * @return IntroConfig record of given lanquage if it exist, else null
+     */
     public IntroConfigRecord GetByLanquageID(int id){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         IntroConfig tmp = new IntroConfig();
@@ -60,6 +103,13 @@ public class IntroConfigService {
         return null;
     }
 
+    /**
+     * Get all IntroConfig records
+     *
+     * Use {@link #getConfigs()} to get all IntroConfig records from database
+     *
+     * @return list of all IntroConfig records
+     */
     public List<IntroConfigRecord> getConfigs() {
         return SelectIntroConfigService();
     }

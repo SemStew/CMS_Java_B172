@@ -33,46 +33,137 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * @author DreamTeam SemStew
+ * @version 1.0
+ * @since 0.5
+ */
 @Route(value = "admin/dishes/selected",layout = MainLayout.class)
 @PageTitle("Selected Dishes | Admin")
 public class SelectedAdminMenu extends GeneralAdminList
     implements RouterLayout {
+    /**
+     * page header
+     */
     private final H2 header = new H2();
+    /**
+     * grid for displaying MenuItems from selected Menu
+     */
     private final Grid<MenuItemRepresentation> gridMenu = new Grid<>();
+    /**
+     * MenuItem management
+     */
     private MenuItemController menuItemController = new MenuItemController();
+    /**
+     * Language management
+     */
     private LanguagesService languagesService = new LanguagesService();
+    /**
+     * Allergens management
+     */
     private final AllergensNameService allergensNameService = new AllergensNameService();
+    /**
+     * list of all MenuItems in selected Menu
+     */
     private List<MenuItemRepresentation> menuItems;
+    /**
+     * Route back
+     */
     private RouterLink back;
+    /**
+     * Dialog window to create and update MenuItem
+     */
     private final Dialog editDialog = new Dialog();
+    /**
+     * Button to add new MenuItem
+     */
     private final Button addButton = new Button();
-    // Allergen checkboxes
+    /**
+     * Checkbox for allergen 1
+     */
     private final Checkbox allergen1 = new Checkbox();
+    /**
+     * Checkbox for allergen 2
+     */
     private final Checkbox allergen2 = new Checkbox();
+    /**
+     * Checkbox for allergen 3
+     */
     private final Checkbox allergen3 = new Checkbox();
+    /**
+     * Checkbox for allergen 4
+     */
     private final Checkbox allergen4 = new Checkbox();
+    /**
+     * Checkbox for allergen 5
+     */
     private final Checkbox allergen5 = new Checkbox();
+    /**
+     * Checkbox for allergen 6
+     */
     private final Checkbox allergen6 = new Checkbox();
+    /**
+     * Checkbox for allergen 7
+     */
     private final Checkbox allergen7 = new Checkbox();
+    /**
+     * Checkbox for allergen 8
+     */
     private final Checkbox allergen8 = new Checkbox();
+    /**
+     * Checkbox for allergen 9
+     */
     private final Checkbox allergen9 = new Checkbox();
+    /**
+     * Checkbox for allergen 10
+     */
     private final Checkbox allergen10 = new Checkbox();
+    /**
+     * Checkbox for allergen 11
+     */
     private final Checkbox allergen11 = new Checkbox();
+    /**
+     * Checkbox for allergen 12
+     */
     private final Checkbox allergen12 = new Checkbox();
+    /**
+     * Checkbox for allergen 13
+     */
     private final Checkbox allergen13 = new Checkbox();
+    /**
+     * Checkbox for allergen 14
+     */
     private final Checkbox allergen14 = new Checkbox();
 
+    /**
+     * SelectedAdminMenu constructor
+     *
+     * Use {@link #SelectedAdminMenu()} to create and initialize page
+     *
+     */
     public SelectedAdminMenu()
     {
         init();
         addContent();
     }
 
+    /**
+     * Initialize page
+     *
+     * Use {@link #init()} to initialize page
+     *
+     */
     private void init() {
         addClassName("dishes-list");
         setDefaultHorizontalComponentAlignment(Alignment.STRETCH);
     }
 
+    /**
+     * Load content
+     *
+     * Use {@link #addContent()} to load and set up page content
+     *
+     */
     private void addContent() {
         VerticalLayout content = new VerticalLayout();
         HorizontalLayout buttons = new HorizontalLayout();
@@ -100,7 +191,7 @@ public class SelectedAdminMenu extends GeneralAdminList
         gridMenu.addColumn(MenuItemRepresentation::getUnitDescription).setHeader("Units");
         gridMenu.addColumn(MenuItemRepresentation::getCategoryDescription).setComparator(Comparator.comparing(MenuItemRepresentation::getCategoryDescription)).setHeader("Category").setSortable(true);
         gridMenu.addColumn(MenuItemRepresentation::getPrice).setComparator(Comparator.comparing(MenuItemRepresentation::getPrice)).setHeader("Price").setSortable(true);
-        gridMenu.addColumn(MenuItemRepresentation::getAlergens).setHeader("Alergens");
+        gridMenu.addColumn(MenuItemRepresentation::getAllergens).setHeader("Alergens");
         gridMenu.addColumn(new ComponentRenderer<>(clickedItem -> {
             Button tmp = new Button(new Icon(VaadinIcons.EDIT));
             tmp.addClickListener(buttonClickEvent -> {
@@ -135,11 +226,24 @@ public class SelectedAdminMenu extends GeneralAdminList
         add(content);
     }
 
+    /**
+     * Refresh values
+     *
+     * Use {@link #RefreshValues()} to refresh values in grid
+     *
+     */
     private void RefreshValues(){
         menuItems = menuItemController.getItems();
         gridMenu.setItems(menuItems);
     }
 
+    /**
+     * Set all checkboxes
+     *
+     * Use {@link #setUpCheckboxes(int)} to set up checkboxes to given language
+     *
+     * @param language id of requested language
+     */
     private void setUpCheckboxes(int language){
         List<String> allergenNames = allergensNameService.GetAllDescriptionsInLanguage(language);
 
@@ -173,6 +277,13 @@ public class SelectedAdminMenu extends GeneralAdminList
         allergen14.setValue(false);
     }
 
+    /**
+     * Check which checkboxes are selected
+     *
+     * Use {@link #SelectedCheckboxes()} to get which checkboxes are currently selected
+     *
+     * @return list of selected checkboxes labels
+     */
     private List<String> SelectedCheckboxes() {
         List<String> values = new ArrayList<>();
         if(allergen1.getValue())
@@ -208,6 +319,13 @@ public class SelectedAdminMenu extends GeneralAdminList
         return values;
     }
 
+    /**
+     * Set checkboxes to certain state
+     *
+     * Use {@link #SetCheckboxes(List)} to set checkboxes to given state
+     *
+     * @param in list of label of checkboxes to be selected
+     */
     private void SetCheckboxes(List<String> in){
         if(in.contains(allergen1.getLabel()))
             allergen1.setValue(true);
@@ -239,6 +357,13 @@ public class SelectedAdminMenu extends GeneralAdminList
             allergen14.setValue(true);
     }
 
+    /**
+     * Set up editDialog for editing MenuItemRepresentation
+     *
+     * Use {@link #setUpEditDialog(MenuItemRepresentation)} to set up {@link #editDialog} for editing MenuItemRepresentation
+     *
+     * @param update MenuItemRepresentation to be updated
+     */
     private void setUpEditDialog( MenuItemRepresentation update)
     {
         editDialog.removeAll();
@@ -279,7 +404,7 @@ public class SelectedAdminMenu extends GeneralAdminList
         price.setValue(update.getPrice().toString());
         Label infoLabel = new Label();
 
-        SetCheckboxes(update.getAlergens());
+        SetCheckboxes(update.getAllergens());
 
         Button updateButton = new Button("Update");
         Button close = new Button("Close");
@@ -302,7 +427,7 @@ public class SelectedAdminMenu extends GeneralAdminList
             update.setName(name.getValue());
             update.setPrice(Integer.parseInt(price.getValue()));
             update.setUnitDescription(units.getValue());
-            update.setAlergens(SelectedCheckboxes());
+            update.setAllergens(SelectedCheckboxes());
             menuItemController.Update(update);
             RefreshValues();
             infoLabel.setText("Updated");
@@ -322,6 +447,12 @@ public class SelectedAdminMenu extends GeneralAdminList
         editDialog.add(content);
     }
 
+    /**
+     * Set up editDialog to add new MenuItemRepresentations
+     *
+     * Use {@link #setUpAddDialog()} to set up {@link #editDialog} for adding MenuItemRepresentations
+     *
+     */
     private void setUpAddDialog()
     {
         editDialog.removeAll();
@@ -397,12 +528,12 @@ public class SelectedAdminMenu extends GeneralAdminList
                 tmp.setName(name.getValue());
                 tmp.setPrice(Integer.parseInt(price.getValue()));
                 tmp.setUnitDescription(units.getValue());
-                tmp.setAlergens(SelectedCheckboxes());
+                tmp.setAllergens(SelectedCheckboxes());
                 tmp.setIdMenu(menuItemController.getMenuID());
                 menuItemRepresentations.add(tmp);
                 int languageIdea = languagesService.GetIdByName(valueChangeEvent.getValue());
                 setUpCheckboxes(languageIdea);
-                SetCheckboxes(menuItemController.getAlergensForItem(menuItemRepresentations.get(0).getAlergens(),languageIdea));
+                SetCheckboxes(menuItemController.getAlergensForItem(menuItemRepresentations.get(0).getAllergens(),languageIdea));
             }
         });
 
@@ -430,7 +561,7 @@ public class SelectedAdminMenu extends GeneralAdminList
             tmp.setName(name.getValue());
             tmp.setPrice(Integer.parseInt(price.getValue()));
             tmp.setUnitDescription(units.getValue());
-            tmp.setAlergens(SelectedCheckboxes());
+            tmp.setAllergens(SelectedCheckboxes());
             tmp.setIdMenu(menuItemController.getMenuID());
             if(menuItemRepresentations.stream().filter(menuItem -> menuItem.getIdLanguage().equals(languageId)).count() != 0){
                 if(menuItemRepresentations.size() == languageNames.size()){

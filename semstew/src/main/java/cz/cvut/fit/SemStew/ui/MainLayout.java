@@ -33,14 +33,31 @@ import cz.cvut.fit.SemStew.backend.Services.GeneralPageConfig.LanguagesService;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author DreamTeam SemStew
+ * @version 1.0
+ * @since 0.5
+ */
 @HtmlImport("frontend://styles/shared-styles.html")
 @Viewport("width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes")
 public class MainLayout extends Div
         implements RouterLayout, PageConfigurator {
 
-        private final GeneralConfigService generalService = new GeneralConfigService();
-        private final LanguagesService languagesService = new LanguagesService();
+    /**
+     * Page management
+      */
+    private final GeneralConfigService generalService = new GeneralConfigService();
+    /**
+     * Language management
+     */
+    private final LanguagesService languagesService = new LanguagesService();
 
+    /**
+     * MainLayout constructor
+     *
+     * Use {@link #MainLayout()} to create and initialize page
+     *
+     */
     public MainLayout() {
         PostgreSQLConnection postgre = new PostgreSQLConnection();
         Image image = new Image();
@@ -82,6 +99,14 @@ public class MainLayout extends Div
         addClassName("main-layout");
     }
 
+    /**
+     * Configure page
+     *
+     * Use {@link #configurePage(InitialPageSettings)} to configure initial page settings
+     * Overwritten documentation {@inheritDoc}
+     *
+     * @param settings Initial page settings
+     */
     @Override
     public void configurePage(InitialPageSettings settings) {
         settings.addMetaTag("apple-mobile-web-app-capable", "yes");

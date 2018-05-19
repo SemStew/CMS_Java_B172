@@ -10,12 +10,29 @@ import org.jooq.impl.DSL;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author DreamTeam SemStew
+ * @version 1.0
+ * @since 0.5
+ */
 public class MenusService {
+    /**
+     * database context
+     */
     private DSLContext ctx;
 
+    /**
+     *  MenusService constructor
+     */
     public MenusService() {}
 
-    //select
+    /**
+     * Get all Menus records
+     *
+     * Use {@link #SelectMenusService()} to get all Menus records from database
+     *
+     * @return list of all Menus records
+     */
     public List<MenusRecord> SelectMenusService(){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         List<MenusRecord> configs = new ArrayList<MenusRecord>();
@@ -27,7 +44,13 @@ public class MenusService {
         return configs;
     }
 
-    //update
+    /**
+     * Update Menus record
+     *
+     * Use {@link #UpdateMenusService(MenusRecord a)} to update given Menus record
+     *
+     * @param a Menus record to be updated
+     */
     public void UpdateMenusService(MenusRecord a){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         Menus tmp = new Menus();
@@ -35,7 +58,13 @@ public class MenusService {
                 where(tmp.ID_BRANCH.eq(a.getIdBranch())).and(tmp.ID_MENU.eq(a.getIdMenu())).execute();
     }
 
-    //insert
+    /**
+     * Insert new Menus record
+     *
+     * Use {@link #InsertMenusService(MenusRecord a)} to insert given Menus record
+     *
+     * @param a Menus record to be inserted
+     */
     public void InsertMenusService(MenusRecord a){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         Menus tmp = new Menus();
@@ -43,14 +72,27 @@ public class MenusService {
                 values(a.getIdBranch(), a.getUrlImage()).execute();
     }
 
-    //delete
+    /**
+     * Delete Menus record
+     *
+     * Use {@link #DeleteMenusService(MenusRecord a)} to delete given Menus record
+     *
+     * @param a Menus record to be deleted
+     */
     public void DeleteMenusService(MenusRecord a){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         Menus tmp = new Menus();
         ctx.delete(tmp).where(tmp.ID_BRANCH.eq(a.getIdBranch())).and(tmp.ID_MENU.eq(a.getIdMenu())).execute();
     }
 
-    // insert and return id
+    /**
+     * Insert Menus record and return generated Menus ID
+     *
+     * Use {@link #InsertAndReturn(MenusRecord insert)} to insert given Menus record and return generated Menus ID
+     *
+     * @param insert Menus record to be inserted
+     * @return generated Menus ID
+     */
     public int InsertAndReturn(MenusRecord insert){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         Menus tmp = new Menus();
@@ -61,6 +103,13 @@ public class MenusService {
         return menusRecord.getIdMenu();
     }
 
+    /**
+     * Get all Menus records
+     *
+     * Use {@link #getConfigs()} to get all Menus records from database
+     *
+     * @return list of all Menus records
+     */
     public List<MenusRecord> getConfigs() {
         return SelectMenusService();
     }

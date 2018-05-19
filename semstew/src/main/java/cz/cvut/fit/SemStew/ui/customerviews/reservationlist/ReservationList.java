@@ -23,39 +23,113 @@ import cz.cvut.fit.SemStew.ui.CustomerLayout;
 
 import java.util.List;
 
+/**
+ * @author DreamTeam SemStew
+ * @version 1.0
+ * @since 0.5
+ */
 @Route(value = "reservations", layout = CustomerLayout.class)
 @PageTitle("Reservations | Home")
 public class ReservationList extends VerticalLayout {
+    /**
+     * page header
+     */
     private final H2 header = new H2();
+    /**
+     * dataPicker filed for date picking
+     */
     private final DatePicker date = new DatePicker();
+    /**
+     * time textfield
+     */
     private final TextField time = new TextField();
+    /**
+     * person textfield
+     */
     private final TextField person = new TextField();
+    /**
+     * table textfield
+     */
     private final TextField table = new TextField();
+    /**
+     * email textfield
+     */
     private final TextField email = new TextField();
+    /**
+     * combo box for choosing branch
+     */
     private final ComboBox<String> branches = new ComboBox<>();
+    /**
+     * confirmation button
+     */
     private final Button confirm = new Button();
+    /**
+     * button for checking status or deleting reservation
+     */
     private final Button checkStatus = new Button();
+    /**
+     *  button for updating reservation
+     */
     private final Button updateButton = new Button();
+    /**
+     * informative texts label
+     */
     private final Label infoLabel = new Label();
+    /**
+     * Dialog window for handling CRUD operations on reservations
+     */
     private final Dialog checkDialog = new Dialog();
+    /**
+     * page management
+     */
     private final ReservationConfigService reservationConfigService = new ReservationConfigService();
+    /**
+     * language management
+     */
     private final LanguagesService languagesService = new LanguagesService();
+    /**
+     * reservation management
+     */
     private final ReservationController reservationController = new ReservationController();
+    /**
+     * branch management
+     */
     private final BranchService branchService = new BranchService();
+    /**
+     * current reservation
+     */
     private ReservationRepresentation update;
 
+    /**
+     * ReservationList constructor
+     *
+     * Use {@link #ReservationList()} to create and initialize page
+     *
+     */
     public ReservationList()
     {
         init();
         addContent();
     }
 
+    /**
+     * Initialize page
+     *
+     * Use {@link #init()} to initialize page
+     *
+     */
     private void init()
     {
         setClassName("reservations");
         setDefaultHorizontalComponentAlignment(Alignment.STRETCH);
     }
 
+    /**
+     * Load content
+     *
+     * Use {@link #addContent()} to load and set up page content
+     *
+     */
     private void addContent()
     {
         VerticalLayout content = new VerticalLayout();
@@ -148,6 +222,12 @@ public class ReservationList extends VerticalLayout {
         add(content);
     }
 
+    /**
+     * Set up checkDialog for editing
+     *
+     * Use {@link #SetUpEditDialog()} to set up {@link #checkDialog} for editing reservations
+     *
+     */
     private void SetUpEditDialog(){
         checkDialog.removeAll();
 
@@ -239,6 +319,12 @@ public class ReservationList extends VerticalLayout {
         checkDialog.add(content);
     }
 
+    /**
+     * Set up checkDialog for checking or deleting
+     *
+     * Use {@link #SetUpCheckDialog()} to set up {@link #checkDialog} for checking status or deleting reservations
+     *
+     */
     private void SetUpCheckDialog(){
         checkDialog.removeAll();
 

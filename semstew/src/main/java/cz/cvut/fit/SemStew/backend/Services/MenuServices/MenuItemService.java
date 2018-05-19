@@ -11,12 +11,29 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author DreamTeam SemStew
+ * @version 1.0
+ * @since 0.5
+ */
 public class MenuItemService {
+    /**
+     * database context
+     */
     private DSLContext ctx;
 
+    /**
+     * MenuItemService constructor
+     */
     public MenuItemService() {}
 
-    //select
+    /**
+     * Get all MenuItem records
+     *
+     * Use {@link #SelectMenuItemService()} to get all MenuItem records from database
+     *
+     * @return list of all MenuItem records
+     */
     public List<MenuItemRecord> SelectMenuItemService(){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         List<MenuItemRecord> configs = new ArrayList<MenuItemRecord>();
@@ -28,7 +45,13 @@ public class MenuItemService {
         return configs;
     }
 
-    //update
+    /**
+     * Update MenuItem record
+     *
+     * Use {@link #UpdateMenuItemService(MenuItemRecord a)} to update given MenuItem record
+     *
+     * @param a MenuItem record to be updated
+     */
     public void UpdateMenuItemService(MenuItemRecord a){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         MenuItem tmp = new MenuItem();
@@ -38,7 +61,13 @@ public class MenuItemService {
                         where(tmp.ID_CATEGORY.eq(a.getIdCategory())).and(tmp.ID_MENU_ITEM.eq(a.getIdMenuItem())).execute();
     }
 
-    //insert
+    /**
+     * Insert new MenuItem record
+     *
+     * Use {@link #InsertMenuItemService(MenuItemRecord a)} to insert given MenuItem record
+     *
+     * @param a MenuItem record to be inserted
+     */
     public void InsertMenuItemService(MenuItemRecord a){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         MenuItem tmp = new MenuItem();
@@ -46,14 +75,27 @@ public class MenuItemService {
                 values(a.getIdCategory(), a.getAmount(), a.getIdUnit(), a.getImageName(), a.getPrice(), a.getIdMenu()).execute();
     }
 
-    //delete
+    /**
+     * Delete MenuItem record
+     *
+     * Use {@link #DeleteMenuItemService(MenuItemRecord a)} to delete given MenuItem record
+     *
+     * @param a MenuItem record to be deleted
+     */
     public void DeleteMenuItemService(MenuItemRecord a){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         MenuItem tmp = new MenuItem();
         ctx.delete(tmp).where(tmp.ID_CATEGORY.eq(a.getIdCategory())).and(tmp.ID_MENU_ITEM.eq(a.getIdMenuItem())).execute();
     }
 
-    // get by menu id
+    /**
+     * Get MenuItem records by Menu ID
+     *
+     * Use {@link #GetByMenuId(int id)} to get MenuItem records by Menu ID
+     *
+     * @param id Menu ID of searched MenuItem records
+     * @return list of all MenuItem records with Menu ID
+     */
     public List<MenuItemRecord> GetByMenuId(int id){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         MenuItem tmp = new MenuItem();
@@ -63,7 +105,14 @@ public class MenuItemService {
         return ret;
     }
 
-    // get by menu item id
+    /**
+     * Get MenuItem record by MenuItem ID
+     *
+     * Use {@link #GetByMenuItemId(int id)} to get MenuItem record of MenuItem ID
+     *
+     * @param id MenuItem ID fo searched MenuItem record
+     * @return MenuItem record with given MenuItem ID if it exists, else null
+     */
     public MenuItemRecord GetByMenuItemId(int id){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         MenuItem tmp = new MenuItem();
@@ -72,7 +121,14 @@ public class MenuItemService {
         return null;
     }
 
-    // insert and return id
+    /**
+     * Insert MenuItem record and return generated MenuItem ID
+     *
+     * Use {@link #InsertAndReturn(MenuItemRecord insert)} to insert MenuItem record and get generated MenuItem ID
+     *
+     * @param insert MenuItem record to be inserted
+     * @return generated MenuItem ID
+     */
     public int InsertAndReturn(MenuItemRecord insert){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         MenuItem tmp = new MenuItem();
@@ -87,6 +143,13 @@ public class MenuItemService {
         return menuItemRecord.getIdMenuItem();
     }
 
+    /**
+     * Get all MenuItem records
+     *
+     * Use {@link #getConfigs()} to get all MenuItem records from database
+     *
+     * @return list of all MenuItem records
+     */
     public List<MenuItemRecord> getConfigs() {
         return SelectMenuItemService();
     }

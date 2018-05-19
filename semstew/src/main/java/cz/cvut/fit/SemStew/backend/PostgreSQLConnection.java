@@ -6,10 +6,26 @@ import java.sql.DriverManager;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+/**
+ * @author DreamTeam SemStew
+ * @version 1.0
+ * @since 0.5
+ */
 public class PostgreSQLConnection {
+    /**
+     *  database connection
+     */
     private static Connection con;
+    /**
+     *  database context
+     */
     protected static DSLContext ctx;
 
+    /**
+     * PostgreSQLConnection constructor
+     *
+     * Use {@link #PostgreSQLConnection()} to create PostgreSQLConnection class and connect to database
+     */
     public PostgreSQLConnection(){
         try{
             Class.forName("org.postgresql.Driver");
@@ -31,6 +47,13 @@ public class PostgreSQLConnection {
         }
     }
 
+    /**
+     * Getter for connection
+     *
+     * Use {@link #getConnection()} to get Connection
+     *
+     * @return Connection of current PostgreSQLConnection class instance
+     */
     public static Connection getConnection(){
         return con;
     }

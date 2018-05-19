@@ -10,13 +10,37 @@ import cz.cvut.fit.SemStew.backend.Services.GeneralPageConfig.NewsService;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author DreamTeam SemStew
+ * @version 1.0
+ * @since 0.5
+ */
 public class NewsController {
+    /**
+     * News management
+     */
     private final NewsService newsService = new NewsService();
+    /**
+     * NewsName management
+     */
     private final NewsNameService newsNameService = new NewsNameService();
+    /**
+     * Language management
+     */
     private final LanguagesService languagesService = new LanguagesService();
 
+    /**
+     * NewsController constructor
+     */
     public NewsController() {}
 
+    /**
+     * Get NewsRepresentation in selected language
+     *
+     * Use {@link #LoadData()} to get NewsRepresentations in selected language from database
+     *
+     * @return list of NewsRepresentation in selected language
+     */
     private List<NewsRepresentation> LoadData()
     {
         List<NewsRepresentation> newsRepresentations = new ArrayList<>();
@@ -45,6 +69,13 @@ public class NewsController {
         return newsRepresentations;
     }
 
+    /**
+     * Insert new NewsRepresentation in single language
+     *
+     * Use {@link #Insert(NewsRepresentation)} to insert given NewsRepresentation in single language
+     *
+     * @param insert NewsRepresentation to be inserted
+     */
     public void Insert(NewsRepresentation insert){
         NewsRecord newsRecord = insert.getNews();
         NewsNameRecord newsNameRecord = insert.getNewsName();
@@ -54,6 +85,13 @@ public class NewsController {
         newsNameService.InsertNewsNameService(newsNameRecord);
     }
 
+    /**
+     * Insert new NewsRepresentation in multiple languages
+     *
+     * Use {@link #InsertMultilingual(List)} to insert given NewsRepresentation in multiple languages
+     *
+     * @param insert NewsRepresentations to be inserted
+     */
     public void InsertMultilingual(List<NewsRepresentation> insert){
         NewsRecord newsRecord = insert.get(0).getNews();
         int newId = newsService.InsertAndReturn(newsRecord);
@@ -65,6 +103,13 @@ public class NewsController {
         }
     }
 
+    /**
+     * Update NewsRepresentation
+     *
+     * Use {@link #Update(NewsRepresentation)} to update given NewsRepresentation
+     *
+     * @param update NewsRepresentation to be updated
+     */
     public void Update(NewsRepresentation update){
         NewsRecord newsRecord = update.getNews();
         NewsNameRecord newsNameRecord = update.getNewsName();
@@ -73,6 +118,13 @@ public class NewsController {
         newsNameService.UpdateNewsNameService(newsNameRecord);
     }
 
+    /**
+     * Delete NewsRepresentation
+     *
+     * Use {@link #Delete(NewsRepresentation)} to delete NewsRepresentation
+     *
+     * @param delete NewsRepresentation to be deleted
+     */
     public void Delete(NewsRepresentation delete){
         NewsRecord newsRecord = delete.getNews();
 
@@ -80,6 +132,13 @@ public class NewsController {
         newsService.DeleteNewsService(newsRecord);
     }
 
+    /**
+     * Get all NewsRepresentation in selected language
+     *
+     * Use {@link #getItems()} to get all NewsRepresentation in selected language from database
+     *
+     * @return list of NewsRepresentation in selected language
+     */
     public List<NewsRepresentation> getItems(){
         return LoadData();
     }

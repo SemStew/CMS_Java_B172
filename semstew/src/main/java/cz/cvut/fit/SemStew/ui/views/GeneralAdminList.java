@@ -22,29 +22,83 @@ import cz.cvut.fit.SemStew.ui.views.reservationslist.ReservationsList;
 import cz.cvut.fit.SemStew.ui.views.settingslist.SettingsList;
 import cz.cvut.fit.SemStew.ui.views.statisticslist.StatisticsList;
 
+/**
+ * @author DreamTeam SemStew
+ * @version 1.0
+ * @since 0.5
+ */
 public class GeneralAdminList extends VerticalLayout
         implements AfterNavigationObserver, BeforeEnterObserver {
+    /**
+     * Style holder
+     */
     private static final String ACTIVE_ITEM_STYLE = "main-layout__nav-item--selected";
+    /**
+     * Branch route
+     */
     private RouterLink branch;
+    /**
+     * Preview route
+     */
     private RouterLink preview;
+    /**
+     * Dishes route
+     */
     private RouterLink dishes;
+    /**
+     * Articles route
+     */
     private RouterLink articles;
+    /**
+     * Gallery route
+     */
     private RouterLink gallery;
+    /**
+     * Reservations route
+     */
     private RouterLink reservations;
+    /**
+     * Orders route
+     */
     private RouterLink orders;
+    /**
+     * Statistics route
+     */
     private RouterLink statistics;
+    /**
+     * Appearance route
+     */
     private RouterLink appearance;
+    /**
+     * Settings route
+     */
     private RouterLink settings;
+    /**
+     * Logout button
+     */
     private final Button logout = new Button(new Icon(VaadinIcons.EXIT));
-
+    /**
+     * Footer layout
+     */
     private HorizontalLayout bottom;
 
+    /**
+     * GeneralAdminList
+     *
+     * Use {@link #GeneralAdminList()} to create and initialize page
+     *
+     */
     public GeneralAdminList(){
         addMenu();
         addFoot();
     }
 
-
+    /**
+     * Add menu
+     *
+     * Use {@link #addMenu()} to add menu into page
+     *
+     */
     private void addMenu() {
         H2 title = new H2("SemStew CMS");
         title.addClassName("title");
@@ -104,6 +158,12 @@ public class GeneralAdminList extends VerticalLayout
         add(navigation);
     }
 
+    /**
+     * Add footer
+     *
+     * Use {@link #addFoot()} to add footer into page
+     *
+     */
     private void addFoot () {
         bottom = new HorizontalLayout();
         bottom.addClassName("main-layout__bottom");
@@ -117,6 +177,14 @@ public class GeneralAdminList extends VerticalLayout
         add(bottom);
     }
 
+    /**
+     * After navigation handler
+     *
+     * Use {@link #afterNavigation(AfterNavigationEvent)} to handle after navigation events
+     * Overwritten documentation {@inheritDoc}
+     *
+     * @param event Routing event
+     */
     @Override
     public void afterNavigation(AfterNavigationEvent event) {
         // updating the active menu item based on if either of views is active
@@ -150,6 +218,14 @@ public class GeneralAdminList extends VerticalLayout
         add(bottom);
     }
 
+    /**
+     * Before enter handler
+     *
+     * Use {@link #beforeEnter(BeforeEnterEvent)} to handle before entering events
+     * Overwritten documentation {@inheritDoc}
+     *
+     * @param event Routing event
+     */
     @Override
     public void beforeEnter(BeforeEnterEvent event)
     {

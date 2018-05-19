@@ -29,27 +29,71 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * @author DreamTeam SemStew
+ * @version 1.0
+ * @since 0.5
+ */
 @Route(value = "admin/articles", layout = MainLayout.class)
 @PageTitle("Article List | Admin")
 public class ArticleList extends GeneralAdminList {
+    /**
+     * page header
+     */
     private final H2 header = new H2();
+    /**
+     * grid for displaying news
+     */
     private final Grid<NewsRepresentation> representationGrid = new Grid<>();
+    /**
+     * Button for adding news
+     */
     private final Button add = new Button();
+    /**
+     * Dialog window for handling create and update operations
+     */
     private final Dialog editDialog = new Dialog();
+    /**
+     * news management
+     */
     private final NewsController newsController = new NewsController();
+    /**
+     * language management
+     */
     private final LanguagesService languagesService = new LanguagesService();
+    /**
+     * list of all news
+     */
     private List<NewsRepresentation> representationList;
 
+    /**
+     * ArticleList constructor
+     *
+     * Use {@link #ArticleList()} to create and initialize page
+     *
+     */
     public ArticleList() {
         init();
         addContent();
     }
 
+    /**
+     * Initialize page
+     *
+     * Use {@link #init()} to initialize page
+     *
+     */
     private void init() {
         super.addClassName("article-list");
         super.setDefaultHorizontalComponentAlignment(Alignment.STRETCH);
     }
 
+    /**
+     * Load content
+     *
+     * Use {@link #addContent()} to load and set up page content
+     *
+     */
     private void addContent() {
         VerticalLayout content = new VerticalLayout();
         content.setClassName("content");
@@ -98,11 +142,24 @@ public class ArticleList extends GeneralAdminList {
         super.add(content);
     }
 
+    /**
+     * Refresh values in grid
+     *
+     * Use {@link #Refresh()} to update values in {@link #representationGrid}
+     *
+     */
     private void Refresh(){
         representationList = newsController.getItems();
         representationGrid.setItems(representationList);
     }
 
+    /**
+     * Set up editDialog to edit NewsRepresentation
+     *
+     * Use {@link #SetUpEditDialog(NewsRepresentation)} to set up {@link #editDialog} for editing given NewsRepresentation
+     *
+     * @param update NewsRepresentation to be updated
+     */
     private void SetUpEditDialog(NewsRepresentation update){
         editDialog.removeAll();
         VerticalLayout content = new VerticalLayout();
@@ -144,6 +201,12 @@ public class ArticleList extends GeneralAdminList {
         editDialog.add(content);
     }
 
+    /**
+     * Set up editDialog to add new NewsRepresentation
+     *
+     * Use {@link #SetUpAddDialog()} to  set up {@link #editDialog} for adding new NewsRepresentation
+     *
+     */
     private void SetUpAddDialog(){
         editDialog.removeAll();
         VerticalLayout content = new VerticalLayout();
