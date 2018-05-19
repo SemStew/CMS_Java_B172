@@ -19,29 +19,73 @@ import cz.cvut.fit.SemStew.ui.CustomerLayout;
 
 import java.util.List;
 
+/**
+ * @author DreamTeam SemStew
+ * @version 1.0
+ * @since 0.5
+ */
 @Route(value = "about", layout = CustomerLayout.class)
 @PageTitle("About | Home")
 public class AboutList extends VerticalLayout {
+    /**
+     * Page header
+     */
     private final H2 header = new H2();
+    /**
+     * Page description
+     */
     private final Text description = new Text("");
+    /**
+     * Page sub-header
+     */
     private final H3 subheader = new H3();
+    /**
+     * Page grid for pictures
+     */
     private final Grid<ImagesRecord> recordGrid = new Grid<>();
+    /**
+     * Page management
+     */
     private final AboutUsConfigService aboutUsConfigService = new AboutUsConfigService();
+    /**
+     * Language management
+     */
     private final LanguagesService languagesService = new LanguagesService();
+    /**
+     * Images management
+     */
     private final ImageServis imageServis = new ImageServis();
 
+    /**
+     * AboutList constructor
+     *
+     * Use {@link #AboutList()} to create instance of AboutList page and initialize it's content
+     *
+     */
     public AboutList()
     {
         init();
         addContent();
     }
 
+    /**
+     * Initializes page
+     *
+     * Use {@link #init()} to initialize page
+     *
+     */
     private void init()
     {
         setClassName("about");
         setDefaultHorizontalComponentAlignment(Alignment.STRETCH);
     }
 
+    /**
+     * Loads page contents
+     *
+     * Use {@link #addContent()} to load and set content of this page
+     *
+     */
     private void addContent()
     {
         VerticalLayout content = new VerticalLayout();

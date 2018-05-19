@@ -24,28 +24,87 @@ import cz.cvut.fit.SemStew.backend.Services.GeneralPageConfig.RestaurantService;
 import java.math.BigDecimal;
 import java.util.List;
 
-
+/**
+ * @author DreamTeam SemStew
+ * @version 1.0
+ * @since 0.5
+ */
 @Route(value = "registration", layout = MainLayout.class)
 @PageTitle("Registration")
 public class Registration extends VerticalLayout
     implements RouterLayout {
+
+    /**
+     *  page header
+     */
     private final H2 header = new H2();
+    /**
+     * TextField for Username
+     */
     private final TextField userName = new TextField();
+    /**
+     * PasswordField for password
+     */
     private final PasswordField password = new PasswordField();
+    /**
+     * PasswordField for password repeat
+     */
     private final PasswordField passwordRepeat = new PasswordField();
-    private final TextField forname = new TextField();
+    /**
+     * TextField for Forename
+     */
+    private final TextField forename = new TextField();
+    /**
+     * TextField for Surname
+     */
     private final TextField surname = new TextField();
+    /**
+     * TextField for ICO
+     */
     private final TextField ico = new TextField();
+    /**
+     * TextField for Email
+     */
     private final TextField email = new TextField();
+    /**
+     * PasswordField for email password
+     */
     private final PasswordField emailPassword = new PasswordField();
+    /**
+     * PasswordField for email password repeat
+     */
     private final PasswordField emailPasswordRepeat = new PasswordField();
+    /**
+     * TextField for RestaurantName
+     */
     private final TextField restaurantName = new TextField();
+    /**
+     * Registration button
+     */
     private final Button registrationButton = new Button();
+    /**
+     * Informative texts label
+     */
     private final Label infoLabel = new Label();
+    /**
+     * Route back
+     */
     private RouterLink back;
+    /**
+     * Admins management
+     */
     private AdminsService admin = new AdminsService();
+    /**
+     * Restaurant management
+     */
     private RestaurantService rest = new RestaurantService();
 
+    /**
+     * Registration constructor
+     *
+     * Use {@link #Registration()} to create and initialize page
+     *
+     */
     public Registration()
     {
         init();
@@ -53,12 +112,24 @@ public class Registration extends VerticalLayout
         addFoot();
     }
 
+    /**
+     * Initialize page
+     *
+     * Use {@link #init()} to initialize page
+     *
+     */
     private void init()
     {
         addClassName("register");
         setDefaultHorizontalComponentAlignment(Alignment.STRETCH);
     }
 
+    /**
+     * Load content
+     *
+     * Use {@link #addContent()} to load and set up page content
+     *
+     */
     private void addContent()
     {
         VerticalLayout content = new VerticalLayout();
@@ -78,7 +149,7 @@ public class Registration extends VerticalLayout
         userName.setLabel("Username:");
         password.setLabel("Password:");
         passwordRepeat.setLabel("Confirm password:");
-        forname.setLabel("Forename:");
+        forename.setLabel("Forename:");
         surname.setLabel("Surname:");
         ico.setLabel("ICO:");
         email.setLabel("Email:");
@@ -144,19 +215,32 @@ public class Registration extends VerticalLayout
 
         emailPasswords.add(emailPassword, emailPasswordRepeat);
 
-        names.add(forname, surname);
+        names.add(forename, surname);
 
         content.add(header, userName, passwords, names, ico, email, emailPasswords,restaurantName, buttons,infoLabel);
         add(content);
     }
 
+    /**
+     * Check if UI is filled
+     *
+     * Use {@link #UINotFilled()} to check if UI is completely filled or not
+     *
+     * @return true if it isn't filled, false otherwise
+     */
     private boolean UINotFilled()
     {
-        return (userName.isEmpty() || password.isEmpty() || passwordRepeat.isEmpty() || forname.isEmpty()
+        return (userName.isEmpty() || password.isEmpty() || passwordRepeat.isEmpty() || forename.isEmpty()
                 || surname.isEmpty() || ico.isEmpty() || email.isEmpty() || restaurantName.isEmpty()
                 || emailPassword.isEmpty() || emailPasswordRepeat.isEmpty());
     }
 
+    /**
+     * Add footer
+     *
+     * Use {@link #addFoot()} to add footer to page content
+     *
+     */
     private void addFoot () {
         HorizontalLayout bottom = new HorizontalLayout();
         bottom.addClassName("main-layout__bottom");

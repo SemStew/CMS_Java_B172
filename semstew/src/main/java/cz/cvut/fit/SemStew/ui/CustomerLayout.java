@@ -32,22 +32,66 @@ import cz.cvut.fit.SemStew.ui.customerviews.reservationlist.ReservationList;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author DreamTeam SemStew
+ * @version 1.0
+ * @since 0.5
+ */
 @HtmlImport("frontend://styles/customer-styles.html")
 @Viewport("width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes")
 public class CustomerLayout extends Div
         implements RouterLayout, PageConfigurator, AfterNavigationObserver {
+    /**
+     * Style holder
+     */
     private static final String ACTIVE_ITEM_STYLE = "main-layout__nav-item--selected";
+    /**
+     * page header
+     */
     private final H2 name = new H2();
+    /**
+     * Intro route
+     */
     private RouterLink intro;
+    /**
+     * Menu route
+     */
     private RouterLink menus;
+    /**
+     * Contacts route
+     */
     private RouterLink contacts;
+    /**
+     * About route
+     */
     private RouterLink about;
+    /**
+     * Reservations route
+     */
     private RouterLink reservations;
+    /**
+     * Orders route
+     */
     private RouterLink orders;
+    /**
+     * Footer layout
+     */
     private final HorizontalLayout bottom = new HorizontalLayout();
+    /**
+     * Page management
+     */
     private final GeneralConfigService generalService = new GeneralConfigService();
+    /**
+     * Language management
+     */
     private final LanguagesService languagesService = new LanguagesService();
 
+    /**
+     * CustomerLayout constructor
+     *
+     * Use {@link #CustomerLayout()} to create and initialize page
+     *
+     */
     public CustomerLayout() {
         PostgreSQLConnection postgre = new PostgreSQLConnection();
         Image image = new Image();
@@ -155,6 +199,14 @@ public class CustomerLayout extends Div
     }
 
 
+    /**
+     * After navigation handler
+     *
+     * Use {@link #afterNavigation(AfterNavigationEvent)} to handle after navigation events
+     * Overwritten documentation {@inheritDoc}
+     *
+     * @param event Routing event
+     */
     @Override
     public void afterNavigation(AfterNavigationEvent event) {
         // updating the active menu item based on if either of views is active
@@ -180,6 +232,14 @@ public class CustomerLayout extends Div
         add(bottom);
     }
 
+    /**
+     * Configure page
+     *
+     * Use {@link #configurePage(InitialPageSettings)} to configure initial page settings
+     * Overwritten documentation {@inheritDoc}
+     *
+     * @param settings Initial page settings
+     */
     @Override
     public void configurePage(InitialPageSettings settings) {
         settings.addMetaTag("apple-mobile-web-app-capable", "yes");

@@ -24,27 +24,68 @@ import java.time.format.FormatStyle;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * @author DreamTeam SemStew
+ * @version 1.0
+ * @since 0.5
+ */
 @Route(value = "admin/orders", layout = MainLayout.class)
 @PageTitle("Orders List | Admin")
 public class OrdersList extends GeneralAdminList {
 
+    /**
+     * page header
+     */
     private final H2 header = new H2();
+    /**
+     * grid for displaying Orders
+     */
     private final Grid<OrdersRepresentation> representationGrid = new Grid<>();
+    /**
+     * Informational texts label
+     */
     private final Label infoLabel = new Label();
+    /**
+     * Orders management
+     */
     private final OrdersController ordersController = new OrdersController();
+    /**
+     * Email management
+     */
     private final EmailController emailController = new EmailController();
+    /**
+     * list of all available orders
+     */
     private List<OrdersRepresentation> ordersRepresentations;
 
+    /**
+     * OrdersList constructor
+     *
+     * Use {@link #OrdersList()} to create and initialize page
+     *
+     */
     public OrdersList() {
         init();
         addContent();
     }
 
+    /**
+     * Initialize page
+     *
+     * Use {@link #init()} to initialize page
+     *
+     */
     private void init() {
         super.addClassName("orders-list");
         super.setDefaultHorizontalComponentAlignment(Alignment.STRETCH);
     }
 
+    /**
+     * Load content
+     *
+     * Use {@link #addContent()} to load and set up page content
+     *
+     */
     private void addContent() {
         VerticalLayout content = new VerticalLayout();
         content.setClassName("content");
@@ -102,12 +143,24 @@ public class OrdersList extends GeneralAdminList {
         super.add(content);
     }
 
-
+    /**
+     * Refresh values
+     *
+     * Use {@link #Refresh()} to refresh values in grid
+     *
+     */
     private void Refresh(){
         ordersRepresentations = ordersController.getConfigs();
         representationGrid.setItems(ordersRepresentations);
     }
 
+    /**
+     * Accept Order
+     *
+     * Use {@link #Accept(OrdersRepresentation)} to accept given OrdersRepresentation and send acceptance message
+     *
+     * @param toAccept OrdersRepresentation to be accepted
+     */
     private void Accept(OrdersRepresentation toAccept){
         if(toAccept.getStatus().equals("Accepted")){
             infoLabel.setText("Already accepted");
@@ -120,6 +173,13 @@ public class OrdersList extends GeneralAdminList {
         Refresh();
     }
 
+    /**
+     * Decline Order
+     *
+     * Use {@link #Decline(OrdersRepresentation)} to decline given OrdersRepresentation and send declination message
+     *
+     * @param toDecline OrdersRepresentation to be declined
+     */
     private void Decline(OrdersRepresentation toDecline){
         if(toDecline.getStatus().equals("Declined")){
             infoLabel.setText("Already declined");
@@ -131,6 +191,13 @@ public class OrdersList extends GeneralAdminList {
         Refresh();
     }
 
+    /**
+     * Delete Order
+     *
+     * Use {@link #Delete(OrdersRepresentation)} to delete given OrdersRepresentation and send deletion message
+     *
+     * @param toDelete OrdersRepresentation to be deleted
+     */
     private void Delete(OrdersRepresentation toDelete){
         ordersController.Delete(toDelete);
 

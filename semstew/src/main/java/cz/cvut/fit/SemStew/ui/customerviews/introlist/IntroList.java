@@ -21,28 +21,69 @@ import java.time.format.FormatStyle;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * @author DreamTeam SemStew
+ * @version 1.0
+ * @since 0.5
+ */
 @Route(value = "", layout = CustomerLayout.class)
 @PageTitle("Home")
 public class IntroList extends VerticalLayout {
+    /**
+     * Page intro text
+     */
     private final Text introText = new Text("");
+    /**
+     * Page header
+     */
     private final H2 header = new H2();
+    /**
+     * Page grid for displaying news
+     */
     private final Grid<NewsRepresentation> representationGrid = new Grid<>();
+    /**
+     * Page management
+     */
     private final IntroConfigService introConfigService = new IntroConfigService();
+    /**
+     * Page language management
+     */
     private final LanguagesService languagesService = new LanguagesService();
+    /**
+     * Page news management
+     */
     private final NewsController newsController = new NewsController();
 
+    /**
+     * IntroList constructor
+     *
+     * Use {@link #IntroList()} to initialize page and it's content
+     *
+     */
     public IntroList()
     {
         init();
         addContent();
     }
 
+    /**
+     * Initialize page
+     *
+     * Use {@link #init()} to initialize page
+     *
+     */
     private void init()
     {
         addClassName("intro-list");
         setDefaultHorizontalComponentAlignment(Alignment.STRETCH);
     }
 
+    /**
+     * Load content
+     *
+     * Use {@link #addContent()} to load and set up content of the page
+     *
+     */
     private void addContent()
     {
         PostgreSQLConnection postgre = new PostgreSQLConnection();
