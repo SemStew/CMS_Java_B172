@@ -176,7 +176,7 @@ public class MenuItemController {
         item.setIdCategory(category.getIdCategory());
         item.setIdUnit(unit.getIdUnit());
 
-        List<String> allergens = in.getAlergens();
+        List<String> allergens = in.getAllergens();
         List<AllergensNameRecord> allergensNameRecords = new ArrayList<>();
 
         for(String rec : allergens){
@@ -211,7 +211,7 @@ public class MenuItemController {
         item.setIdCategory(category.getIdCategory());
         item.setIdUnit(unit.getIdUnit());
 
-        List<String> allergens = insert.get(0).getAlergens();
+        List<String> allergens = insert.get(0).getAllergens();
         List<AllergensNameRecord> allergensNameRecords = new ArrayList<>();
 
         for(String rec : allergens){
@@ -253,7 +253,7 @@ public class MenuItemController {
         item.setIdCategory(category.getIdCategory());
         item.setIdUnit(unit.getIdUnit());
 
-        List<String> allergens = in.getAlergens();
+        List<String> allergens = in.getAllergens();
         List<AllergensNameRecord> allergensNameRecords = new ArrayList<>();
 
         for(String rec : allergens){
