@@ -10,6 +10,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLayout;
 import com.vaadin.flow.router.RouterLink;
+import com.vaadin.flow.server.VaadinService;
 import cz.cvut.fit.SemStew.backend.Controllers.MenuItemController;
 import cz.cvut.fit.SemStew.backend.Controllers.MenuItemRepresentation;
 import cz.cvut.fit.SemStew.ui.CustomerLayout;
@@ -69,6 +70,7 @@ public class SelectedMenu extends VerticalLayout
     private void init()
     {
         setClassName("selectedMenu");
+        getElement().setAttribute("itemtype", "http://schema.org/Menu");
         setDefaultHorizontalComponentAlignment(Alignment.STRETCH);
     }
 
@@ -84,7 +86,7 @@ public class SelectedMenu extends VerticalLayout
         content.setDefaultHorizontalComponentAlignment(Alignment.STRETCH);
 
         header.setText("Menu");
-
+        content.getElement().setAttribute("name", "Menu");
         menuItems = menuItemController.getItems();
 
         back = new RouterLink(null, MenusList.class);
@@ -96,6 +98,9 @@ public class SelectedMenu extends VerticalLayout
             Image tmp = new Image();
             tmp.setClassName("picture_grid");
             tmp.setSrc(menuItemRepresentation.getImageAddress());
+            tmp.getElement().setAttribute("name", menuItemRepresentation.getName());
+            tmp.getElement().setAttribute("image", menuItemRepresentation.getImageAddress());
+            tmp.getElement().setAttribute("description", menuItemRepresentation.getDescription());
             return tmp;
         }));
         gridMenu.addColumn(MenuItemRepresentation::getName).setComparator(Comparator.comparing(MenuItemRepresentation::getName)).setHeader("Name").setSortable(true);

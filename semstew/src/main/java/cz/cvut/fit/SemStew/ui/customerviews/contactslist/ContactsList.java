@@ -68,6 +68,7 @@ public class ContactsList extends VerticalLayout {
     private void init()
     {
         addClassName("contacts");
+        getElement().setAttribute("itemtype", "http://schema.org/Restaurant");
         setDefaultHorizontalComponentAlignment(Alignment.STRETCH);
     }
 
@@ -98,7 +99,9 @@ public class ContactsList extends VerticalLayout {
         ContactConfigRecord configSet = contactsService.GetByLanguageId(id);
 
         header.setText(configSet.getHeader());
+        content.getElement().setAttribute("name", configSet.getHeader());
         description.setText(configSet.getDescription());
+        content.getElement().setAttribute("description", configSet.getDescription());
 
         //image1.setSrc(configSet.getUrlImage1());
         //image2.setSrc(configSet.getUrlImage2());

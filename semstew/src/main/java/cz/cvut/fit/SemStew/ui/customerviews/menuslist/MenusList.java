@@ -13,6 +13,8 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.VaadinService;
 import cz.cvut.fit.SemStew.backend.Controllers.MenuController;
+import cz.cvut.fit.SemStew.backend.Controllers.MenuItemController;
+import cz.cvut.fit.SemStew.backend.Controllers.MenuItemRepresentation;
 import cz.cvut.fit.SemStew.backend.Controllers.MenuRepresentation;
 import cz.cvut.fit.SemStew.backend.Services.GeneralPageConfig.LanguagesService;
 import cz.cvut.fit.SemStew.backend.Services.MenuServices.MenusConfigService;
@@ -75,6 +77,7 @@ public class MenusList extends VerticalLayout {
     private void init()
     {
         setClassName("menu");
+        getElement().setAttribute("itemtype", "http://schema.org/Menu");
         setDefaultHorizontalComponentAlignment(Alignment.STRETCH);
     }
 
@@ -100,14 +103,15 @@ public class MenusList extends VerticalLayout {
         MenusConfigRecord menusConfigRecord = menusConfigService.GetInstanceByLanguage(id);
 
         header.setText(menusConfigRecord.getHeader());
-
+        content.getElement().setAttribute("name", menusConfigRecord.getHeader());
         menus = menusController.getItems();
-
         gridMenu.setItems(menus);
         gridMenu.addColumn(new ComponentRenderer<>(menuRepresentation -> {
             Image tmp = new Image();
             tmp.setClassName("picture_grid");
             tmp.setSrc(menuRepresentation.getImageAddress());
+            tmp.getElement().setAttribute("image", menuRepresentation.getImageAddress());
+            tmp.getElement().setAttribute("description", menuRepresentation.getDescription());
             return tmp;
         }));
         gridMenu.addColumn(MenuRepresentation::getDescription).setComparator(Comparator.comparing(MenuRepresentation::getDescription)).setHeader("Menu name").setSortable(true);
