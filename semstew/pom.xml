@@ -158,9 +158,9 @@
                     <!-- JDBC connection parameters -->
                     <jdbc>
                         <driver>org.postgresql.Driver</driver>
-                        <url>jdbc:postgresql:SemStew</url>
+                        <url>jdbc:postgresql://localhost:5433/SemStew</url>
                         <user>postgres</user>
-                        <password>postolka11</password>
+                        <password>1234</password>
                     </jdbc>
 
                     <!-- Generator parameters -->

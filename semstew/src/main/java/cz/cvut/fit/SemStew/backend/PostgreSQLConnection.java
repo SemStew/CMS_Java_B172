@@ -22,8 +22,8 @@ public class PostgreSQLConnection {
         System.out.println("JDBC driver was succesfully found...");
 
         try{
-            con = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/SemStew",
-                    "postgres", "postolka11");
+            con = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5433/SemStew",
+                    "postgres", "1234");
         } catch (SQLException e){
             System.out.println("Couln't connect to database due to an exception: "
                     + e.toString());
