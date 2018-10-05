@@ -10,12 +10,29 @@ import org.jooq.impl.DSL;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author DreamTeam SemStew
+ * @version 1.0
+ * @since 0.5
+ */
 public class MenusConfigService {
+    /**
+     * database context
+     */
     private DSLContext ctx;
 
+    /**
+     * MenusConfigService constructor
+     */
     public MenusConfigService() {}
 
-    //select
+    /**
+     * Get all MenusConfig records
+     *
+     * Use {@link #SelectMenusConfigService()} to get all MenusConfig records from database
+     *
+     * @return list of all MenusConfig records
+     */
     public List<MenusConfigRecord> SelectMenusConfigService(){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         List<MenusConfigRecord> configs = new ArrayList<MenusConfigRecord>();
@@ -27,7 +44,13 @@ public class MenusConfigService {
         return configs;
     }
 
-    //update
+    /**
+     * Update MenusConfig record
+     *
+     * Use {@link #UpdateMenusConfigService(MenusConfigRecord a)} to update given MenusConfig record
+     *
+     * @param a MenusConfig record to be updated
+     */
     public void UpdateMenusConfigService(MenusConfigRecord a){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         MenusConfig tmp = new MenusConfig();
@@ -35,7 +58,13 @@ public class MenusConfigService {
                 where(tmp.ID_LANGUAGE.eq(a.getIdLanguage())).execute();
     }
 
-    //insert
+    /**
+     * Insert new MenusConfig record
+     *
+     * Use {@link #InsertMenusConfigService(MenusConfigRecord a)} to insert given MenusConfig record
+     *
+     * @param a MenusConfig record to be inserted
+     */
     public void InsertMenusConfigService(MenusConfigRecord a){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         MenusConfig tmp = new MenusConfig();
@@ -43,14 +72,27 @@ public class MenusConfigService {
                 values(a.getIdLanguage(), a.getHeader()).execute();
     }
 
-    //delete
+    /**
+     * Delete MenusConfig record
+     *
+     * Use {@link #DeleteMenusConfigService(MenusConfigRecord a)} to delete given MenusConfig record
+     *
+     * @param a MenusConfig record to be deleted
+     */
     public void DeleteMenusConfigService(MenusConfigRecord a){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         MenusConfig tmp = new MenusConfig();
         ctx.delete(tmp).where(tmp.ID_LANGUAGE.eq(a.getIdLanguage())).execute();
     }
 
-    // get instance by language
+    /**
+     * Get MenusConfig record by language
+     *
+     * Use {@link #GetInstanceByLanguage(int id)} to get MenusConfig record of given language
+     *
+     * @param id Requested language ID
+     * @return MenusConfig record of requested language if it exists, else null
+     */
     public MenusConfigRecord GetInstanceByLanguage(int id){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         MenusConfig tmp = new MenusConfig();
@@ -59,7 +101,13 @@ public class MenusConfigService {
         return null;
     }
 
-
+    /**
+     * Get all MenusConfig records
+     *
+     * Use {@link #getConfigs()} to get all MenusConfig records from database
+     *
+     * @return list of all MenusConfig records
+     */
     public List<MenusConfigRecord> getConfigs() {
         return SelectMenusConfigService();
     }

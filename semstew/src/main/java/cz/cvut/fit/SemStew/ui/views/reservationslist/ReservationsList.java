@@ -22,27 +22,68 @@ import java.time.format.FormatStyle;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * @author DreamTeam SemStew
+ * @version 1.0
+ * @since 0.5
+ */
 @Route(value = "admin/reservations", layout = MainLayout.class)
 @PageTitle("Reservations List | Admin")
 public class ReservationsList extends GeneralAdminList {
 
+    /**
+     * page header
+     */
     private final H2 header = new H2();
+    /**
+     * grid for displaying Reservations
+     */
     private final Grid<ReservationRepresentation> recordGrid = new Grid<>();
+    /**
+     * Informative texts label
+     */
     private final Label infoLabel = new Label();
+    /**
+     * Reservations management
+     */
     private final ReservationController reservationController = new ReservationController();
+    /**
+     * Email management
+     */
     private final EmailController emailController = new EmailController();
+    /**
+     * list of all ReservationRepresentation
+     */
     private List<ReservationRepresentation> reservationRecords;
 
+    /**
+     * ReservationsList constructor
+     *
+     * Use {@link #ReservationsList()} to create and initialize page
+     *
+     */
     public ReservationsList() {
         init();
         addContent();
     }
 
+    /**
+     * Initialize page
+     *
+     * Use {@link #init()} to initialize page
+     *
+     */
     private void init() {
         super.addClassName("reservations-list");
         super.setDefaultHorizontalComponentAlignment(Alignment.STRETCH);
     }
 
+    /**
+     * Load content
+     *
+     * Use {@link #addContent()} to load and set up page content
+     *
+     */
     private void addContent() {
         VerticalLayout content = new VerticalLayout();
         content.setClassName("content");
@@ -93,11 +134,24 @@ public class ReservationsList extends GeneralAdminList {
         super.add(content);
     }
 
+    /**
+     * Refresh values
+     *
+     * Use {@link #Refresh()} to refresh values in grid
+     *
+     */
     private void Refresh(){
         reservationRecords = reservationController.getConfigs();
         recordGrid.setItems(reservationRecords);
     }
 
+    /**
+     * Accept ReservationRepresentation
+     *
+     * Use {@link #Accept(ReservationRepresentation)} to accept given ReservationRepresentation and send acceptance message
+     *
+     * @param toAccept ReservationRepresentation to be accepted
+     */
     private void Accept(ReservationRepresentation toAccept){
         if(toAccept.getStatus().equals("Accepted")){
             infoLabel.setText("Already accepted");
@@ -111,6 +165,13 @@ public class ReservationsList extends GeneralAdminList {
         Refresh();
     }
 
+    /**
+     * Decline ReservationRepresentation
+     *
+     * Use {@link #Decline(ReservationRepresentation)} to decline given ReservationRepresentation and send decline message
+     *
+     * @param toDecline ReservationRepresentation to be declined
+     */
     private void Decline(ReservationRepresentation toDecline){
         if(toDecline.getStatus().equals("Declined")){
             infoLabel.setText("Already declined");
@@ -123,6 +184,13 @@ public class ReservationsList extends GeneralAdminList {
         Refresh();
     }
 
+    /**
+     * Delete ReservationRepresentation
+     *
+     * Use {@link #Delete(ReservationRepresentation)} to delete given ReservationRepresentation and send deletion message
+     *
+     * @param toDelete ReservationRepresentation to be deleted
+     */
     private void Delete(ReservationRepresentation toDelete){
         reservationController.Delete(toDelete);
 

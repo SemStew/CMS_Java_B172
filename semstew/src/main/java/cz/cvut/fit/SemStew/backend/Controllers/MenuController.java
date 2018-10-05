@@ -10,14 +10,41 @@ import cz.cvut.fit.SemStew.backend.Services.MenuServices.MenusService;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author DreamTeam SemStew
+ * @version 1.0
+ * @since 0.5
+ */
 public class MenuController {
+    /**
+     * Menu management
+     */
     private final MenusService menusService = new MenusService();
+    /**
+     *  MenuName management
+     */
     private final MenusNameService menusNameService = new MenusNameService();
+    /**
+     *  Language management
+     */
     private final LanguagesService languagesService = new LanguagesService();
+    /**
+     *  MenuItem management
+     */
     private final MenuItemController menuItemController = new MenuItemController();
 
+    /**
+     *  MenuController constructor
+     */
     public MenuController(){}
 
+    /**
+     * Loads MenuRepresentations in selected language
+     *
+     * Use {@link #LoadData()} to load MenuRepresentations in selected language from database
+     *
+     * @return list of MenuRepresentations
+     */
     private List<MenuRepresentation> LoadData()
     {
         List<MenuRepresentation> items = new ArrayList<>();
@@ -47,6 +74,13 @@ public class MenuController {
         return items;
     }
 
+    /**
+     * Inserts MenuRepresentation in single language
+     *
+     * Use {@link #Insert(MenuRepresentation insert)} to insert given MenuRepresentations in single language
+     *
+     * @param insert MenuRepresentations to be inserted
+     */
     public void Insert(MenuRepresentation insert)
     {
         MenusRecord menusRecord = insert.GetMenus();
@@ -57,6 +91,13 @@ public class MenuController {
         menusNameService.InsertMenusNameService(menusNameRecord);
     }
 
+    /**
+     * Insert MenuRepresentation in multiple languages
+     *
+     * Use {@link #InsertMultiLingual(List insert)} to insert given MenuRepresentation in multiple languages
+     *
+     * @param insert list of MenuRepresentation in various languages
+     */
     public void InsertMultiLingual(List<MenuRepresentation> insert)
     {
         MenusRecord menusRecord = insert.get(0).GetMenus();
@@ -69,6 +110,13 @@ public class MenuController {
         }
     }
 
+    /**
+     * Update MenuRepresentation
+     *
+     * Use {@link #Update(MenuRepresentation update)} to update given MenuRepresentation
+     *
+     * @param update MenuRepresentation to be updated
+     */
     public void Update(MenuRepresentation update)
     {
         MenusRecord menusRecord = update.GetMenus();
@@ -78,6 +126,13 @@ public class MenuController {
         menusNameService.UpdateMenusNameService(menusNameRecord);
     }
 
+    /**
+     * Delete MenuRepresentation
+     *
+     * Use {@link #Delete(MenuRepresentation delete)} to delete given MenuRepresentation
+     *
+     * @param delete MenuRepresentation to be deleted
+     */
     public void Delete(MenuRepresentation delete)
     {
         MenusRecord menusRecord = delete.GetMenus();
@@ -88,6 +143,13 @@ public class MenuController {
 
     }
 
+    /**
+     * Get MenuRepresentations in selected language
+     *
+     * Use {@link #getItems()} to get MenuRepresentations in selected language from database
+     *
+     * @return list of MenuRepresentations
+     */
     public List<MenuRepresentation> getItems() {
         return LoadData();
     }

@@ -18,25 +18,60 @@ import cz.cvut.fit.SemStew.ui.views.orderslist.OrdersList;
 
 import java.util.Comparator;
 
+/**
+ * @author DreamTeam SemStew
+ * @version 1.0
+ * @since 0.5
+ */
 @Route(value = "admin/orders/detail", layout = MainLayout.class)
 @PageTitle("Orders List Detail | Admin")
 public class OrderedItems extends GeneralAdminList
     implements RouterLayout {
+    /**
+     * page header
+     */
     private final H2 header = new H2();
+    /**
+     * grid for displaying MenuItems
+     */
     private final Grid<MenuItemRepresentation> showGrid = new Grid<>();
+    /**
+     * Orders management
+     */
     private final OrdersController ordersController = new OrdersController();
+    /**
+     * Route back
+     */
     private RouterLink backLink;
 
+    /**
+     * OrderedItems constructor
+     *
+     * Use {@link #OrderedItems()} to create and initialize page
+     *
+     */
     public OrderedItems(){
         init();
         addContent();
     }
 
+    /**
+     * Initialize page
+     *
+     * Use {@link #init()} to initialize page
+     *
+     */
     private void init(){
         super.addClassName("orders-list");
         super.setDefaultHorizontalComponentAlignment(Alignment.STRETCH);
     }
 
+    /**
+     * Load content
+     *
+     * Use {@link #addContent()} to load and set up page content
+     *
+     */
     private void addContent(){
         VerticalLayout content = new VerticalLayout();
         content.setClassName("content");
@@ -58,7 +93,7 @@ public class OrderedItems extends GeneralAdminList
         showGrid.addColumn(MenuItemRepresentation::getUnitDescription).setHeader("Units");
         showGrid.addColumn(MenuItemRepresentation::getCategoryDescription).setComparator(Comparator.comparing(MenuItemRepresentation::getCategoryDescription)).setHeader("Category").setSortable(true);
         showGrid.addColumn(MenuItemRepresentation::getPrice).setComparator(Comparator.comparing(MenuItemRepresentation::getPrice)).setHeader("Price").setSortable(true);
-        showGrid.addColumn(MenuItemRepresentation::getAlergens).setHeader("Alergens");
+        showGrid.addColumn(MenuItemRepresentation::getAllergens).setHeader("Alergens");
 
         backLink = new RouterLink(null, OrdersList.class);
         backLink.add(new Button("Back"));

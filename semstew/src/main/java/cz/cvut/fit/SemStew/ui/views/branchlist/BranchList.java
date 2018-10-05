@@ -22,27 +22,68 @@ import cz.cvut.fit.SemStew.ui.views.GeneralAdminList;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * @author DreamTeam SemStew
+ * @version 1.0
+ * @since 0.5
+ */
 @Route(value = "admin", layout = MainLayout.class)
 @PageTitle("Branch List | Admin")
 public class BranchList extends GeneralAdminList {
 
+    /**
+     * page header
+     */
     private final H2 header = new H2();
+    /**
+     * branch management
+     */
     private BranchService branchServis = new BranchService();
+    /**
+     * grid for displaying branches
+     */
     private final Grid<BranchRecord> gridBranch = new Grid<>();
+    /**
+     * list of all Branch records
+     */
     private List<BranchRecord> branchRecords;
+    /**
+     * Button to add new Branch record
+     */
     private final Button addButton = new Button();
+    /**
+     * Dialog window to create and edit Branch records
+     */
     private final Dialog editDialog = new Dialog();
 
+    /**
+     *  BranchList constructor
+     *
+     *  Use {@link #BranchList()} to create and initialize page
+     *
+     */
     public BranchList() {
         init();
         addContent();
     }
 
+    /**
+     * Initialize page
+     *
+     * Use {@link #init()} to initialize page
+     *
+     */
     private void init() {
         super.addClassName("branch-list");
         super.setDefaultHorizontalComponentAlignment(Alignment.STRETCH);
     }
 
+    /**
+     * Load content
+     *
+     * Use {@link #addContent()} to load and set up page content
+     *
+     */
     private void addContent() {
         VerticalLayout content = new VerticalLayout();
         content.setClassName("content");
@@ -89,12 +130,26 @@ public class BranchList extends GeneralAdminList {
         super.add(content);
     }
 
+    /**
+     * Delete BranchRecord
+     *
+     * Use {@link #deleteEntry(BranchRecord)} to delete given BranchRecord
+     *
+     * @param branchRecord BranchRecord to be deleted
+     */
     private void deleteEntry(BranchRecord branchRecord){
         branchServis.DeleteBranchService(branchRecord);
         branchRecords = branchServis.getConfigs();
         gridBranch.setItems(branchRecords);
     }
 
+    /**
+     * Set up editDialog to update BranchRecord
+     *
+     * Use {@link #setUpDialogEdit(BranchRecord)} to set up {@link #editDialog} for updating given BranchRecord
+     *
+     * @param rec BranchRecord to be updated
+     */
     private void setUpDialogEdit(BranchRecord rec)
     {
         editDialog.removeAll();
@@ -142,6 +197,12 @@ public class BranchList extends GeneralAdminList {
         editDialog.add(content_layout);
     }
 
+    /**
+     * Set up editDialog for adding new BranchRecords
+     *
+     * Use {@link #setUpDialogAdd()} to set up {@link #editDialog} for adding new BranchRecords
+     *
+     */
     private void setUpDialogAdd()
     {
         editDialog.removeAll();

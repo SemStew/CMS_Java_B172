@@ -21,28 +21,69 @@ import cz.cvut.fit.SemStew.ui.CustomerLayout;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * @author DreamTeam SemStew
+ * @version 1.0
+ * @since 0.5
+ */
 @Route(value = "menus", layout = CustomerLayout.class)
 @PageTitle("Menu | Home")
 public class MenusList extends VerticalLayout {
+    /**
+     * Page header
+     */
     private final H2 header = new H2();
+    /**
+     * Page grid to display menus
+     */
     private final Grid<MenuRepresentation> gridMenu = new Grid<>();
+    /**
+     * Menu management
+     */
     private final MenuController menusController = new MenuController();
+    /**
+     * Page management
+     */
     private final MenusConfigService menusConfigService = new MenusConfigService();
+    /**
+     * Language management
+     */
     private final LanguagesService languagesService = new LanguagesService();
+    /**
+     * List of all available menus
+     */
     private List<MenuRepresentation> menus;
 
+    /**
+     * MenusList constructor
+     *
+     * Use {@link #MenusList()} to create and initialize page
+     *
+     */
     public MenusList()
     {
         init();
         addContent();
     }
 
+    /**
+     * Initialize page
+     *
+     * Use {@link #init()} to initialize page
+     *
+     */
     private void init()
     {
         setClassName("menu");
         setDefaultHorizontalComponentAlignment(Alignment.STRETCH);
     }
 
+    /**
+     * Load content
+     *
+     * Use {@link #addContent()} to load and set up content of the page
+     *
+     */
     private void addContent()
     {
         VerticalLayout content = new VerticalLayout();

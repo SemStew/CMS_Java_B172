@@ -10,12 +10,29 @@ import org.jooq.impl.DSL;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author DreamTeam SemStew
+ * @version 1.0
+ * @since 0.5
+ */
 public class AdminsService {
+    /**
+     * Database context
+     */
     private DSLContext ctx;
 
+    /**
+     * AdminsService constructor
+     */
     public AdminsService() {}
 
-    //select
+    /**
+     * Get all Admins records
+     *
+     * Use {@link #SelectAdminsService()} to get all Admins records from database
+     *
+     * @return list of all Admins records
+     */
     public List<AdminsRecord> SelectAdminsService(){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         List<AdminsRecord> configs = new ArrayList<AdminsRecord>();
@@ -27,7 +44,13 @@ public class AdminsService {
         return configs;
     }
 
-    //update
+    /**
+     * Updates given Admins record
+     *
+     * Use {@link #UpdateAdminsService(AdminsRecord a)} to update given Admins record
+     *
+     * @param a Admins record to update
+     */
     public void UpdateAdminsService(AdminsRecord a){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         Admins tmp = new Admins();
@@ -35,7 +58,13 @@ public class AdminsService {
                         where(tmp.ID_ADMIN.eq(a.getIdAdmin())).execute();
     }
 
-    //insert
+    /**
+     * Insert new Admins record
+     *
+     * Use {@link #InsertAdminsService(AdminsRecord a)} to insert given Admins record
+     *
+     * @param a Admins record to insert into database
+     */
     public void InsertAdminsService(AdminsRecord a){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         Admins tmp = new Admins();
@@ -43,14 +72,27 @@ public class AdminsService {
                 values(a.getName(), a.getPassword()).execute();
     }
 
-    //delete
+    /**
+     * Delete Admins record
+     *
+     * Use {@link #DeleteAdminsService(AdminsRecord a)} to delete given Admins record
+     *
+     * @param a Admins record to delete
+     */
     public void DeleteAdminsService(AdminsRecord a){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         Admins tmp = new Admins();
         ctx.delete(tmp).where(tmp.ID_ADMIN.eq(a.getIdAdmin())).execute();
     }
 
-    // get by name
+    /**
+     * Gets Admins record by given name
+     *
+     * Use {@link #GetByName(String name)} to get Admins record by given name
+     *
+     * @param name name of searched Admins record
+     * @return Admins record of given name if it exist, else null
+     */
     public AdminsRecord GetByName(String name){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         Admins a = new Admins();
@@ -59,6 +101,13 @@ public class AdminsService {
         return null;
     }
 
+    /**
+     * Gets all Admins record
+     *
+     * Use {@link #getConfigs()} to get all Admins record from database
+     *
+     * @return list of all Admins records
+     */
     public List<AdminsRecord> getConfigs() {
         return SelectAdminsService();
     }

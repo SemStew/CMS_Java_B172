@@ -10,12 +10,29 @@ import org.jooq.impl.DSL;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author DreamTeam SemStew
+ * @version 1.0
+ * @since 0.5
+ */
 public class OrdersService {
+    /**
+     * database context
+     */
     private DSLContext ctx;
 
+    /**
+     * OrdersService constructor
+     */
     public OrdersService() {}
 
-    //select
+    /**
+     * Get all Order records
+     *
+     * Use {@link #SelectOrdersService()} to get all Order records from database
+     *
+     * @return list of all Order records
+     */
     public List<OrdersRecord> SelectOrdersService(){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         List<OrdersRecord> configs = new ArrayList<OrdersRecord>();
@@ -27,7 +44,14 @@ public class OrdersService {
         return configs;
     }
 
-    //update
+
+    /**
+     * Update Order record
+     *
+     * Use {@link #UpdateOrdersService(OrdersRecord a)} to update given Order record
+     *
+     * @param a Order record to be updated
+     */
     public void UpdateOrdersService(OrdersRecord a){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         Orders tmp = new Orders();
@@ -36,7 +60,13 @@ public class OrdersService {
                 where(tmp.ID_ORDER.eq(a.getIdOrder())).execute();
     }
 
-    //insert
+    /**
+     * Insert new Order record
+     *
+     * Use {@link #InsertOrdersService(OrdersRecord a)} to insert given Order record
+     *
+     * @param a Order record to be inserted
+     */
     public void InsertOrdersService(OrdersRecord a){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         Orders tmp = new Orders();
@@ -44,7 +74,14 @@ public class OrdersService {
                 values(a.getIdBranch(), a.getAddress(), a.getODate(), a.getPerson(), a.getEmail(), a.getStatus()).execute();
     }
 
-    // insert and get id
+    /**
+     * Insert new Order record and get generated Order ID
+     *
+     * Use {@link #InsertAndGetId(OrdersRecord in)} insert given Order record and get generated Order ID
+     *
+     * @param in Order record to be inserted
+     * @return generated Order identification number
+     */
     public int InsertAndGetId(OrdersRecord in){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         Orders tmp = new Orders();
@@ -59,21 +96,41 @@ public class OrdersService {
         return inserted.getIdOrder();
     }
 
-    //delete
+
+    /**
+     * Delete Order record
+     *
+     * Use {@link #DeleteOrdersService(OrdersRecord a)} to delete given Order record
+     *
+     * @param a Order record to be deleted
+     */
     public void DeleteOrdersService(OrdersRecord a){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         Orders tmp = new Orders();
         ctx.delete(tmp).where(tmp.ID_ORDER.eq(a.getIdOrder())).execute();
     }
 
-    // delete by order id
+    /**
+     * Delete Order record by ID
+     *
+     * Use {@link #DeleteById(int orderId)} to delete Order record of given ID
+     *
+     * @param orderId Order ID of Order record to be deleted
+     */
     public void DeleteById(int orderId){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         Orders tmp = new Orders();
         ctx.delete(tmp).where(tmp.ID_ORDER.eq(orderId)).execute();
     }
 
-    // get by order id
+    /**
+     * Get Order record by ID
+     *
+     * Use {@link #GetByOrderId(int orderID)} to get Order record of given ID
+     *
+     * @param orderId Order ID of searched Order record
+     * @return Order record with given Order ID if it exists, else null
+     */
     public OrdersRecord GetByOrderId(int orderId){
         ctx = DSL.using(PostgreSQLConnection.getConnection(), SQLDialect.POSTGRES);
         Orders tmp = new Orders();
@@ -82,6 +139,13 @@ public class OrdersService {
         return null;
     }
 
+    /**
+     * Get all Order records
+     *
+     * Use {@link #getConfigs()} to get all Order records from database
+     *
+     * @return list of all Order records
+     */
     public List<OrdersRecord> getConfigs() {
         return SelectOrdersService();
     }

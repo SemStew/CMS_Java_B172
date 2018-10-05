@@ -19,29 +19,72 @@ import cz.cvut.fit.SemStew.ui.customerviews.orderlist.OrderList;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * @author DreamTeam SemStew
+ * @version 1.0
+ * @since 0.5
+ */
 @Route(value = "orders/selected",layout = CustomerLayout.class)
 @PageTitle("Orders | Selected")
 public class OrderSelected extends VerticalLayout
     implements RouterLayout, BeforeEnterObserver {
+    /**
+     * Page header
+     */
     private final H2 header = new H2();
+    /**
+     * Grid for displaying menu items
+     */
     private final Grid<MenuItemRepresentation> gridMenu = new Grid<>();
+    /**
+     * MenuItem management
+     */
     private final MenuItemController menuItemController = new MenuItemController();
+    /**
+     * Orders management
+     */
     private final OrdersController ordersController = new OrdersController();
+    /**
+     * list of all MenuItems from selected Menu
+     */
     private List<MenuItemRepresentation> menuItems;
+    /**
+     * return link
+     */
     private RouterLink back;
+    /**
+     * id of worked on Order
+     */
     private int idOrder;
 
-
+    /**
+     * OrderSelected constructor
+     *
+     * Use {@link #OrderSelected()} to create and initialize page
+     *
+     */
     public OrderSelected(){
         init();
         addContent();
     }
 
+    /**
+     * Initialize page
+     *
+     * Use {@link #init()} to initialize page
+     *
+     */
     private void init(){
         setClassName("order-selected");
         setDefaultHorizontalComponentAlignment(Alignment.STRETCH);
     }
 
+    /**
+     * Load content
+     *
+     * Use {@link #addContent()} to load and set up page content
+     *
+     */
     private void addContent(){
         VerticalLayout content = new VerticalLayout();
         content.setDefaultHorizontalComponentAlignment(Alignment.STRETCH);
@@ -69,7 +112,7 @@ public class OrderSelected extends VerticalLayout
         gridMenu.addColumn(MenuItemRepresentation::getUnitDescription).setHeader("Units");
         gridMenu.addColumn(MenuItemRepresentation::getCategoryDescription).setComparator(Comparator.comparing(MenuItemRepresentation::getCategoryDescription)).setHeader("Category").setSortable(true);
         gridMenu.addColumn(MenuItemRepresentation::getPrice).setComparator(Comparator.comparing(MenuItemRepresentation::getPrice)).setHeader("Price").setSortable(true);
-        gridMenu.addColumn(MenuItemRepresentation::getAlergens).setHeader("Alergens");
+        gridMenu.addColumn(MenuItemRepresentation::getAllergens).setHeader("Alergens");
         gridMenu.addColumn(new ComponentRenderer<>(selectedItem -> {
             Checkbox tmp = new Checkbox();
             if(ordersController.IsSelected(idOrder, selectedItem.getIdMenuItem())){
@@ -92,6 +135,13 @@ public class OrderSelected extends VerticalLayout
         add(content);
     }
 
+    /**
+     * Before entering page handling
+     *
+     * Documentation of overwritten method {@inheritDoc}
+     *
+     * @param beforeEnterEvent event representing routing to this page
+     */
     @Override
     public void beforeEnter(BeforeEnterEvent beforeEnterEvent) {
         if(VaadinService.getCurrentRequest().getWrappedSession().getAttribute("order_active") == null ||

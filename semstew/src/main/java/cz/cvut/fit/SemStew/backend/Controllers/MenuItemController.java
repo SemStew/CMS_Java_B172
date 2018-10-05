@@ -9,19 +9,61 @@ import cz.cvut.fit.SemStew.backend.Services.MenuServices.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author DreamTeam SemStew
+ * @version 1.0
+ * @since 0.5
+ */
 public class MenuItemController {
+    /**
+     *  MenuItem management
+     */
     private final MenuItemService menuItemService = new MenuItemService();
+    /**
+     * MenuItemName management
+     */
     private final MenuItemNameService menuItemNameService = new MenuItemNameService();
+    /**
+     * CategoriesName management
+     */
     private final CategoriesNameService categoriesNameService = new CategoriesNameService();
+    /**
+     * Units management
+     */
     private final AboutUsConfigService.UnitsService unitsService = new AboutUsConfigService.UnitsService();
+    /**
+     * MenuItemAllergen management
+     */
     private final MenuItemAllergenService menuItemAllergenService = new MenuItemAllergenService();
+    /**
+     * Allergens management
+     */
     private final AllergensNameService allergensNameService = new AllergensNameService();
+    /**
+     * Languages management
+     */
     private final LanguagesService languagesService = new LanguagesService();
+    /**
+     * Menu ID number
+     */
     private int menuID = 0;
+    /**
+     * Selected Language number
+     */
     private int languageId;
 
+    /**
+     * MenuItemController constructor
+     */
     public MenuItemController() {}
 
+    /**
+     * Get MenuItemRepresentations in selected language
+     *
+     * Use {@link #LoadData()} to get MenuItemRepresentations in selected language from database
+     *
+     * @return list of all MenuItemRepresentations in given language
+     */
     private List<MenuItemRepresentation> LoadData()
     {
         List<MenuItemRepresentation> items = new ArrayList<>();
@@ -72,6 +114,14 @@ public class MenuItemController {
         return items;
     }
 
+    /**
+     * Gets all MenuItemRepresentationsin selected language and id
+     *
+     * Use {@link #LoadById(int id)} to get all MenuItemRepresentation in selected language and given id from database
+     *
+     * @param id ID of searched MenuItemRepresentation
+     * @return MenuItemRepresentation with given id
+     */
     public MenuItemRepresentation LoadById(int id){
         MenuItemNameRecord menuItemNameRecord;
         CategoriesNameRecord categoriesNameRecord;
@@ -108,6 +158,13 @@ public class MenuItemController {
         return representation;
     }
 
+    /**
+     * Insert MenuItemRepresentation in single language
+     *
+     * Use {@link #Insert(MenuItemRepresentation in)} to insert given MenuItemRepresentation
+     *
+     * @param in MenuItemRepresentation to be inserted
+     */
     public void Insert(MenuItemRepresentation in)
     {
         MenuItemRecord item = in.GetItemRecord();
@@ -119,7 +176,7 @@ public class MenuItemController {
         item.setIdCategory(category.getIdCategory());
         item.setIdUnit(unit.getIdUnit());
 
-        List<String> allergens = in.getAlergens();
+        List<String> allergens = in.getAllergens();
         List<AllergensNameRecord> allergensNameRecords = new ArrayList<>();
 
         for(String rec : allergens){
@@ -138,6 +195,13 @@ public class MenuItemController {
         }
     }
 
+    /**
+     * Insert MenuItemRepresentation in multiple languages
+     *
+     * Use {@link #InsertMultiLingual(List insert)} to insert given MenuItemRepresentation in multiple languages
+     *
+     * @param insert list of MenuItemRepresentations to be inserted
+     */
     public void InsertMultiLingual(List<MenuItemRepresentation> insert){
         MenuItemRecord item = insert.get(0).GetItemRecord();
 
@@ -147,7 +211,7 @@ public class MenuItemController {
         item.setIdCategory(category.getIdCategory());
         item.setIdUnit(unit.getIdUnit());
 
-        List<String> allergens = insert.get(0).getAlergens();
+        List<String> allergens = insert.get(0).getAllergens();
         List<AllergensNameRecord> allergensNameRecords = new ArrayList<>();
 
         for(String rec : allergens){
@@ -171,6 +235,13 @@ public class MenuItemController {
         }
     }
 
+    /**
+     * Update MenuItemRepresentation
+     *
+     * Use {@link #Update(MenuItemRepresentation in)} to update given MenuItemRepresentation
+     *
+     * @param in MenuItemRepresentation to be updated
+     */
     public void Update(MenuItemRepresentation in)
     {
         MenuItemRecord item = in.GetItemRecord();
@@ -182,7 +253,7 @@ public class MenuItemController {
         item.setIdCategory(category.getIdCategory());
         item.setIdUnit(unit.getIdUnit());
 
-        List<String> allergens = in.getAlergens();
+        List<String> allergens = in.getAllergens();
         List<AllergensNameRecord> allergensNameRecords = new ArrayList<>();
 
         for(String rec : allergens){
@@ -203,6 +274,13 @@ public class MenuItemController {
         menuItemNameService.UpdateMenuItemNameService(itemName);
     }
 
+    /**
+     * Delete MenuItemRepresentation
+     *
+     * Use {@link #Delete(MenuItemRepresentation in)} to delete given MenuItemRepresentation
+     *
+     * @param in MenuItemRepresentation to be deleted
+     */
     public void Delete(MenuItemRepresentation in)
     {
         MenuItemRecord item = in.GetItemRecord();
@@ -219,6 +297,13 @@ public class MenuItemController {
         menuItemService.DeleteMenuItemService(item);
     }
 
+    /**
+     * Delete MenuItemRecord
+     *
+     * Use {@link #Delete(MenuItemRecord in)} to delete MenuItemRecord
+     *
+     * @param in MenuItemRecord to be deleted
+     */
     private void Delete(MenuItemRecord in){
 
         menuItemAllergenService.DeleteByMenuItemId(in.getIdMenuItem());
@@ -227,6 +312,13 @@ public class MenuItemController {
         menuItemService.DeleteMenuItemService(in);
     }
 
+    /**
+     * Delete MenuItemRepresentations by Menu ID
+     *
+     * Use {@link #DeleteByMenuId(int menuID)} to delete MenuItemRepresentations of given Menu ID
+     *
+     * @param menuID Menu ID for MenuItemRepresentations to be deleted
+     */
     public void DeleteByMenuId(int menuID){
         List<MenuItemRecord> menuItemRecords = menuItemService.GetByMenuId(menuID);
         for(MenuItemRecord rec : menuItemRecords){
@@ -234,6 +326,15 @@ public class MenuItemController {
         }
     }
 
+    /**
+     * Swaps languges for allergens on MenuItemRepresentation
+     *
+     * Use {@link #getAlergensForItem(List input, int languages)} to swap allergens name language
+     *
+     * @param input list of items allergens
+     * @param language requested language
+     * @return list of allergens names in requested language
+     */
     public List<String> getAlergensForItem(List<String> input, int language){
         List<Integer> idList = new ArrayList<>();
         for(String rec : input)
@@ -244,20 +345,46 @@ public class MenuItemController {
         return alergensByName;
     }
 
+    /**
+     * Gets all MenuItemRepresentations in selected language
+     *
+     * Use {@link #getItems()} to get all MenuItemRepresentation in selected language from database
+     *
+     * @return list of MenuItemRepresentation in selected language
+     */
     public List<MenuItemRepresentation> getItems() {
         return LoadData();
     }
 
+    /**
+     * Gets all categories descriptions in selected language
+     *
+     * Use {@link #getCategories()} to get all Categories descriptions in selected language from database
+     *
+     * @return list of Categories descriptions
+     */
     public List<String> getCategories()
     {
         return categoriesNameService.CategoriesDescriptions(languageId);
     }
 
+    /**
+     * Gets all Units descriptions
+     *
+     * Use {@link #getUnits()} to get all Units descriptions from database
+     *
+     * @return list of all Units descriptions
+     */
     public List<String> getUnits()
     {
         return unitsService.UnitsDescription();
     }
 
+    /**
+     * Gets Menu ID
+     *
+     * @return Menu ID
+     */
     public int getMenuID() {
         return menuID;
     }

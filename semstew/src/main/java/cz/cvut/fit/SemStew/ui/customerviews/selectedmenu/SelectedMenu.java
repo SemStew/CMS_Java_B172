@@ -18,28 +18,66 @@ import cz.cvut.fit.SemStew.ui.customerviews.menuslist.MenusList;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * @author DreamTeam SemStew
+ * @version 1.0
+ * @since 0.5
+ */
 @Route(value = "menus/selected", layout = CustomerLayout.class)
 @PageTitle("Selected | Menu")
 public class SelectedMenu extends VerticalLayout
     implements RouterLayout {
+    /**
+     * page header
+     */
     private final H2 header = new H2();
+    /**
+     * grid for displaying MenuItems from selected Menu
+     */
     private final Grid<MenuItemRepresentation> gridMenu = new Grid<>();
+    /**
+     * MenuItem management
+     */
     private MenuItemController menuItemController = new MenuItemController();
+    /**
+     * List of all MenuItems from selected Menu
+     */
     private List<MenuItemRepresentation> menuItems;
+    /**
+     * Route back
+     */
     private RouterLink back;
 
+    /**
+     * SelectedMenu constructor
+     *
+     * Use {@link #SelectedMenu()} to create and initialize page
+     *
+     */
     public SelectedMenu()
     {
         init();
         addContent();
     }
 
+    /**
+     * Initialize page
+     *
+     * Use {@link #init()} to initialize page
+     *
+     */
     private void init()
     {
         setClassName("selectedMenu");
         setDefaultHorizontalComponentAlignment(Alignment.STRETCH);
     }
 
+    /**
+     * Load page content
+     *
+     * Use {@link #addContent()} to load and set up page content
+     *
+     */
     private void addContent()
     {
         VerticalLayout content = new VerticalLayout();
@@ -66,7 +104,7 @@ public class SelectedMenu extends VerticalLayout
         gridMenu.addColumn(MenuItemRepresentation::getUnitDescription).setHeader("Units");
         gridMenu.addColumn(MenuItemRepresentation::getCategoryDescription).setComparator(Comparator.comparing(MenuItemRepresentation::getCategoryDescription)).setHeader("Category").setSortable(true);
         gridMenu.addColumn(MenuItemRepresentation::getPrice).setComparator(Comparator.comparing(MenuItemRepresentation::getPrice)).setHeader("Price").setSortable(true);
-        gridMenu.addColumn(MenuItemRepresentation::getAlergens).setHeader("Alergens");
+        gridMenu.addColumn(MenuItemRepresentation::getAllergens).setHeader("Alergens");
 
         content.add(header, gridMenu, back);
 

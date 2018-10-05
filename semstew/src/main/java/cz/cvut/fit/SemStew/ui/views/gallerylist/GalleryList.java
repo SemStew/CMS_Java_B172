@@ -21,27 +21,68 @@ import cz.cvut.fit.SemStew.ui.views.GeneralAdminList;
 
 import java.util.List;
 
+/**
+ * @author DreamTeam SemStew
+ * @version 1.0
+ * @since 0.5
+ */
 @Route(value = "admin/gallery", layout = MainLayout.class)
 @PageTitle("Gallery List | Admin")
 public class GalleryList extends GeneralAdminList {
 
+    /**
+     * page header
+     */
     private final H2 header = new H2();
+    /**
+     * grid for displaying images
+     */
     private final Grid<ImagesRecord> recordGrid = new Grid<>();
+    /**
+     * Dialog window for create and edit
+     */
     private final Dialog editDialog = new Dialog();
+    /**
+     * Images management
+     */
     private final ImageServis imageServis = new ImageServis();
+    /**
+     * Button to add new Image
+     */
     private final Button add = new Button();
+    /**
+     * list of all Images
+     */
     private List<ImagesRecord> imagesRecords;
 
+    /**
+     * GalleryList constructor
+     *
+     * Use {@link #GalleryList()} to create and initialize page
+     *
+     */
     public GalleryList() {
         init();
         addContent();
     }
 
+    /**
+     * Initialize page
+     *
+     * Use {@link #init()} to initialize page
+     *
+     */
     private void init() {
         super.addClassName("gallery-list");
         super.setDefaultHorizontalComponentAlignment(Alignment.STRETCH);
     }
 
+    /**
+     * Load content
+     *
+     * Use {@link #addContent()} to load and set up page content
+     *
+     */
     private void addContent() {
         VerticalLayout content = new VerticalLayout();
         content.setClassName("content");
@@ -90,11 +131,24 @@ public class GalleryList extends GeneralAdminList {
         add(content);
     }
 
+    /**
+     * Refresh values
+     *
+     * Use {@link #Refresh()} to refresh values in grid
+     *
+     */
     private void Refresh(){
         imagesRecords = imageServis.getConfigs();
         recordGrid.setItems(imagesRecords);
     }
 
+    /**
+     * Set up editDialog for editing ImagesRecord
+     *
+     * Use {@link #SetUpEditDialog(ImagesRecord)} to set up {@link #editDialog} for editing given ImagesRecord
+     *
+     * @param in ImagesRecord to be edited
+     */
     private void SetUpEditDialog(ImagesRecord in){
         editDialog.removeAll();
 
@@ -128,6 +182,12 @@ public class GalleryList extends GeneralAdminList {
         editDialog.add(content);
     }
 
+    /**
+     * Set up editDialog for adding new ImagesRecords
+     *
+     * Use {@link #SetUpEditDialog(ImagesRecord)} to set up {@link #editDialog} for adding new ImagesRecords
+     *
+     */
     private void SetUpAddDialog(){
         editDialog.removeAll();
 

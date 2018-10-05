@@ -15,27 +15,68 @@ import cz.cvut.fit.SemStew.ui.CustomerLayout;
 
 import java.util.List;
 
+/**
+ * @author DreamTeam SemStew
+ * @version 1.0
+ * @since 0.5
+ */
 @Route(value = "contacts", layout = CustomerLayout.class)
 @PageTitle("Contacts | Home")
 public class ContactsList extends VerticalLayout {
+    /**
+     * Page header
+     */
     private final H2 header = new H2();
+    /**
+     * Page description
+     */
     private final Text description = new Text("");
+    /**
+     * Page image number 1
+     */
     private final Image image1 = new Image();
+    /**
+     * Page image number 2
+     */
     private final Image image2 = new Image();
+    /**
+     * Page management
+     */
     private ContactConfigService contactsService = new ContactConfigService();
+    /**
+     * Language management
+     */
     private LanguagesService languagesService = new LanguagesService();
 
+    /**
+     * ContactsList constructor
+     *
+     * Use {@link #ContactsList()} to create and initialize page
+     *
+     */
     public ContactsList(){
         init();
         addContent();
     }
 
+    /**
+     * Initialize page
+     *
+     * Use {@link #init()} to initialize page
+     *
+     */
     private void init()
     {
         addClassName("contacts");
         setDefaultHorizontalComponentAlignment(Alignment.STRETCH);
     }
 
+    /**
+     * Load content
+     *
+     * Use {@link #addContent()} to load content and data into the page
+     *
+     */
     private void addContent()
     {
         VerticalLayout content = new VerticalLayout();

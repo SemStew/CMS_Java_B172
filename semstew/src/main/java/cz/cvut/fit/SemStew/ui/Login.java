@@ -19,21 +19,58 @@ import cz.cvut.fit.SemStew.ui.customerviews.introlist.IntroList;
 
 import java.util.List;
 
-
+/**
+ * @author DreamTeam SemStew
+ * @version 1.0
+ * @since 0.5
+ */
 @Route(value = "login", layout = MainLayout.class)
 @PageTitle("Login")
 public class Login extends VerticalLayout
     implements RouterLayout, BeforeEnterObserver {
+    /**
+     * Register route
+     */
     private RouterLink register;
+    /**
+     * Back route
+     */
     private RouterLink back;
+    /**
+     * page header
+     */
     private final H2 header = new H2();
+    /**
+     * Username textfield
+     */
     private final TextField userName = new TextField();
+    /**
+     * Password textfield
+     */
     private final PasswordField password = new PasswordField();
+    /**
+     * Button for login
+     */
     private final Button loginButton = new Button();
+    /**
+     * Registration button
+     */
     private final Button registrationButton = new Button();
+    /**
+     * Informative texts label
+     */
     private final Label infoLabel = new Label();
+    /**
+     * Admins management
+     */
     private final AdminsService admin = new AdminsService();
 
+    /**
+     * Login constructor
+     *
+     * Use {@link #Login()} to create and initialize page
+     *
+     */
     public Login()
     {
         init();
@@ -41,12 +78,24 @@ public class Login extends VerticalLayout
         addFoot();
     }
 
+    /**
+     * Initialize page
+     *
+     * Use {@link #init()} to initialize page
+     *
+     */
     private void init()
     {
         addClassName("logreg");
         setDefaultHorizontalComponentAlignment(Alignment.STRETCH);
     }
 
+    /**
+     * Load content
+     *
+     * Use {@link #addContent()} to load and set up page content
+     *
+     */
     private void addContent()
     {
         VerticalLayout content = new VerticalLayout();
@@ -112,6 +161,12 @@ public class Login extends VerticalLayout
         add(content);
     }
 
+    /**
+     * Add footer
+     *
+     * Use {@link #addFoot()} to add footer to page content
+     *
+     */
     private void addFoot () {
         HorizontalLayout bottom = new HorizontalLayout();
         bottom.addClassName("main-layout__bottom");
@@ -125,6 +180,14 @@ public class Login extends VerticalLayout
         add(bottom);
     }
 
+    /**
+     * Before enter handler
+     *
+     * Use {@link #beforeEnter(BeforeEnterEvent)} to handle before entering events
+     * Overwritten documentation {@inheritDoc}
+     *
+     * @param event Routing event
+     */
     @Override
     public void beforeEnter(BeforeEnterEvent event)
     {

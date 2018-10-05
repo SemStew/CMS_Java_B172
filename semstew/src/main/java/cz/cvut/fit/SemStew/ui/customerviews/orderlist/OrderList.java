@@ -27,35 +27,99 @@ import java.sql.Date;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * @author DreamTeam SemStew
+ * @version 1.0
+ * @since 0.5
+ */
 @Route(value = "orders",layout = CustomerLayout.class)
 @PageTitle("Orders | Home")
 public class OrderList extends VerticalLayout {
+    /**
+     * Page header
+     */
     private final H2 header = new H2();
+    /**
+     * Order info description
+     */
     private final Text orderDescription = new Text("");
+    /**
+     * Grid for all available menus
+     */
     private final Grid<MenuRepresentation> gridMenu = new Grid<>();
+    /**
+     * Button for creating new order
+     */
     private final Button createButton = new Button();
+    /**
+     * Button for updating/reopening existing order
+     */
     private final Button updateButton = new Button();
+    /**
+     * Button for checking status or deleting order
+     */
     private final Button checkButton = new Button();
+    /**
+     * Button for closing order
+     */
     private final Button closeOrder = new Button();
+    /**
+     * Information texts label
+     */
     private final Label infoLabel = new Label();
+    /**
+     * Menu management
+     */
     private final MenuController menuController = new MenuController();
+    /**
+     * Dialog window for CRUD operations on orders
+     */
     private final Dialog editDialog = new Dialog();
+    /**
+     * Orders management
+     */
     private final OrdersController ordersController = new OrdersController();
+    /**
+     * Branch management
+     */
     private final BranchService branchService = new BranchService();
+    /**
+     * list of all available menus
+     */
     private List<MenuRepresentation> menuRepresentations;
+    /**
+     * currently active order
+     */
     private OrdersRepresentation ordersRepresentation;
 
-
+    /**
+     * OrderList constructor
+     *
+     * Use {@link #OrderList()} to initialize and set up page
+     *
+     */
     public OrderList(){
         init();
         addContent();
     }
 
+    /**
+     * Initialize page
+     *
+     * Use {@link #init()} to initialize page
+     *
+     */
     private void init(){
         setClassName("order");
         setDefaultHorizontalComponentAlignment(Alignment.STRETCH);
     }
 
+    /**
+     * Load content
+     *
+     * Use {@link #addContent()} to load and set up page content
+     *
+     */
     private void addContent(){
         VerticalLayout content = new VerticalLayout();
         content.setDefaultHorizontalComponentAlignment(Alignment.STRETCH);
@@ -144,6 +208,12 @@ public class OrderList extends VerticalLayout {
         add(content);
     }
 
+    /**
+     * Set up ediDialog to check
+     *
+     * Use {@link #SetUpCheckDialog()} to set up {@link #editDialog} for checking status or deleting orders
+     *
+     */
     private void SetUpCheckDialog(){
         editDialog.removeAll();
         VerticalLayout content = new VerticalLayout();
@@ -205,6 +275,12 @@ public class OrderList extends VerticalLayout {
         editDialog.add(content);
     }
 
+    /**
+     * Set up editDialog to edit
+     *
+     * Use {@link #SetUpEditDialog()} to set up {@link #editDialog} for editing and reopening orders
+     *
+     */
     private void SetUpEditDialog(){
         editDialog.removeAll();
         VerticalLayout content = new VerticalLayout();
@@ -290,6 +366,12 @@ public class OrderList extends VerticalLayout {
         editDialog.add(content);
     }
 
+    /**
+     * Set up editDialog to create
+     *
+     * Use {@link #SetUpCreateDialog()} to set up {@link #editDialog} for creating new orders
+     *
+     */
     private void SetUpCreateDialog(){
         editDialog.removeAll();
         VerticalLayout content = new VerticalLayout();

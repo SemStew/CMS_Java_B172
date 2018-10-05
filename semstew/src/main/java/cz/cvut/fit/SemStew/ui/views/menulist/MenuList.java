@@ -28,28 +28,75 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * @author DreamTeam SemStew
+ * @version 1.0
+ * @since 0.5
+ */
 @Route(value = "admin/dishes", layout = MainLayout.class)
 @PageTitle("Dishes List | Admin")
 public class MenuList extends GeneralAdminList {
+    /**
+     * page header
+     */
     private final H2 header = new H2();
+    /**
+     * grid to display Menus
+     */
     private final Grid<MenuRepresentation> menuGrid = new Grid<>();
+    /**
+     * Language management
+     */
     private final LanguagesService languagesService = new LanguagesService();
+    /**
+     * Menus management
+     */
     private final MenuController menuController = new MenuController();
+    /**
+     * Branches management
+     */
     private final BranchService branchService = new BranchService();
+    /**
+     * list of all available Menus
+     */
     private List<MenuRepresentation> menuRecords;
+    /**
+     * Button for adding new Menu
+     */
     private final Button addButton = new Button();
+    /**
+     * Dialog window for creating and updating Menus
+     */
     private final Dialog editDialog = new Dialog();
 
+    /**
+     * MenuList constructor
+     *
+     * Use {@link #MenuList()} to create and initialize page
+     *
+     */
     public MenuList() {
         init();
         addContent();
     }
 
+    /**
+     * Initialize page
+     *
+     * Use {@link #init()} to initialize page
+     *
+     */
     private void init() {
         addClassName("dishes-list");
         setDefaultHorizontalComponentAlignment(Alignment.STRETCH);
     }
 
+    /**
+     * Load content
+     *
+     * Use {@link #addContent()} to load and set up page content
+     *
+     */
     private void addContent() {
         VerticalLayout content = new VerticalLayout();
         content.setClassName("content");
@@ -108,12 +155,25 @@ public class MenuList extends GeneralAdminList {
         add(content);
     }
 
+    /**
+     * Refresh values
+     *
+     * Use {@link #RefreshValues()} to refresh values in grid
+     *
+     */
     private void RefreshValues()
     {
         menuRecords = menuController.getItems();
         menuGrid.setItems(menuRecords);
     }
 
+    /**
+     * Set up editDialog for editing MenuRepresentation
+     *
+     * Use {@link #setUpEditDialog(MenuRepresentation)} to set up {@link #editDialog} for editing given MenuRepresentation
+     *
+     * @param input MenuRepresentation to be edited
+     */
     private void setUpEditDialog(MenuRepresentation input)
     {
         editDialog.removeAll();
@@ -168,6 +228,12 @@ public class MenuList extends GeneralAdminList {
         editDialog.add(content);
     }
 
+    /**
+     * Set up editDialog for adding new MenuRepresentations
+     *
+     * Use {@link #setUpAddDialog()} to set up {@link #editDialog} to add new MenuRepresentations
+     *
+     */
     private void setUpAddDialog()
     {
         editDialog.removeAll();
